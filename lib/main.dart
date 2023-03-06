@@ -14,10 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'Money Flow',
       initialRoute: 'home',
       routes: {
-        'home' : (context) => HomeScreen()
+        'home': (context) => HomeScreen(),
+        'form': (context) => FormScreen()
       },
-      //theme: ThemeApp.darkTheme,
-      theme: ThemeApp.lightTheme,
+      theme: ThemeApp.darkTheme,
+      // theme: ThemeApp.lightTheme,
     );
   }
 }
