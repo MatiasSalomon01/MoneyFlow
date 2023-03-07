@@ -10,23 +10,27 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Money Flow'),
       ),
+      drawer: SideMenu(),
       body: Column(
         children: [
           SizedBox(
             height: 10,
           ),
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: cardService.cards.length,
-              itemBuilder: (context, index) {
-                return CardData(
-                    description: cardService.cards[index].description,
-                    date: cardService.cards[index].date,
-                    amount: cardService.cards[index].amount,
-                    state: cardService.cards[index].state);
-              }),
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: cardService.cards.length,
+                itemBuilder: (context, index) {
+                  return CardData(
+                      description: cardService.cards[index].description,
+                      date: cardService.cards[index].date,
+                      amount: cardService.cards[index].amount,
+                      state: cardService.cards[index].state);
+                }),
+          ),
           /*CardData(
             description: 'Salario',
             date: '05/03/2023 15:25hs',
@@ -40,7 +44,7 @@ class HomeScreen extends StatelessWidget {
             state: false,
           ),*/
           SizedBox(
-            height: 40,
+            height: 5,
           ),
         ],
       ),

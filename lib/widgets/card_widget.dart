@@ -20,7 +20,7 @@ class CardData extends StatelessWidget {
         Navigator.pushNamed(context, 'form');
       },
       child: Container(
-          margin: const EdgeInsets.only(right: 5, left: 5),
+          margin: const EdgeInsets.only(right: 5, left: 5, top: 5),
           child: Card(
             elevation: 2,
             child: Row(
