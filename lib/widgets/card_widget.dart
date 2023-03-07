@@ -72,12 +72,18 @@ class CardData extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Text(
-                            '${amount.round()}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        )
+                            padding: const EdgeInsets.only(right: 10),
+                            child: this.state == true
+                                ? Text(
+                                    '${amount.round()}',
+                                    style: const TextStyle(
+                                        fontSize: 20, color: Colors.green),
+                                  )
+                                : Text(
+                                    '-${amount.round()}',
+                                    style: const TextStyle(
+                                        fontSize: 20, color: Colors.red),
+                                  ))
                       ],
                     ),
                   ),

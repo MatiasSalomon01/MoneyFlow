@@ -10,7 +10,7 @@ class SideMenu extends StatelessWidget {
         children: [
           ListTile(
             title: const Text(
-              '      Opciones',
+              'Opciones',
               style: TextStyle(fontSize: 20),
             ),
             trailing: IconButton(

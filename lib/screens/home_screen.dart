@@ -8,21 +8,27 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
 
+    //cardService.getTotalAmount(cardService.cards);
+
+    int totalCards = cardService.cards.length;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Money Flow'),
+        title: Align(
+          alignment: Alignment.centerRight,
+          child: Text('${cardService.currentAmount.round()} Gs'),
+        ),
       ),
       drawer: SideMenu(),
       body: Column(
         children: [
           SizedBox(
-            height: 10,
+            height: 100,
           ),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: cardService.cards.length,
+                itemCount: totalCards > 0 ? totalCards : 0,
                 itemBuilder: (context, index) {
                   return CardData(
                       description: cardService.cards[index].description,
