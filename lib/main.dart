@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (context) => HomeScreen(),
-        'form': (context) => FormScreen(),
+        //'form': (context) => FormScreen(),
         'settings': (context) => SettingsScreen()
       },
       theme: ThemeApp.darkTheme,

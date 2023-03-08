@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/models/models.dart';
+import 'package:money_flow/screens/screens.dart';
 
 class CardData extends StatelessWidget {
   final String description;
@@ -17,7 +19,17 @@ class CardData extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, 'form');
+        //Navigator.pushNamed(context, 'form');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => FormScreen(
+                      cardInfo: CardInfo(
+                          amount: amount,
+                          date: date,
+                          description: description,
+                          state: state),
+                    )));
       },
       child: Container(
           margin: const EdgeInsets.only(right: 5, left: 5, top: 5),
@@ -57,7 +69,7 @@ class CardData extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          date,
+                          '$date',
                           style:
                               const TextStyle(fontSize: 14, color: Colors.grey),
                         )

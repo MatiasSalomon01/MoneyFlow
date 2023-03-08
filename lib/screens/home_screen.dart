@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:money_flow/models/models.dart';
+import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +69,17 @@ class HomeScreen extends StatelessWidget {
           ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'form');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FormScreen(
+                        cardInfo: CardInfo(
+                            amount: 0,
+                            description: '',
+                            state: true,
+                            date: DateFormat('dd/MM/yyyy')
+                                .format(DateTime.now())),
+                      )));
         },
         child: const Icon(Icons.add),
       ),

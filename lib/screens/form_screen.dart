@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:money_flow/models/models.dart';
 import 'package:money_flow/widgets/widgets.dart';
 
 class FormScreen extends StatelessWidget {
+  final CardInfo cardInfo;
+
+  const FormScreen({super.key, required this.cardInfo});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,23 +19,28 @@ class FormScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormFieldCustom(
-                    initialValue:
-                        DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                    initialValue: cardInfo.date,
                     labelText: 'Fecha',
                     helperText: 'Fecha de ocurrencia'),
                 const SizedBox(height: 25),
-                const TextFormFieldCustom(
-                    initialValue: null,
+                TextFormFieldCustom(
+                    initialValue: cardInfo.description,
                     labelText: 'Descripcion',
                     helperText: 'Breve descripcion del Ingreso o Egreso'),
                 const SizedBox(height: 25),
-                const TextFormFieldCustom(
+                TextFormFieldCustom(
+                  initialValue:
+                      cardInfo.amount > 0 ? '${cardInfo.amount.round()}' : '',
                   labelText: 'Monto',
                   helperText: 'Ingrese Monto',
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 25),
-                const RadioListTileCustom(selected: 1),
+                if (cardInfo.state == true && cardInfo.amount == 0)
+                  RadioListTileCustom(selected: 0),
+                if (cardInfo.state == true && cardInfo.amount > 0)
+                  RadioListTileCustom(selected: 1),
+                if (cardInfo.state == false) RadioListTileCustom(selected: 2),
                 const SizedBox(height: 50),
                 Align(
                   alignment: Alignment.bottomRight,
