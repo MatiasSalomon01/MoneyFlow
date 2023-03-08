@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         title: Align(
           alignment: Alignment.centerRight,
-          child: Text('${cardService.currentAmount.round()} Gs'),
+          child: Text('Gs. ${cardService.currentAmount.round()}'),
         ),
       ),
       drawer: SideMenu(),
@@ -65,7 +65,9 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(Icons.add_chart_sharp), label: 'Boton2')
           ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, 'form');
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
