@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/theme/theme.dart';
@@ -13,6 +14,9 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CardService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FormProvider(),
         )
       ],
       child: MyApp(),
