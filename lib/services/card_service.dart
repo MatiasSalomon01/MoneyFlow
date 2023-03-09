@@ -19,6 +19,8 @@ class CardService extends ChangeNotifier {
   }
 
   Future<List<CardInfo>> loadCards() async {
+    cards.clear();
+
     final url = Uri.https(_baseUrl, 'card.json');
     final res = await http.get(url);
 

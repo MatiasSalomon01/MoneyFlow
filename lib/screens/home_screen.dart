@@ -26,19 +26,25 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 100,
+            height: 10,
           ),
           Expanded(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: totalCards > 0 ? totalCards : 0,
-                itemBuilder: (context, index) {
-                  return CardData(
-                      description: cardService.cards[index].description,
-                      date: cardService.cards[index].date,
-                      amount: cardService.cards[index].amount,
-                      state: cardService.cards[index].state);
-                }),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                cardService.loadCards();
+                //totalCards = cardService.cards.length;
+              },
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: totalCards > 0 ? totalCards : 0,
+                  itemBuilder: (context, index) {
+                    return CardData(
+                        description: cardService.cards[index].description,
+                        date: cardService.cards[index].date,
+                        amount: cardService.cards[index].amount,
+                        state: cardService.cards[index].state);
+                  }),
+            ),
           ),
           /*CardData(
             description: 'Salario',
@@ -53,7 +59,7 @@ class HomeScreen extends StatelessWidget {
             state: false,
           ),*/
           SizedBox(
-            height: 5,
+            height: 10,
           ),
         ],
       ),
