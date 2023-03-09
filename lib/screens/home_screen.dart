@@ -118,9 +118,15 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
                     child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       color: Color.fromARGB(255, 34, 34, 34),
+                      // color: Colors.red,
                       width: double.infinity,
                       height: modalOptionsProvider.height,
                       child: ListView(
