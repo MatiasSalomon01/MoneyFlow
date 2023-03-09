@@ -8,7 +8,7 @@ class ModelOptionsProvider extends ChangeNotifier {
   double height = 0;
   String idCard = '';
   CardInfo cardInfo =
-      CardInfo(amount: 0, date: '', description: '', state: true);
+      CardInfo(amount: 0, date: '', description: '', state: true, id: '');
 
   CardService cardService = CardService();
 
@@ -19,7 +19,7 @@ class ModelOptionsProvider extends ChangeNotifier {
     cardInfo.description = card.description;
     cardInfo.date = card.date;
     cardInfo.state = card.state;
-    cardInfo.id = card.id;
+    cardInfo.id = id;
 
     notifyListeners();
     return height;
