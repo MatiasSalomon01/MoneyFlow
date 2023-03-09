@@ -17,6 +17,9 @@ class AppState extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FormProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ModelOptionsProvider(),
         )
       ],
       child: MyApp(),

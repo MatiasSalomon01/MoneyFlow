@@ -33,7 +33,7 @@ class CardData extends StatelessWidget {
                           state: state),
                     )));
       },
-      onLongPress: () {
+      /*onLongPress: () {
         print(id);
         showMenu(
           color: Colors.red,
@@ -57,7 +57,7 @@ class CardData extends StatelessWidget {
             ),
           ],
         );
-      },
+      },*/
       child: Container(
           margin: const EdgeInsets.only(right: 5, left: 5, top: 5),
           child: Card(
