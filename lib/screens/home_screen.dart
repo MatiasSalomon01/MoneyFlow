@@ -39,10 +39,12 @@ class HomeScreen extends StatelessWidget {
                   itemCount: totalCards > 0 ? totalCards : 0,
                   itemBuilder: (context, index) {
                     return CardData(
-                        description: cardService.cards[index].description,
-                        date: cardService.cards[index].date,
-                        amount: cardService.cards[index].amount,
-                        state: cardService.cards[index].state);
+                      description: cardService.cards[index].description,
+                      date: cardService.cards[index].date,
+                      amount: cardService.cards[index].amount,
+                      state: cardService.cards[index].state,
+                      id: cardService.cards[index].id!,
+                    );
                   }),
             ),
           ),
