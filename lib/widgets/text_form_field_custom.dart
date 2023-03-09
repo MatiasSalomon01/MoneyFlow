@@ -9,17 +9,19 @@ class TextFormFieldCustom extends StatelessWidget {
   dynamic dataInput;
   FormProvider formProvider;
 
-  TextFormFieldCustom(
-      {super.key,
-      this.initialValue,
-      required this.labelText,
-      required this.helperText,
-      this.keyboardType,
-      required this.dataInput,
-      required this.formProvider});
+  TextFormFieldCustom({
+    super.key,
+    this.initialValue,
+    required this.labelText,
+    required this.helperText,
+    this.keyboardType,
+    required this.dataInput,
+    required this.formProvider,
+  });
 
   @override
   Widget build(BuildContext context) {
+    getInput(initialValue, formProvider, labelText);
     return TextFormField(
       initialValue: initialValue,
       keyboardType: keyboardType,

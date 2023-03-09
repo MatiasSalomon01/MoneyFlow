@@ -49,11 +49,20 @@ class FormScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 if (cardInfo.state == true && cardInfo.amount == 0)
-                  RadioListTileCustom(selected: 0, formProvider: formProvider),
+                  RadioListTileCustom(
+                      selected: 0,
+                      formProvider: formProvider,
+                      state: cardInfo.state),
                 if (cardInfo.state == true && cardInfo.amount > 0)
-                  RadioListTileCustom(selected: 1, formProvider: formProvider),
+                  RadioListTileCustom(
+                      selected: 1,
+                      formProvider: formProvider,
+                      state: cardInfo.state),
                 if (cardInfo.state == false)
-                  RadioListTileCustom(selected: 2, formProvider: formProvider),
+                  RadioListTileCustom(
+                      selected: 2,
+                      formProvider: formProvider,
+                      state: cardInfo.state),
                 const SizedBox(height: 50),
                 Align(
                   alignment: Alignment.bottomRight,

@@ -5,25 +5,31 @@ import 'package:money_flow/providers/providers.dart';
 
 class RadioListTileCustom extends StatefulWidget {
   final int selected;
+  final bool state;
   FormProvider formProvider;
   RadioListTileCustom(
-      {super.key, required this.selected, required this.formProvider});
+      {super.key,
+      required this.selected,
+      required this.formProvider,
+      required this.state});
 
   @override
   State<RadioListTileCustom> createState() =>
-      _RadioListTileCustomState(selected, formProvider);
+      _RadioListTileCustomState(selected, formProvider, state);
 }
 
 class _RadioListTileCustomState extends State<RadioListTileCustom> {
   int? selected;
   FormProvider formProvider;
+  bool state;
   //int? _value = selected;
 
-  _RadioListTileCustomState(this.selected, this.formProvider);
+  _RadioListTileCustomState(this.selected, this.formProvider, this.state);
   //States? _state = States.ingreso;
 
   @override
   Widget build(BuildContext context) {
+    //formProvider.saveInput(state, 3);
     return Row(
       children: [
         Expanded(
@@ -34,7 +40,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(value, 3);
+                formProvider.saveInput(true, 3);
               });
             },
           ),
@@ -47,7 +53,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(value, 3);
+                formProvider.saveInput(false, 3);
               });
             },
           ),

@@ -29,6 +29,6 @@ class FormProvider extends ChangeNotifier {
     if (option == 1) description = value;
     if (option == 2) amount = double.parse(value);
     if (option == 3) state = value;
-    notifyListeners();
+    //notifyListeners();
   }
 }
