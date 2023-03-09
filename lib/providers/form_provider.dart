@@ -27,7 +27,7 @@ class FormProvider extends ChangeNotifier {
   saveInput(dynamic value, int option) {
     if (option == 0) date = value;
     if (option == 1) description = value;
-    if (option == 2) amount = double.parse(value);
+    if (option == 2) amount = value != '' ? double.parse(value) : 0;
     if (option == 3) state = value;
     //notifyListeners();
   }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:http/http.dart' as http;
@@ -45,5 +44,17 @@ class CardService extends ChangeNotifier {
       if (card.state == false) _currentAmount -= card.amount;
     }
     return _currentAmount;
+  }
+
+  Future<String> createCard(CardInfo cardInfo) async {
+    final url = Uri.https(_baseUrl, 'card.json');
+    final res = await http.post(url, body: cardInfo.toRawJson());
+
+    final decodedData = json.decode(res.body);
+
+    cardInfo.id = decodedData['name'];
+    cards.add(cardInfo);
+
+    return cardInfo.id!;
   }
 }

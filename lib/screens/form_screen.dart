@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ class FormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
     final formProvider = Provider.of<FormProvider>(context);
 
     return Scaffold(
@@ -68,8 +70,13 @@ class FormScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      print(
-                          '---INFORMACION---\n${formProvider.date}\n${formProvider.description}\n${formProvider.amount}\n${formProvider.state}');
+                      cardService.createCard(CardInfo(
+                          amount: formProvider.amount,
+                          date: formProvider.date,
+                          description: formProvider.description,
+                          state: formProvider.state));
+                      // print(
+                      //     '---INFORMACION---\n${formProvider.date}\n${formProvider.description}\n${formProvider.amount}\n${formProvider.state}');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 104, 104, 104),
