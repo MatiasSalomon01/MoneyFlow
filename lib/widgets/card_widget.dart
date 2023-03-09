@@ -30,17 +30,26 @@ class CardData extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => FormScreen(
               cardInfo: CardInfo(
+                  id: id,
                   amount: amount,
                   date: date,
                   description: description,
                   state: state),
+              buttonType: 1,
             ),
           ),
         );
       },
       onLongPress: () {
         modalOptionsProvider.openModalOptions(
-            MediaQuery.of(context).size.height, id);
+            MediaQuery.of(context).size.height,
+            id,
+            CardInfo(
+                id: id,
+                amount: amount,
+                date: date,
+                description: description,
+                state: state));
       },
       child: Container(
           margin: const EdgeInsets.only(right: 5, left: 5, top: 5),

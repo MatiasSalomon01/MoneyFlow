@@ -10,6 +10,7 @@ class FormProvider extends ChangeNotifier {
   String description = '';
   double amount = 0;
   bool state = true;
+  String? id = '';
 
   //CardInfo? cardInfo;
 

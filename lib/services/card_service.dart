@@ -66,4 +66,11 @@ class CardService extends ChangeNotifier {
 
     if (res.body == 'null') return 'Eliminación Exitosa';
   }
+
+  Future<String?> updateCard(CardInfo cardInfo) async {
+    final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
+    final res = await http.patch(url, body: cardInfo.toRawJson());
+
+    return 'Actualización Exitosa';
+  }
 }

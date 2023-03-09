@@ -7,8 +7,10 @@ import 'package:provider/provider.dart';
 
 class FormScreen extends StatelessWidget {
   final CardInfo cardInfo;
+  final int buttonType;
 
-  const FormScreen({super.key, required this.cardInfo});
+  const FormScreen(
+      {super.key, required this.cardInfo, required this.buttonType});
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +72,19 @@ class FormScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      cardService.createCard(CardInfo(
-                          amount: formProvider.amount,
-                          date: formProvider.date,
-                          description: formProvider.description,
-                          state: formProvider.state));
+                      if (buttonType == 1)
+                        cardService.createCard(CardInfo(
+                            amount: formProvider.amount,
+                            date: formProvider.date,
+                            description: formProvider.description,
+                            state: formProvider.state));
+                      if (buttonType == 2)
+                        cardService.updateCard(CardInfo(
+                            id: formProvider.id,
+                            amount: formProvider.amount,
+                            date: formProvider.date,
+                            description: formProvider.description,
+                            state: formProvider.state));
                       // print(
                       //     '---INFORMACION---\n${formProvider.date}\n${formProvider.description}\n${formProvider.amount}\n${formProvider.state}');
                     },

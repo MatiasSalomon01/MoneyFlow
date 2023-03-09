@@ -1,16 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:money_flow/models/models.dart';
 import 'package:money_flow/services/services.dart';
 
 class ModelOptionsProvider extends ChangeNotifier {
   double height = 0;
   String idCard = '';
+  CardInfo cardInfo =
+      CardInfo(amount: 0, date: '', description: '', state: true);
+
   CardService cardService = CardService();
 
-  double openModalOptions(double value, String id) {
+  double openModalOptions(double value, String id, CardInfo card) {
     height = value;
     idCard = id;
+    cardInfo.amount = card.amount;
+    cardInfo.description = card.description;
+    cardInfo.date = card.date;
+    cardInfo.state = card.state;
+    cardInfo.id = card.id;
+
     notifyListeners();
     return height;
   }
@@ -22,12 +32,16 @@ class ModelOptionsProvider extends ChangeNotifier {
   }
 
   void deleteCard(String id) {
-    print('Card Selecionado : $id');
+    print('Card Selecionado para eliminar : $id');
     var x = cardService.deleteCard(id);
-    print(x);
+    print(id);
   }
 
-  void updateCard() {}
+  void updateCard(CardInfo cardInfo) {
+    //print('Card Selecionado para actualizar: ${cardInfo.id}');
+    var x = cardService.updateCard(cardInfo);
+    //print(cardInfo.id);
+  }
 
   void addCard() {}
 }

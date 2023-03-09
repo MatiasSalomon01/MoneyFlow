@@ -97,6 +97,7 @@ class HomeScreen extends StatelessWidget {
                             state: true,
                             date: DateFormat('dd/MM/yyyy')
                                 .format(DateTime.now())),
+                        buttonType: 1,
                       ),
                     ),
                   );
@@ -136,16 +137,16 @@ class HomeScreen extends StatelessWidget {
                           ListTile(
                             onTap: () => modalOptionsProvider
                                 .deleteCard(modalOptionsProvider.idCard),
-                            leading: Icon(
+                            leading: const Icon(
                               Icons.delete,
                               size: 25,
                             ),
-                            title: Text(
+                            title: const Text(
                               'Eliminar',
                               style: TextStyle(fontSize: 25),
                             ),
                           ),
-                          ListTile(
+                          const ListTile(
                             leading: Icon(
                               Icons.add,
                               size: 25,
@@ -156,11 +157,21 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           ListTile(
-                            leading: Icon(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FormScreen(
+                                      cardInfo: modalOptionsProvider.cardInfo,
+                                      buttonType: 2),
+                                ),
+                              );
+                            },
+                            leading: const Icon(
                               Icons.update,
                               size: 25,
                             ),
-                            title: Text(
+                            title: const Text(
                               'Actualizar',
                               style: TextStyle(fontSize: 25),
                             ),
