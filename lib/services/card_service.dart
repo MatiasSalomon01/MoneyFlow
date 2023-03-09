@@ -59,4 +59,11 @@ class CardService extends ChangeNotifier {
 
     return cardInfo.id!;
   }
+
+  Future<String?> deleteCard(String id) async {
+    final url = Uri.https(_baseUrl, 'card/$id.json');
+    final res = await http.delete(url);
+
+    if (res.body == 'null') return 'Eliminación Exitosa';
+  }
 }

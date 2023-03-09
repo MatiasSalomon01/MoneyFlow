@@ -24,7 +24,9 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         title: Align(
           alignment: Alignment.centerRight,
-          child: Text('Gs. ${cardService.currentAmount.round()}'),
+          child: totalCards > 0
+              ? Text('Gs. ${cardService.currentAmount.round()}')
+              : Text('Gs. ${0}'),
         ),
       ),
       drawer: SideMenu(),
@@ -32,10 +34,10 @@ class HomeScreen extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           GestureDetector(
-            onLongPress: () {
+            /*onLongPress: () {
               modalOptionsProvider
                   .changeHeight(MediaQuery.of(context).size.height);
-            },
+            },*/
             child: Column(
               children: [
                 SizedBox(
@@ -111,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: GestureDetector(
-                    onTap: () => modalOptionsProvider.changeHeight(0),
+                    onTap: () => modalOptionsProvider.closeModalOptions(0),
                     child: Container(
                       color: Colors.transparent.withOpacity(0.2),
                     ),
@@ -132,7 +134,8 @@ class HomeScreen extends StatelessWidget {
                       child: ListView(
                         children: [
                           ListTile(
-                            onTap: () => print('eliminar'),
+                            onTap: () => modalOptionsProvider
+                                .deleteCard(modalOptionsProvider.idCard),
                             leading: Icon(
                               Icons.delete,
                               size: 25,

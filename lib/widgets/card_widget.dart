@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
+import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 class CardData extends StatelessWidget {
   final String description;
@@ -19,45 +21,27 @@ class CardData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
     return GestureDetector(
       onTap: () {
         //Navigator.pushNamed(context, 'form');
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FormScreen(
-                      cardInfo: CardInfo(
-                          amount: amount,
-                          date: date,
-                          description: description,
-                          state: state),
-                    )));
-      },
-      /*onLongPress: () {
-        print(id);
-        showMenu(
-          color: Colors.red,
-          context: context,
-          position: RelativeRect.fromLTRB(40.0, 60.0, 100.0, 100.0),
-          items: [
-            PopupMenuItem(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.delete),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text('Eliminar')
-                    ],
-                  ),
-                ],
-              ),
+          context,
+          MaterialPageRoute(
+            builder: (context) => FormScreen(
+              cardInfo: CardInfo(
+                  amount: amount,
+                  date: date,
+                  description: description,
+                  state: state),
             ),
-          ],
+          ),
         );
-      },*/
+      },
+      onLongPress: () {
+        modalOptionsProvider.openModalOptions(
+            MediaQuery.of(context).size.height, id);
+      },
       child: Container(
           margin: const EdgeInsets.only(right: 5, left: 5, top: 5),
           child: Card(
@@ -65,19 +49,20 @@ class CardData extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    width: 60,
-                    child: state == true
-                        ? const Icon(
-                            Icons.arrow_drop_up,
-                            size: 50,
-                            color: Colors.green,
-                          )
-                        : const Icon(
-                            Icons.arrow_drop_down,
-                            size: 50,
-                            color: Colors.red,
-                          )),
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  width: 60,
+                  child: state == true
+                      ? const Icon(
+                          Icons.arrow_drop_up,
+                          size: 50,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          Icons.arrow_drop_down,
+                          size: 50,
+                          color: Colors.red,
+                        ),
+                ),
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -111,18 +96,19 @@ class CardData extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: this.state == true
-                                ? Text(
-                                    '${amount.round()}',
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.green),
-                                  )
-                                : Text(
-                                    '-${amount.round()}',
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.red),
-                                  ))
+                          padding: const EdgeInsets.only(right: 10),
+                          child: this.state == true
+                              ? Text(
+                                  '${amount.round()}',
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.green),
+                                )
+                              : Text(
+                                  '-${amount.round()}',
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.red),
+                                ),
+                        )
                       ],
                     ),
                   ),
@@ -131,19 +117,5 @@ class CardData extends StatelessWidget {
             ),
           )),
     );
-  }
-
-  RelativeRect _getRelativeRect(GlobalKey key) {
-    return RelativeRect.fromSize(
-        _getWidgetGlobalRect(key), const Size(200, 200));
-  }
-
-  Rect _getWidgetGlobalRect(GlobalKey key) {
-    final RenderBox renderBox =
-        key.currentContext!.findRenderObject() as RenderBox;
-    var offset = renderBox.localToGlobal(Offset.zero);
-    debugPrint('Widget position: ${offset.dx} ${offset.dy}');
-    return Rect.fromLTWH(offset.dx / 3.1, offset.dy * 1.05,
-        renderBox.size.width, renderBox.size.height);
   }
 }
