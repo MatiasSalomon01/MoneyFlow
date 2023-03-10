@@ -45,7 +45,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(true, 3, cardInfo.id!);
+                formProvider.saveInput(true, 3, cardInfo.id ?? '');
               });
             },
           ),
@@ -58,7 +58,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(false, 3, cardInfo.id!);
+                formProvider.saveInput(false, 3, cardInfo.id ?? '');
               });
             },
           ),

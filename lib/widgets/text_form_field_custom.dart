@@ -41,9 +41,11 @@ class TextFormFieldCustom extends StatelessWidget {
   static getInput(dynamic value, FormProvider formProvider, String labelText,
       CardInfo cardInfo) {
     //print(cardInfo.id);
-    if (labelText == 'Fecha') formProvider.saveInput(value, 0, cardInfo.id!);
+    if (labelText == 'Fecha')
+      formProvider.saveInput(value, 0, cardInfo.id ?? '');
     if (labelText == 'Descripcion')
-      formProvider.saveInput(value, 1, cardInfo.id!);
-    if (labelText == 'Monto') formProvider.saveInput(value, 2, cardInfo.id!);
+      formProvider.saveInput(value, 1, cardInfo.id ?? '');
+    if (labelText == 'Monto')
+      formProvider.saveInput(value, 2, cardInfo.id ?? '');
   }
 }
