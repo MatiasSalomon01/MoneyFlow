@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 
 //enum States { ingreso, egreso }
@@ -7,15 +8,17 @@ class RadioListTileCustom extends StatefulWidget {
   final int selected;
   final bool state;
   FormProvider formProvider;
+  final CardInfo cardInfo;
   RadioListTileCustom(
       {super.key,
       required this.selected,
       required this.formProvider,
-      required this.state});
+      required this.state,
+      required this.cardInfo});
 
   @override
   State<RadioListTileCustom> createState() =>
-      _RadioListTileCustomState(selected, formProvider, state);
+      _RadioListTileCustomState(selected, cardInfo, state, formProvider);
 }
 
 class _RadioListTileCustomState extends State<RadioListTileCustom> {
@@ -23,8 +26,10 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
   FormProvider formProvider;
   bool state;
   //int? _value = selected;
+  CardInfo cardInfo;
 
-  _RadioListTileCustomState(this.selected, this.formProvider, this.state);
+  _RadioListTileCustomState(
+      this.selected, this.cardInfo, this.state, this.formProvider);
   //States? _state = States.ingreso;
 
   @override
@@ -40,7 +45,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(true, 3);
+                formProvider.saveInput(true, 3, cardInfo.id!);
               });
             },
           ),
@@ -53,7 +58,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
             onChanged: (value) {
               setState(() {
                 selected = value;
-                formProvider.saveInput(false, 3);
+                formProvider.saveInput(false, 3, cardInfo.id!);
               });
             },
           ),

@@ -10,7 +10,7 @@ class FormProvider extends ChangeNotifier {
   String description = '';
   double amount = 0;
   bool state = true;
-  String? id = '';
+  String id = '';
 
   //CardInfo? cardInfo;
 
@@ -25,11 +25,12 @@ class FormProvider extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }*/
 
-  saveInput(dynamic value, int option) {
+  saveInput(dynamic value, int option, String cardId) {
     if (option == 0) date = value;
     if (option == 1) description = value;
     if (option == 2) amount = value != '' ? double.parse(value) : 0;
     if (option == 3) state = value;
+    id = cardId;
     //notifyListeners();
   }
 }

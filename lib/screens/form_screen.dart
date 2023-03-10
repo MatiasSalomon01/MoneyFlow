@@ -30,16 +30,18 @@ class FormScreen extends StatelessWidget {
                   initialValue: cardInfo.date,
                   labelText: 'Fecha',
                   helperText: 'Fecha de ocurrencia',
-                  dataInput: formProvider.date,
-                  formProvider: formProvider,
+                  cardInfo: cardInfo,
+                  //dataInput: formProvider.date,
+                  //formProvider: formProvider,
                 ),
                 const SizedBox(height: 25),
                 TextFormFieldCustom(
                   initialValue: cardInfo.description,
                   labelText: 'Descripcion',
                   helperText: 'Breve descripcion del Ingreso o Egreso',
-                  dataInput: formProvider.description,
-                  formProvider: formProvider,
+                  cardInfo: cardInfo,
+                  //dataInput: formProvider.description,
+                  //formProvider: formProvider,
                 ),
                 const SizedBox(height: 25),
                 TextFormFieldCustom(
@@ -48,25 +50,32 @@ class FormScreen extends StatelessWidget {
                   labelText: 'Monto',
                   helperText: 'Ingrese Monto',
                   keyboardType: TextInputType.number,
-                  dataInput: formProvider.amount,
-                  formProvider: formProvider,
+                  cardInfo: cardInfo,
+                  //dataInput: formProvider.amount,
+                  //formProvider: formProvider,
                 ),
                 const SizedBox(height: 25),
                 if (cardInfo.state == true && cardInfo.amount == 0)
                   RadioListTileCustom(
-                      selected: 0,
-                      formProvider: formProvider,
-                      state: cardInfo.state),
+                    selected: 0,
+                    formProvider: formProvider,
+                    state: cardInfo.state,
+                    cardInfo: cardInfo,
+                  ),
                 if (cardInfo.state == true && cardInfo.amount > 0)
                   RadioListTileCustom(
-                      selected: 1,
-                      formProvider: formProvider,
-                      state: cardInfo.state),
+                    selected: 1,
+                    formProvider: formProvider,
+                    state: cardInfo.state,
+                    cardInfo: cardInfo,
+                  ),
                 if (cardInfo.state == false)
                   RadioListTileCustom(
-                      selected: 2,
-                      formProvider: formProvider,
-                      state: cardInfo.state),
+                    selected: 2,
+                    formProvider: formProvider,
+                    state: cardInfo.state,
+                    cardInfo: cardInfo,
+                  ),
                 const SizedBox(height: 50),
                 Align(
                   alignment: Alignment.bottomRight,
@@ -79,12 +88,14 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state));
                       if (buttonType == 2)
-                        cardService.updateCard(CardInfo(
-                            id: formProvider.id,
-                            amount: formProvider.amount,
-                            date: formProvider.date,
-                            description: formProvider.description,
-                            state: formProvider.state));
+                        cardService.updateCard(
+                          CardInfo(
+                              id: formProvider.id,
+                              amount: formProvider.amount,
+                              date: formProvider.date,
+                              description: formProvider.description,
+                              state: formProvider.state),
+                        );
                       // print(
                       //     '---INFORMACION---\n${formProvider.date}\n${formProvider.description}\n${formProvider.amount}\n${formProvider.state}');
                     },

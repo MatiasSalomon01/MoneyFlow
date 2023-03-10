@@ -68,9 +68,13 @@ class CardService extends ChangeNotifier {
   }
 
   Future<String?> updateCard(CardInfo cardInfo) async {
-    print(cardInfo.id);
+    // print(cardInfo.id);
+    // print(cardInfo.description);
+    // print(cardInfo.date);
+    // print(cardInfo.amount);
+    // print(cardInfo.state);
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
-    //final res = await http.patch(url, body: cardInfo.toRawJson());
+    final res = await http.patch(url, body: cardInfo.toRawJson());
 
     return 'Actualización Exitosa';
   }
