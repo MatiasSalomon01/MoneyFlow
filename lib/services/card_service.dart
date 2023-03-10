@@ -12,6 +12,8 @@ class CardService extends ChangeNotifier {
 
   bool empty = false;
 
+  bool isLoading = false;
+
   double _currentAmount = 0;
 
   double get currentAmount => _currentAmount;
@@ -21,6 +23,7 @@ class CardService extends ChangeNotifier {
   }
 
   Future<List<CardInfo>> loadCards() async {
+    isLoading = true;
     cards.clear();
 
     final url = Uri.https(_baseUrl, 'card.json');
@@ -37,6 +40,7 @@ class CardService extends ChangeNotifier {
       });
     }
     if (cards.length == 0) empty = true;
+    isLoading = false;
     notifyListeners();
     return cards;
   }

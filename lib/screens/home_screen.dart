@@ -18,6 +18,14 @@ class HomeScreen extends StatelessWidget {
     int totalCards = cardService.cards.length;
 
     double _height = 0;
+
+    // if (cardService.isLoading)
+    //   return Center(
+    //     child: CircularProgressIndicator(
+    //       color: Colors.red,
+    //     ),
+    //   );
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -32,6 +40,12 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
+          if (cardService.isLoading)
+            Center(
+              child: CircularProgressIndicator(
+                color: Colors.grey,
+              ),
+            ),
           GestureDetector(
             /*onLongPress: () {
               modalOptionsProvider
@@ -50,13 +64,11 @@ class HomeScreen extends StatelessWidget {
                       //totalCards = cardService.cards.length;
                     },
                     child: totalCards == 0
-                        ? CircularProgressIndicator()
-                        :
-                        //? CircularProgressIndicator()
-                        ListView.builder(
+                        ? Text('No hay datos')
+                        : ListView.builder(
                             padding: const EdgeInsets.only(bottom: 80),
                             shrinkWrap: true,
-                            itemCount: totalCards > 0 ? totalCards : 0,
+                            itemCount: totalCards,
                             itemBuilder: (context, index) {
                               return CardData(
                                 description:
