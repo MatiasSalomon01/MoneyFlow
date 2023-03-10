@@ -64,7 +64,11 @@ class HomeScreen extends StatelessWidget {
                       //totalCards = cardService.cards.length;
                     },
                     child: totalCards == 0
-                        ? Text('No hay datos')
+                        ? Center(
+                            child: Text(
+                            'No hay datos',
+                            style: TextStyle(fontSize: 20),
+                          ))
                         : ListView.builder(
                             padding: const EdgeInsets.only(bottom: 80),
                             shrinkWrap: true,
