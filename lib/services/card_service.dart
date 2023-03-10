@@ -10,6 +10,8 @@ class CardService extends ChangeNotifier {
 
   late CardInfo cardInfo;
 
+  bool empty = false;
+
   double _currentAmount = 0;
 
   double get currentAmount => _currentAmount;
@@ -34,7 +36,7 @@ class CardService extends ChangeNotifier {
         getTotalAmount(cards);
       });
     }
-
+    if (cards.length == 0) empty = true;
     notifyListeners();
     return cards;
   }
@@ -56,15 +58,14 @@ class CardService extends ChangeNotifier {
 
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
-
+    loadCards();
     return cardInfo.id!;
   }
 
-  Future<String?> deleteCard(String id) async {
+  Future deleteCard(String id) async {
     final url = Uri.https(_baseUrl, 'card/$id.json');
     final res = await http.delete(url);
-
-    if (res.body == 'null') return 'Eliminación Exitosa';
+    loadCards();
   }
 
   Future<String?> updateCard(CardInfo cardInfo) async {
@@ -73,9 +74,10 @@ class CardService extends ChangeNotifier {
     // print(cardInfo.date);
     // print(cardInfo.amount);
     // print(cardInfo.state);
+
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
-
+    loadCards();
     return 'Actualización Exitosa';
   }
 }

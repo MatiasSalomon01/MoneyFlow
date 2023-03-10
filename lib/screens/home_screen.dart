@@ -4,7 +4,6 @@ import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
-import 'package:money_flow/theme/theme.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: totalCards > 0
               ? Text('Gs. ${cardService.currentAmount.round()}')
-              : Text('Gs. ${0}'),
+              : const Text('Gs. ${0}'),
         ),
       ),
       drawer: SideMenu(),
@@ -40,29 +39,35 @@ class HomeScreen extends StatelessWidget {
             },*/
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Expanded(
                   child: RefreshIndicator(
+                    displacement: 5,
                     onRefresh: () async {
                       cardService.loadCards();
                       //totalCards = cardService.cards.length;
                     },
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(bottom: 80),
-                      shrinkWrap: true,
-                      itemCount: totalCards > 0 ? totalCards : 0,
-                      itemBuilder: (context, index) {
-                        return CardData(
-                          description: cardService.cards[index].description,
-                          date: cardService.cards[index].date,
-                          amount: cardService.cards[index].amount,
-                          state: cardService.cards[index].state,
-                          id: cardService.cards[index].id!,
-                        );
-                      },
-                    ),
+                    child: totalCards == 0
+                        ? CircularProgressIndicator()
+                        :
+                        //? CircularProgressIndicator()
+                        ListView.builder(
+                            padding: const EdgeInsets.only(bottom: 80),
+                            shrinkWrap: true,
+                            itemCount: totalCards > 0 ? totalCards : 0,
+                            itemBuilder: (context, index) {
+                              return CardData(
+                                description:
+                                    cardService.cards[index].description,
+                                date: cardService.cards[index].date,
+                                amount: cardService.cards[index].amount,
+                                state: cardService.cards[index].state,
+                                id: cardService.cards[index].id!,
+                              );
+                            },
+                          ),
                   ),
                 ),
                 /*CardData(
@@ -84,7 +89,7 @@ class HomeScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              margin: EdgeInsets.only(bottom: 20, right: 10),
+              margin: const EdgeInsets.only(bottom: 20, right: 10),
               child: FloatingActionButton(
                 onPressed: () {
                   Navigator.push(
@@ -114,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: GestureDetector(
-                    onTap: () => modalOptionsProvider.closeModalOptions(0),
+                    onTap: () {
+                      modalOptionsProvider.closeModalOptions(0);
+                    },
                     child: Container(
                       color: Colors.transparent.withOpacity(0.2),
                     ),
@@ -122,21 +129,28 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      color: Color.fromARGB(255, 34, 34, 34),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      color: const Color.fromARGB(255, 34, 34, 34),
                       // color: Colors.red,
                       width: double.infinity,
                       height: modalOptionsProvider.height,
                       child: ListView(
                         children: [
                           ListTile(
-                            onTap: () => modalOptionsProvider
-                                .deleteCard(modalOptionsProvider.idCard),
+                            selectedColor: Colors.red,
+                            onTap: () {
+                              // cardService.cards.removeWhere((element) =>
+                              //     element.id == modalOptionsProvider.idCard);
+                              modalOptionsProvider
+                                  .deleteCard(modalOptionsProvider.idCard);
+                              modalOptionsProvider.closeModalOptions(0);
+                              cardService.loadCards();
+                            },
                             leading: const Icon(
                               Icons.delete,
                               size: 25,
@@ -146,12 +160,29 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 25),
                             ),
                           ),
-                          const ListTile(
-                            leading: Icon(
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FormScreen(
+                                    cardInfo: CardInfo(
+                                        amount: 0,
+                                        description: '',
+                                        state: true,
+                                        date: DateFormat('dd/MM/yyyy')
+                                            .format(DateTime.now())),
+                                    buttonType: 1,
+                                  ),
+                                ),
+                              );
+                              modalOptionsProvider.closeModalOptions(0);
+                            },
+                            leading: const Icon(
                               Icons.add,
                               size: 25,
                             ),
-                            title: Text(
+                            title: const Text(
                               'Agregar',
                               style: TextStyle(fontSize: 25),
                             ),
@@ -166,6 +197,7 @@ class HomeScreen extends StatelessWidget {
                                       buttonType: 2),
                                 ),
                               );
+                              modalOptionsProvider.closeModalOptions(0);
                             },
                             leading: const Icon(
                               Icons.update,

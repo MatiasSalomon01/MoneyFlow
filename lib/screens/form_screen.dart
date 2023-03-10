@@ -81,21 +81,28 @@ class FormScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (buttonType == 1)
-                        cardService.createCard(CardInfo(
+                      if (buttonType == 1) {
+                        cardService.createCard(
+                          CardInfo(
                             amount: formProvider.amount,
                             date: formProvider.date,
                             description: formProvider.description,
-                            state: formProvider.state));
-                      if (buttonType == 2)
+                            state: formProvider.state,
+                          ),
+                        );
+                      }
+                      if (buttonType == 2) {
                         cardService.updateCard(
                           CardInfo(
-                              id: formProvider.id,
-                              amount: formProvider.amount,
-                              date: formProvider.date,
-                              description: formProvider.description,
-                              state: formProvider.state),
+                            id: formProvider.id,
+                            amount: formProvider.amount,
+                            date: formProvider.date,
+                            description: formProvider.description,
+                            state: formProvider.state,
+                          ),
                         );
+                      }
+                      Navigator.pop(context);
                       // print(
                       //     '---INFORMACION---\n${formProvider.date}\n${formProvider.description}\n${formProvider.amount}\n${formProvider.state}');
                     },

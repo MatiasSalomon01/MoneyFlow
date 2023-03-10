@@ -32,9 +32,10 @@ class ModelOptionsProvider extends ChangeNotifier {
   }
 
   void deleteCard(String id) {
-    print('Card Selecionado para eliminar : $id');
+    //print('Card Selecionado para eliminar : $id');
     var x = cardService.deleteCard(id);
-    print(id);
+    //print(id);
+    //print(cardService.empty);
   }
 
   void updateCard(CardInfo cardInfo) {
