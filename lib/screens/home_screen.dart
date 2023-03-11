@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
@@ -12,12 +13,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
-
+    final alertProvider = Provider.of<AlertProvider>(context);
     //cardService.getTotalAmount(cardService.cards);
 
     int totalCards = cardService.cards.length;
 
     double _height = 0;
+
+    //bool onDelete = true;
 
     // if (cardService.isLoading)
     //   return Center(
@@ -160,12 +163,10 @@ class HomeScreen extends StatelessWidget {
                           ListTile(
                             selectedColor: Colors.red,
                             onTap: () {
-                              // cardService.cards.removeWhere((element) =>
-                              //     element.id == modalOptionsProvider.idCard);
-                              modalOptionsProvider
-                                  .deleteCard(modalOptionsProvider.idCard);
-                              modalOptionsProvider.closeModalOptions(0);
-                              cardService.loadCards();
+                              alertProvider.changeDelete(true);
+                              // modalOptionsProvider
+                              //     .deleteCard(modalOptionsProvider.idCard);
+                              // modalOptionsProvider.closeModalOptions(0);
                             },
                             leading: const Icon(
                               Icons.delete,
@@ -178,6 +179,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           ListTile(
                             onTap: () {
+                              //cardService.loadCards();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -275,6 +277,28 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           )*/
+          ,
+          alertProvider.onDelete == true
+              ? AlertDialog(
+                  title: Text('Eliminar'),
+                  content: Text('Seguro que quiers eliminar este card?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          cardService.loadCards();
+                        },
+                        child: TextButton(
+                            onPressed: () {
+                              cardService.loadCards();
+                              modalOptionsProvider
+                                  .deleteCard(modalOptionsProvider.idCard);
+                              modalOptionsProvider.closeModalOptions(0);
+                              alertProvider.changeDelete(false);
+                            },
+                            child: Text('Si')))
+                  ],
+                )
+              : Container()
         ],
       ),
       /*bottomNavigationBar: BottomNavigationBar(
