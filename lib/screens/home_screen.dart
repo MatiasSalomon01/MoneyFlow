@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     final cardService = Provider.of<CardService>(context);
     final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
     final alertProvider = Provider.of<AlertProvider>(context);
+    final dateProvider = Provider.of<DateProvider>(context);
     //cardService.getTotalAmount(cardService.cards);
 
     int totalCards = cardService.cards.length;
@@ -28,8 +29,6 @@ class HomeScreen extends StatelessWidget {
     //     ),
     //   );
     var currentAmount = cardService.currentAmount.round();
-
-    final dates = DateFilter.dates;
 
     return Scaffold(
       appBar: AppBar(
@@ -68,11 +67,12 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: dates.length,
+                      itemCount: dateProvider.dates.length,
                       itemBuilder: (context, index) {
                         return DateButton(
-                          month: dates[index + 1]!,
-                        );
+                            month: dateProvider.dates[index + 1]!,
+                            index: index + 1,
+                            state: dateProvider.datesColors[index + 1]!);
                       },
                     ),
                   ),

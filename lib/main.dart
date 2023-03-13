@@ -23,6 +23,9 @@ class AppState extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AlertProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DateProvider(),
         )
       ],
       child: MyApp(),
