@@ -114,12 +114,16 @@ class CardData extends StatelessWidget {
                               ? Text(
                                   '${amount.round()}',
                                   style: const TextStyle(
-                                      fontSize: 20, color: Colors.green),
+                                    fontSize: 20,
+                                    color: Colors.green,
+                                  ),
                                 )
                               : Text(
                                   '-${amount.round()}',
                                   style: const TextStyle(
-                                      fontSize: 20, color: Colors.red),
+                                    fontSize: 20,
+                                    color: Colors.red,
+                                  ),
                                 ),
                         )
                       ],

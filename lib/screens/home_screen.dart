@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
@@ -18,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
     int totalCards = cardService.cards.length;
 
-    double _height = 0;
+    //double _height = 0;
 
     //bool onDelete = true;
 
@@ -29,6 +28,8 @@ class HomeScreen extends StatelessWidget {
     //     ),
     //   );
     var currentAmount = cardService.currentAmount.round();
+
+    final dates = DateFilter.dates;
 
     return Scaffold(
       appBar: AppBar(
@@ -58,37 +59,59 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Expanded(
-                  child: RefreshIndicator(
-                    displacement: 5,
-                    onRefresh: () async {
-                      cardService.loadCards();
-                      //totalCards = cardService.cards.length;
-                    },
-                    child: totalCards == 0
-                        ? Center(
-                            child: Text(
-                            'No hay datos',
-                            style: TextStyle(fontSize: 20),
-                          ))
-                        : ListView.builder(
-                            padding: const EdgeInsets.only(bottom: 80),
-                            shrinkWrap: true,
-                            itemCount: totalCards,
-                            itemBuilder: (context, index) {
-                              return CardData(
-                                description:
-                                    cardService.cards[index].description,
-                                date: cardService.cards[index].date,
-                                amount: cardService.cards[index].amount,
-                                state: cardService.cards[index].state,
-                                id: cardService.cards[index].id!,
-                                index: index,
-                              );
-                            },
-                          ),
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: dates.length,
+                      itemBuilder: (context, index) {
+                        return DateButton(
+                          month: dates[index + 1]!,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 18,
+                  child: Container(
+                    child: RefreshIndicator(
+                      displacement: 5,
+                      onRefresh: () async {
+                        cardService.loadCards();
+                        //totalCards = cardService.cards.length;
+                      },
+                      child: totalCards == 0
+                          ? const Center(
+                              child: Text(
+                              'No hay datos',
+                              style: TextStyle(fontSize: 20),
+                            ))
+                          : ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 80),
+                              shrinkWrap: true,
+                              itemCount: totalCards,
+                              itemBuilder: (context, index) {
+                                return CardData(
+                                  description:
+                                      cardService.cards[index].description,
+                                  date: cardService.cards[index].date,
+                                  amount: cardService.cards[index].amount,
+                                  state: cardService.cards[index].state,
+                                  id: cardService.cards[index].id!,
+                                  index: index,
+                                );
+                              },
+                            ),
+                    ),
                   ),
                 ),
                 /*CardData(
