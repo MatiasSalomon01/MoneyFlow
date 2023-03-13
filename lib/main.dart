@@ -20,6 +20,9 @@ class AppState extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ModelOptionsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AlertProvider(),
         )
       ],
       child: MyApp(),

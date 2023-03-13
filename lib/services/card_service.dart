@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,6 +42,7 @@ class CardService extends ChangeNotifier {
     }
     if (cards.length == 0) empty = true;
     isLoading = false;
+
     notifyListeners();
     return cards;
   }
@@ -62,14 +64,16 @@ class CardService extends ChangeNotifier {
 
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
-    loadCards();
+    await loadCards();
     return cardInfo.id!;
   }
 
   Future deleteCard(String id) async {
     final url = Uri.https(_baseUrl, 'card/$id.json');
     final res = await http.delete(url);
-    loadCards();
+    var x = loadCards();
+
+    //await loadCards();
   }
 
   Future<String?> updateCard(CardInfo cardInfo) async {
@@ -81,7 +85,7 @@ class CardService extends ChangeNotifier {
 
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
-    loadCards();
+    await loadCards();
     return 'Actualización Exitosa';
   }
 }

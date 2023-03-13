@@ -73,7 +73,7 @@ class CardData extends StatelessWidget {
                         ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Column(
@@ -99,7 +99,7 @@ class CardData extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
