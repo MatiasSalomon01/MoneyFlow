@@ -84,6 +84,7 @@ class HomeScreen extends StatelessWidget {
                                 amount: cardService.cards[index].amount,
                                 state: cardService.cards[index].state,
                                 id: cardService.cards[index].id!,
+                                index: index,
                               );
                             },
                           ),
@@ -163,6 +164,7 @@ class HomeScreen extends StatelessWidget {
                           ListTile(
                             selectedColor: Colors.red,
                             onTap: () {
+                              //print(modalOptionsProvider.index);
                               alertProvider.changeDelete(true);
                               // modalOptionsProvider
                               //     .deleteCard(modalOptionsProvider.idCard);
@@ -281,21 +283,29 @@ class HomeScreen extends StatelessWidget {
           alertProvider.onDelete == true
               ? AlertDialog(
                   title: Text('Eliminar'),
-                  content: Text('Seguro que quiers eliminar este card?'),
+                  content: Text('Seguro que quieres eliminar este Card?'),
                   actions: [
                     TextButton(
+                      onPressed: () {},
+                      child: TextButton(
                         onPressed: () {
-                          cardService.loadCards();
+                          modalOptionsProvider.closeModalOptions(0);
+                          alertProvider.changeDelete(false);
                         },
-                        child: TextButton(
-                            onPressed: () {
-                              cardService.loadCards();
-                              modalOptionsProvider
-                                  .deleteCard(modalOptionsProvider.idCard);
-                              modalOptionsProvider.closeModalOptions(0);
-                              alertProvider.changeDelete(false);
-                            },
-                            child: Text('Si')))
+                        child: Text('Cancelar'),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        cardService.cards.removeAt(modalOptionsProvider.index);
+                        //cardService.loadCards();
+                        modalOptionsProvider
+                            .deleteCard(modalOptionsProvider.idCard);
+                        modalOptionsProvider.closeModalOptions(0);
+                        alertProvider.changeDelete(false);
+                      },
+                      child: Text('Si'),
+                    ),
                   ],
                 )
               : Container()

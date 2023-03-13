@@ -10,6 +10,7 @@ class CardData extends StatelessWidget {
   final double amount;
   final bool state;
   final String id;
+  final int index;
 
   const CardData(
       {super.key,
@@ -17,7 +18,8 @@ class CardData extends StatelessWidget {
       required this.date,
       required this.amount,
       required this.state,
-      required this.id});
+      required this.id,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class CardData extends StatelessWidget {
         modalOptionsProvider.openModalOptions(
             MediaQuery.of(context).size.height,
             id,
+            index,
             CardInfo(
                 id: id,
                 amount: amount,

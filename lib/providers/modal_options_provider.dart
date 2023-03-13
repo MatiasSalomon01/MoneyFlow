@@ -12,7 +12,9 @@ class ModelOptionsProvider extends ChangeNotifier {
 
   CardService cardService = CardService();
 
-  double openModalOptions(double value, String id, CardInfo card) {
+  int index = 0;
+
+  double openModalOptions(double value, String id, int i, CardInfo card) {
     height = value;
     idCard = id;
     cardInfo.amount = card.amount;
@@ -20,6 +22,7 @@ class ModelOptionsProvider extends ChangeNotifier {
     cardInfo.date = card.date;
     cardInfo.state = card.state;
     cardInfo.id = id;
+    index = i;
 
     notifyListeners();
     return height;
