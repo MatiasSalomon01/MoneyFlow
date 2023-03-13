@@ -53,6 +53,7 @@ class CardService extends ChangeNotifier {
       if (card.state == true) _currentAmount += card.amount;
       if (card.state == false) _currentAmount -= card.amount;
     }
+    notifyListeners();
     return _currentAmount;
   }
 
@@ -71,7 +72,7 @@ class CardService extends ChangeNotifier {
   Future deleteCard(String id) async {
     final url = Uri.https(_baseUrl, 'card/$id.json');
     final res = await http.delete(url);
-    var x = loadCards();
+    //loadCards();
 
     //await loadCards();
   }

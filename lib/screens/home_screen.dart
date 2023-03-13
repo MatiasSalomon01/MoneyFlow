@@ -28,6 +28,7 @@ class HomeScreen extends StatelessWidget {
     //       color: Colors.red,
     //     ),
     //   );
+    var currentAmount = cardService.currentAmount.round();
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         title: Align(
           alignment: Alignment.centerRight,
           child: totalCards > 0
-              ? Text('Gs. ${cardService.currentAmount.round()}')
+              ? Text('Gs. ${currentAmount}')
               : const Text('Gs. ${0}'),
         ),
       ),
@@ -298,7 +299,7 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         cardService.cards.removeAt(modalOptionsProvider.index);
-                        //cardService.loadCards();
+                        cardService.getTotalAmount(cardService.cards);
                         modalOptionsProvider
                             .deleteCard(modalOptionsProvider.idCard);
                         modalOptionsProvider.closeModalOptions(0);
