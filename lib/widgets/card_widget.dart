@@ -37,7 +37,8 @@ class CardData extends StatelessWidget {
                   date: date,
                   description: description,
                   state: state),
-              buttonType: 1,
+              buttonType: 2,
+              buttonText: 'Actualizar',
             ),
           ),
         );

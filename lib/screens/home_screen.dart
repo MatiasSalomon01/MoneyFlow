@@ -118,12 +118,13 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => FormScreen(
                         cardInfo: CardInfo(
-                            amount: 0,
-                            description: '',
-                            state: true,
-                            date: DateFormat('dd/MM/yyyy')
-                                .format(DateTime.now())),
+                          amount: 0,
+                          description: '',
+                          state: true,
+                          date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                        ),
                         buttonType: 1,
+                        buttonText: 'Agregar',
                       ),
                     ),
                   );
@@ -188,12 +189,14 @@ class HomeScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => FormScreen(
                                     cardInfo: CardInfo(
-                                        amount: 0,
-                                        description: '',
-                                        state: true,
-                                        date: DateFormat('dd/MM/yyyy')
-                                            .format(DateTime.now())),
+                                      amount: 0,
+                                      description: '',
+                                      state: true,
+                                      date: DateFormat('dd/MM/yyyy')
+                                          .format(DateTime.now()),
+                                    ),
                                     buttonType: 1,
+                                    buttonText: 'Agregar',
                                   ),
                                 ),
                               );
@@ -214,8 +217,10 @@ class HomeScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FormScreen(
-                                      cardInfo: modalOptionsProvider.cardInfo,
-                                      buttonType: 2),
+                                    cardInfo: modalOptionsProvider.cardInfo,
+                                    buttonType: 2,
+                                    buttonText: 'Actualizar',
+                                  ),
                                 ),
                               );
                               modalOptionsProvider.closeModalOptions(0);

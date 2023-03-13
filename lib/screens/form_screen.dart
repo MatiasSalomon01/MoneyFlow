@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
@@ -8,9 +9,13 @@ import 'package:provider/provider.dart';
 class FormScreen extends StatelessWidget {
   final CardInfo cardInfo;
   final int buttonType;
+  final String buttonText;
 
   const FormScreen(
-      {super.key, required this.cardInfo, required this.buttonType});
+      {super.key,
+      required this.cardInfo,
+      required this.buttonType,
+      required this.buttonText});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +31,14 @@ class FormScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 25),
                 TextFormFieldCustom(
                   initialValue: cardInfo.date,
                   labelText: 'Fecha',
                   helperText: 'Fecha de ocurrencia',
                   cardInfo: cardInfo,
+                  suffixIcon: Icons.today_outlined,
+                  //inputFormatters: FilteringTextInputFormatter.allow('.')
                   //dataInput: formProvider.date,
                   //formProvider: formProvider,
                 ),
@@ -40,6 +48,9 @@ class FormScreen extends StatelessWidget {
                   labelText: 'Descripcion',
                   helperText: 'Breve descripcion del Ingreso o Egreso',
                   cardInfo: cardInfo,
+                  suffixIcon: Icons.description,
+                  autofocus: true,
+                  //inputFormatters: FilteringTextInputFormatter.allow('.')
                   //dataInput: formProvider.description,
                   //formProvider: formProvider,
                 ),
@@ -51,6 +62,9 @@ class FormScreen extends StatelessWidget {
                   helperText: 'Ingrese Monto',
                   keyboardType: TextInputType.number,
                   cardInfo: cardInfo,
+                  suffixIcon: Icons.attach_money_rounded,
+                  //inputFormatters: FilteringTextInputFormatter.digitsOnly,
+                  // suffixIconColor: Colors.green,
                   //dataInput: formProvider.amount,
                   //formProvider: formProvider,
                 ),
@@ -76,7 +90,7 @@ class FormScreen extends StatelessWidget {
                     state: cardInfo.state,
                     cardInfo: cardInfo,
                   ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 15),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
@@ -114,7 +128,7 @@ class FormScreen extends StatelessWidget {
                       ),
                       fixedSize: const Size(100, 50),
                     ),
-                    child: const Text('Agregar'),
+                    child: Text('$buttonText'),
                   ),
                 ),
               ],
