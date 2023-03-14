@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
     final alertProvider = Provider.of<AlertProvider>(context);
     final dateProvider = Provider.of<DateProvider>(context);
+    final amountProvider = Provider.of<AmountProvider>(context);
     //cardService.getTotalAmount(cardService.cards);
 
     int totalCards = cardService.cards.length;
@@ -30,14 +31,40 @@ class HomeScreen extends StatelessWidget {
     //   );
     var currentAmount = cardService.currentAmount.round();
 
+    bool iconState = true;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Align(
           alignment: Alignment.centerRight,
           child: totalCards > 0
-              ? Text('Gs. ${currentAmount}')
-              : const Text('Gs. ${0}'),
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        splashRadius: 20,
+                        onPressed: () {
+                          amountProvider.changeIconState();
+                        },
+                        icon: amountProvider.iconState == true
+                            ? Icon(Icons.visibility)
+                            : Icon(Icons.visibility_off)),
+                    amountProvider.iconState == true
+                        ? Text('Gs. ${currentAmount}')
+                        : Text('*********'),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(Icons.visibility),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    const Text('Gs. ${0}')
+                  ],
+                ),
         ),
       ),
       drawer: SideMenu(),
@@ -79,12 +106,18 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      cardService.loadCards();
-                      dateProvider.resetAllState();
-                    },
-                    icon: Icon(Icons.replay_outlined)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        splashRadius: 20,
+                        onPressed: () {
+                          cardService.loadCards();
+                          dateProvider.resetAllState();
+                        },
+                        icon: Icon(Icons.replay_outlined)),
+                  ],
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -94,8 +127,9 @@ class HomeScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       displacement: 5,
                       onRefresh: () async {
-                        cardService
-                            .loadCardsFiltered(DateProvider.selectedMonth);
+                        cardService.loadCardsFiltered(
+                          DateProvider.selectedMonth,
+                        );
                         //dateProvider.resetAllExcept(DateProvider.selectedMonth);
                         //totalCards = cardService.cards.length;
                       },

@@ -27,6 +27,9 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => DateProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AmountProvider(),
+        ),
         // ChangeNotifierProvider(
         //   create: (context) => DataButtons(id, month, state),
         // )

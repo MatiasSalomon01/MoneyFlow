@@ -7,6 +7,7 @@ import 'package:money_flow/theme/theme.dart';
 class DateProvider extends ChangeNotifier {
   static final int currentMonth = DateTime.now().month;
   static late int selectedMonth;
+  int alreadyDone = 0;
 
   List<DataButtons> filterButtons = [
     DataButtons(1, 'Enero', false),
@@ -28,9 +29,12 @@ class DateProvider extends ChangeNotifier {
   }
 
   changeState(int index, bool value) {
+    if (filterButtons[index].state == true) return;
+
     filterButtons[index].state = value;
     resetAllExcept(filterButtons[index].id);
     selectedMonth = filterButtons[index].id;
+
     notifyListeners();
   }
 

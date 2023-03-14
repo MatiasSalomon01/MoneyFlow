@@ -21,7 +21,7 @@ class CardService extends ChangeNotifier {
   double get currentAmount => _currentAmount;
 
   CardService() {
-    loadCards();
+    loadCardsFiltered(DateTime.now().month);
   }
 
   Future<List<CardInfo>> loadCards() async {
