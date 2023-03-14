@@ -1,79 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/theme/theme.dart';
 
 class DateProvider extends ChangeNotifier {
-  final Map<int, String> dates = {
-    1: 'Enero',
-    2: 'Febrero',
-    3: 'Marzo',
-    4: 'Abril',
-    5: 'Mayo',
-    6: 'Junio',
-    7: 'Julio',
-    8: 'Agosto',
-    9: 'Septiembre',
-    10: 'Octubre',
-    11: 'Noviembre',
-    12: 'Diciembre'
-  };
-  final Map<int, bool> datesColors = {
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false,
-    8: false,
-    9: false,
-    10: false,
-    11: false,
-    12: false
-  };
-  changetoTrue(index) {
-    if (datesColors[index] == false) {
-      datesColors[index] = true;
-    }
+  List<DataButtons> filterButtons = [
+    DataButtons(1, 'Enero', false),
+    DataButtons(2, 'Febrero', false),
+    DataButtons(3, 'Marzo', false),
+    DataButtons(4, 'Abril', false),
+    DataButtons(5, 'Mayo', false),
+    DataButtons(6, 'Junio', false),
+    DataButtons(7, 'Julio', false),
+    DataButtons(8, 'Agosto', false),
+    DataButtons(9, 'Septiembre', false),
+    DataButtons(10, 'Octubre', false),
+    DataButtons(11, 'Noviembre', false),
+    DataButtons(12, 'Diciembre', false)
+  ];
+
+  DateProvider() {
+    checkCurrentMonth();
+  }
+
+  changeState(int index, bool value) {
+    filterButtons[index].state = value;
     notifyListeners();
-    datesColors.forEach((key, value) {
-      print("$key -  $value");
-    });
-    // if (datesColors[index] == true) {
-    //   datesColors[index] = false;
-    //   notifyListeners();
-    // }
-    // if (datesColors[index] == true) {
-    //   datesColors[index] = false;
-    //   notifyListeners();
-    // }
   }
 
-  setState(index, bool state) {
-    datesColors[index] == state;
-
-    //notifyListeners();
+  checkCurrentMonth() {
+    for (var i in filterButtons) {
+      if (DateTime.now().month == i.id) {
+        i.state = true;
+      }
+    }
   }
-
-  // changetoFalse(index) {
-  //   if (datesColors[index] == true) {
-  //     datesColors[index] = false;
-  //   }
-  // notifyListeners();
-  // datesColors.forEach((key, value) {
-  //   print("$key -  $value");
 }
-  // if (datesColors[index] == true) {
-  //   datesColors[index] = false;
-  //   notifyListeners();
-  // }
-  // if (datesColors[index] == true) {
-  //   datesColors[index] = false;
-  //   notifyListeners();
-  // }
 
-  // changeState(int index, bool state) {
-  //   datesColors[index] = state;
-  //   notifyListeners();
-  // }
+class DataButtons {
+  int id;
+  String month;
+  bool state;
 
+  DataButtons(this.id, this.month, this.state);
+}

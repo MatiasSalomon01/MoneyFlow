@@ -67,12 +67,12 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: dateProvider.dates.length,
+                      itemCount: dateProvider.filterButtons.length,
                       itemBuilder: (context, index) {
                         return DateButton(
-                            month: dateProvider.dates[index + 1]!,
-                            index: index + 1,
-                            state: dateProvider.datesColors[index + 1]!);
+                            name: dateProvider.filterButtons[index].month,
+                            index: index,
+                            state: dateProvider.filterButtons[index].state);
                       },
                     ),
                   ),
@@ -337,7 +337,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 )
-              : Container()
+              : Container(),
         ],
       ),
       /*bottomNavigationBar: BottomNavigationBar(
