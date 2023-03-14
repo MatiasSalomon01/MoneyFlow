@@ -5,6 +5,9 @@ import 'package:money_flow/models/models.dart';
 import 'package:money_flow/theme/theme.dart';
 
 class DateProvider extends ChangeNotifier {
+  static final int currentMonth = DateTime.now().month;
+  static late int selectedMonth;
+
   List<DataButtons> filterButtons = [
     DataButtons(1, 'Enero', false),
     DataButtons(2, 'Febrero', false),
@@ -26,16 +29,41 @@ class DateProvider extends ChangeNotifier {
 
   changeState(int index, bool value) {
     filterButtons[index].state = value;
+    resetAllExcept(filterButtons[index].id);
+    selectedMonth = filterButtons[index].id;
     notifyListeners();
   }
 
   checkCurrentMonth() {
     for (var i in filterButtons) {
-      if (DateTime.now().month == i.id) {
+      if (currentMonth == i.id) {
         i.state = true;
+        selectedMonth = i.id;
       }
     }
   }
+
+  resetAllState() {
+    for (var i in filterButtons) {
+      i.state = false;
+      notifyListeners();
+    }
+    checkCurrentMonth();
+  }
+
+  resetAllExcept(int id) {
+    for (var i in filterButtons) {
+      if (i.id == id) {
+        continue;
+      }
+      i.state = false;
+      notifyListeners();
+    }
+  }
+
+  // filterByMonth(int month) {
+
+  // }
 }
 
 class DataButtons {

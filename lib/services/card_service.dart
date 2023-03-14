@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:money_flow/providers/providers.dart';
 
 class CardService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
@@ -47,6 +48,41 @@ class CardService extends ChangeNotifier {
     return cards;
   }
 
+  Future<List<CardInfo>> loadCardsFiltered(int month) async {
+    List<CardInfo> x = [];
+    isLoading = true;
+    cards.clear();
+
+    final url = Uri.https(_baseUrl, 'card.json');
+    final res = await http.get(url);
+
+    if (res.body != 'null') {
+      final Map<String, dynamic> cardsMap = json.decode(res.body);
+
+      cardsMap.forEach((key, value) {
+        final tempCard = CardInfo.fromJson(value);
+        tempCard.id = key;
+
+        if (tempCard.date.split('/')[1].startsWith("0")) {
+          if (month == int.parse(tempCard.date.split('/')[1][1])) {
+            cards.add(tempCard);
+          }
+        } else {
+          if (month == int.parse(tempCard.date.split('/')[1])) {
+            cards.add(tempCard);
+          }
+        }
+        x.add(tempCard);
+        getTotalAmount(x);
+      });
+    }
+    if (cards.length == 0) empty = true;
+    isLoading = false;
+
+    notifyListeners();
+    return cards;
+  }
+
   double getTotalAmount(List<CardInfo> cards) {
     _currentAmount = 0;
     for (var card in cards) {
@@ -65,7 +101,7 @@ class CardService extends ChangeNotifier {
 
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
-    await loadCards();
+    await loadCardsFiltered(DateProvider.selectedMonth);
     return cardInfo.id!;
   }
 
@@ -86,7 +122,7 @@ class CardService extends ChangeNotifier {
 
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
-    await loadCards();
+    await loadCardsFiltered(DateProvider.selectedMonth);
     return 'Actualización Exitosa';
   }
 }

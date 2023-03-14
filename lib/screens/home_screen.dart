@@ -70,15 +70,23 @@ class HomeScreen extends StatelessWidget {
                       itemCount: dateProvider.filterButtons.length,
                       itemBuilder: (context, index) {
                         return DateButton(
-                            name: dateProvider.filterButtons[index].month,
-                            index: index,
-                            state: dateProvider.filterButtons[index].state);
+                          name: dateProvider.filterButtons[index].month,
+                          id: dateProvider.filterButtons[index].id,
+                          state: dateProvider.filterButtons[index].state,
+                          index: index,
+                        );
                       },
                     ),
                   ),
                 ),
+                IconButton(
+                    onPressed: () {
+                      cardService.loadCards();
+                      dateProvider.resetAllState();
+                    },
+                    icon: Icon(Icons.replay_outlined)),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Expanded(
                   flex: 18,
@@ -86,13 +94,15 @@ class HomeScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       displacement: 5,
                       onRefresh: () async {
-                        cardService.loadCards();
+                        cardService
+                            .loadCardsFiltered(DateProvider.selectedMonth);
+                        //dateProvider.resetAllExcept(DateProvider.selectedMonth);
                         //totalCards = cardService.cards.length;
                       },
                       child: totalCards == 0
                           ? const Center(
                               child: Text(
-                              'No hay datos',
+                              'Cargando...' /*'No hay datos'*/,
                               style: TextStyle(fontSize: 20),
                             ))
                           : ListView.builder(
