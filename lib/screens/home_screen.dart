@@ -37,35 +37,23 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Align(
-          alignment: Alignment.centerRight,
-          child: totalCards > 0
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        splashRadius: 20,
-                        onPressed: () {
-                          amountProvider.changeIconState();
-                        },
-                        icon: amountProvider.iconState == true
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off)),
-                    amountProvider.iconState == true
-                        ? Text('Gs. ${currentAmount}')
-                        : Text('*********'),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.visibility),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    const Text('Gs. ${0}')
-                  ],
-                ),
-        ),
+            alignment: Alignment.centerRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                    splashRadius: 20,
+                    onPressed: () {
+                      amountProvider.changeIconState();
+                    },
+                    icon: amountProvider.iconState == true
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off)),
+                amountProvider.iconState == true
+                    ? Text('Gs. ${currentAmount}')
+                    : Text('*********'),
+              ],
+            )),
       ),
       drawer: SideMenu(),
       body: Stack(
