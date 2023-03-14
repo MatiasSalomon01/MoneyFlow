@@ -4,6 +4,7 @@ import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
+import 'package:money_flow/theme/theme.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -50,8 +51,12 @@ class HomeScreen extends StatelessWidget {
                         ? Icon(Icons.visibility)
                         : Icon(Icons.visibility_off)),
                 amountProvider.iconState == true
-                    ? Text('Gs. ${currentAmount}')
-                    : Text('*********'),
+                    ? GestureDetector(
+                        onTap: () => amountProvider.changeIconState(),
+                        child: Text('Gs. ${currentAmount}'))
+                    : GestureDetector(
+                        onTap: () => amountProvider.changeIconState(),
+                        child: Text('*********')),
               ],
             )),
       ),
@@ -94,18 +99,134 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        splashRadius: 20,
-                        onPressed: () {
-                          cardService.loadCards();
-                          dateProvider.resetAllState();
-                        },
-                        icon: Icon(Icons.replay_outlined)),
-                  ],
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20),
+                //   child: SingleChildScrollView(
+                //     scrollDirection: Axis.horizontal,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.start,
+                //       children: [
+                //         const SizedBox(
+                //           width: 10,
+                //         ),
+                //         // ElevatedButton(
+                //         //   style: ElevatedButton.styleFrom(
+                //         //       shape: StadiumBorder(),
+                //         //       backgroundColor: ThemeApp.mainDarkColor),
+                //         //   onPressed: () {
+                //         //     cardService.loadCards();
+                //         //     dateProvider.resetAllState();
+                //         //   },
+                //         //   child: Text(
+                //         //     'Ver Todo',
+                //         //     style: TextStyle(fontSize: 18),
+                //         //   ),
+                //         // ),
+
+                //         ClipRRect(
+                //           borderRadius: BorderRadius.circular(50),
+                //           child: GestureDetector(
+                //             onTap: () {
+                //               cardService.loadCards();
+                //               dateProvider.resetAllState();
+                //             },
+                //             child: Container(
+                //               padding: EdgeInsets.symmetric(
+                //                   horizontal: 15, vertical: 10),
+                //               color: Colors.white24,
+                //               child: Row(
+                //                 children: [
+                //                   Icon(
+                //                     Icons.visibility_outlined,
+                //                     size: 25,
+                //                   ),
+                //                   SizedBox(
+                //                     width: 8,
+                //                   ),
+                //                   Text(
+                //                     'Ver Todo',
+                //                     style: TextStyle(fontSize: 18),
+                //                   )
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width: 10,
+                //         ),
+                //         ClipRRect(
+                //           borderRadius: BorderRadius.circular(50),
+                //           child: GestureDetector(
+                //             onTap: () {
+                //               cardService.loadCards();
+                //               dateProvider.resetAllState();
+                //             },
+                //             child: Container(
+                //               padding: EdgeInsets.symmetric(
+                //                   horizontal: 15, vertical: 10),
+                //               color: Colors.white24,
+                //               child: Row(
+                //                 children: [
+                //                   Icon(
+                //                     Icons.replay_outlined,
+                //                     size: 25,
+                //                   ),
+                //                   SizedBox(
+                //                     width: 8,
+                //                   ),
+                //                   Text(
+                //                     'Refrescar',
+                //                     style: TextStyle(fontSize: 18),
+                //                   )
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width: 10,
+                //         ),
+                //         ClipRRect(
+                //           borderRadius: BorderRadius.circular(50),
+                //           child: GestureDetector(
+                //             onTap: () {
+                //               cardService.loadCards();
+                //               dateProvider.resetAllState();
+                //             },
+                //             child: Container(
+                //               padding: EdgeInsets.symmetric(
+                //                   horizontal: 15, vertical: 10),
+                //               color: Colors.white24,
+                //               child: Row(
+                //                 children: [
+                //                   Icon(
+                //                     Icons.delete,
+                //                     size: 25,
+                //                   ),
+                //                   SizedBox(
+                //                     width: 8,
+                //                   ),
+                //                   Text(
+                //                     'Eliminar',
+                //                     style: TextStyle(fontSize: 18),
+                //                   )
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         )
+                //         // IconButton(
+                //         //     splashRadius: 20,
+                //         //     onPressed: () {
+                //         //       cardService.loadCards();
+                //         //       dateProvider.resetAllState();
+                //         //     },
+                //         //     icon: Icon(Icons.receipt_rounded)),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -113,37 +234,48 @@ class HomeScreen extends StatelessWidget {
                   flex: 18,
                   child: Container(
                     child: RefreshIndicator(
-                      displacement: 5,
-                      onRefresh: () async {
-                        cardService.loadCardsFiltered(
-                          DateProvider.selectedMonth,
-                        );
-                        //dateProvider.resetAllExcept(DateProvider.selectedMonth);
-                        //totalCards = cardService.cards.length;
-                      },
-                      child: totalCards == 0
-                          ? const Center(
-                              child: Text(
-                              'Cargando...' /*'No hay datos'*/,
-                              style: TextStyle(fontSize: 20),
-                            ))
-                          : ListView.builder(
-                              padding: const EdgeInsets.only(bottom: 80),
-                              shrinkWrap: true,
-                              itemCount: totalCards,
-                              itemBuilder: (context, index) {
-                                return CardData(
-                                  description:
-                                      cardService.cards[index].description,
-                                  date: cardService.cards[index].date,
-                                  amount: cardService.cards[index].amount,
-                                  state: cardService.cards[index].state,
-                                  id: cardService.cards[index].id!,
-                                  index: index,
-                                );
-                              },
-                            ),
-                    ),
+                        displacement: 5,
+                        onRefresh: () async {
+                          cardService.loadCardsFiltered(
+                            DateProvider.selectedMonth,
+                          );
+                          //dateProvider.resetAllExcept(DateProvider.selectedMonth);
+                          //totalCards = cardService.cards.length;
+                        },
+                        // child: totalCards == 0
+                        //     ? const Center(
+                        //         child: Text(
+                        //         'Cargando...' /*'No hay datos'*/,
+                        //         style: TextStyle(fontSize: 20),
+                        //       ))
+                        /*:*/ child: cardService.isLoading
+                            ? Center(
+                                child: Text(
+                                'Cargando...' /*'No hay datos'*/,
+                                style: TextStyle(fontSize: 20),
+                              ))
+                            : cardService.cards.length > 0
+                                ? ListView.builder(
+                                    padding: const EdgeInsets.only(bottom: 80),
+                                    shrinkWrap: true,
+                                    itemCount: totalCards,
+                                    itemBuilder: (context, index) {
+                                      return CardData(
+                                        description: cardService
+                                            .cards[index].description,
+                                        date: cardService.cards[index].date,
+                                        amount: cardService.cards[index].amount,
+                                        state: cardService.cards[index].state,
+                                        id: cardService.cards[index].id!,
+                                        index: index,
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                    'No hay Datos',
+                                    style: TextStyle(fontSize: 20),
+                                  ))),
                   ),
                 ),
                 /*CardData(

@@ -52,7 +52,7 @@ class DateProvider extends ChangeNotifier {
       i.state = false;
       notifyListeners();
     }
-    checkCurrentMonth();
+    //checkCurrentMonth();
   }
 
   resetAllExcept(int id) {
