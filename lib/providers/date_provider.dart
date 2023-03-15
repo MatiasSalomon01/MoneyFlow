@@ -10,18 +10,18 @@ class DateProvider extends ChangeNotifier {
   int alreadyDone = 0;
 
   List<DataButtons> filterButtons = [
-    DataButtons(1, 'Enero', false),
-    DataButtons(2, 'Febrero', false),
-    DataButtons(3, 'Marzo', false),
-    DataButtons(4, 'Abril', false),
-    DataButtons(5, 'Mayo', false),
-    DataButtons(6, 'Junio', false),
-    DataButtons(7, 'Julio', false),
-    DataButtons(8, 'Agosto', false),
-    DataButtons(9, 'Septiembre', false),
-    DataButtons(10, 'Octubre', false),
-    DataButtons(11, 'Noviembre', false),
-    DataButtons(12, 'Diciembre', false)
+    DataButtons(1, 'Enero', false, false),
+    DataButtons(2, 'Febrero', false, false),
+    DataButtons(3, 'Marzo', false, false),
+    DataButtons(4, 'Abril', false, false),
+    DataButtons(5, 'Mayo', false, false),
+    DataButtons(6, 'Junio', false, false),
+    DataButtons(7, 'Julio', false, false),
+    DataButtons(8, 'Agosto', false, false),
+    DataButtons(9, 'Septiembre', false, false),
+    DataButtons(10, 'Octubre', false, false),
+    DataButtons(11, 'Noviembre', false, false),
+    DataButtons(12, 'Diciembre', false, false)
   ];
 
   DateProvider() {
@@ -29,8 +29,11 @@ class DateProvider extends ChangeNotifier {
   }
 
   changeState(int index, bool value) {
-    if (filterButtons[index].state == true) return;
+    if (filterButtons[index].state == true) {
+      return;
+    }
 
+    filterButtons[index].isPressed = value;
     filterButtons[index].state = value;
     resetAllExcept(filterButtons[index].id);
     selectedMonth = filterButtons[index].id;
@@ -74,6 +77,7 @@ class DataButtons {
   int id;
   String month;
   bool state;
+  bool isPressed;
 
-  DataButtons(this.id, this.month, this.state);
+  DataButtons(this.id, this.month, this.state, this.isPressed);
 }

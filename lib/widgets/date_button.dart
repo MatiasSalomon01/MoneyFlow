@@ -9,26 +9,42 @@ class DateButton extends StatelessWidget {
   final int id;
   final String name;
   final bool state;
-  const DateButton(
+  bool? isPressed;
+  //final bool isPressed;
+  DateButton(
       {super.key,
       required this.name,
       required this.index,
       required this.state,
-      required this.id});
+      required this.id,
+      this.isPressed
+      /*required this.isPressed*/
+      });
 
   @override
   Widget build(BuildContext context) {
     final dateProvider = Provider.of<DateProvider>(context);
     final cardService = Provider.of<CardService>(context);
+    final buttonFiltersProvider = Provider.of<ButtonFiltersProvider>(context);
+
+    x() {
+      print(dateProvider.filterButtons[index].isPressed);
+    }
+
+    pressed() {
+      //isPressed = false;
+      x();
+      dateProvider.changeState(index, !state);
+      buttonFiltersProvider.changeIsPressed();
+      cardService.loadCardsFiltered(id);
+    }
+
     // if (DateTime.now().month == index - 1)
     //   dateProvider.changeState(index, !state);
     return Padding(
         padding: const EdgeInsets.only(right: 10),
         child: ElevatedButton(
-          onPressed: () {
-            dateProvider.changeState(index, !state);
-            cardService.loadCardsFiltered(id);
-          },
+          onPressed: !cardService.isLoading ? pressed : null,
           style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
               backgroundColor: state

@@ -90,11 +90,12 @@ class HomeScreen extends StatelessWidget {
                       itemCount: dateProvider.filterButtons.length,
                       itemBuilder: (context, index) {
                         return DateButton(
-                          name: dateProvider.filterButtons[index].month,
-                          id: dateProvider.filterButtons[index].id,
-                          state: dateProvider.filterButtons[index].state,
-                          index: index,
-                        );
+                            name: dateProvider.filterButtons[index].month,
+                            id: dateProvider.filterButtons[index].id,
+                            state: dateProvider.filterButtons[index].state,
+                            index: index,
+                            isPressed:
+                                dateProvider.filterButtons[index].isPressed);
                       },
                     ),
                   ),
