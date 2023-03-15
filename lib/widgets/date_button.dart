@@ -31,11 +31,10 @@ class DateButton extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
-              backgroundColor: state ? Colors.red : ThemeApp.mainDarkColor),
-          child: Text(
-            name,
-            style: TextStyle(fontSize: 18),
-          ),
+              backgroundColor: state
+                  ? Color.fromARGB(255, 126, 125, 125)
+                  : ThemeApp.mainDarkColor),
+          child: Text(name, style: TextStyle(fontSize: 18)),
         ));
   }
 }
