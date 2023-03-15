@@ -8,7 +8,7 @@ import 'package:money_flow/providers/providers.dart';
 class CardService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
 
-  final List<CardInfo> cards = [];
+  List<CardInfo> cards = [];
 
   late CardInfo cardInfo;
 
@@ -38,11 +38,13 @@ class CardService extends ChangeNotifier {
         final tempCard = CardInfo.fromJson(value);
         tempCard.id = key;
         cards.add(tempCard);
-        getTotalAmount(cards);
       });
     }
+    getTotalAmount(cards);
     if (cards.length == 0) empty = true;
     isLoading = false;
+
+    cards = cards.reversed.toList();
 
     notifyListeners();
     return cards;
@@ -73,13 +75,20 @@ class CardService extends ChangeNotifier {
           }
         }
         x.add(tempCard);
-        getTotalAmount(x);
       });
     }
+    getTotalAmount(x);
     if (cards.length == 0) empty = true;
     isLoading = false;
 
+    cards = cards.reversed.toList();
+
     notifyListeners();
+
+    // for (var element in cards.reversed) {
+    //   print(
+    //       "${element.id} | ${element.description} | ${element.date} 1 ${element.amount} | ${element.state}");
+    // }
     return cards;
   }
 
