@@ -94,8 +94,7 @@ class HomeScreen extends StatelessWidget {
                             id: dateProvider.filterButtons[index].id,
                             state: dateProvider.filterButtons[index].state,
                             index: index,
-                            isPressed:
-                                dateProvider.filterButtons[index].isPressed);
+                            isPressed: dateProvider.idPressed[index].state);
                       },
                     ),
                   ),

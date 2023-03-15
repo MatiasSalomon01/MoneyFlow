@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ButtonFiltersProvider extends ChangeNotifier {
-  bool isPressed = true;
+  // bool isPressed = true;
 
-  changeIsPressed() {
-    isPressed = !isPressed;
-    notifyListeners();
-  }
+  // changeIsPressed() {
+  //   isPressed = !isPressed;
+  //   notifyListeners();
+  // }
 }

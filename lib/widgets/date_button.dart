@@ -4,12 +4,12 @@ import 'package:money_flow/services/services.dart';
 import 'package:money_flow/theme/theme.dart';
 import 'package:provider/provider.dart';
 
-class DateButton extends StatelessWidget {
+class DateButton extends StatefulWidget {
   final int index;
   final int id;
   final String name;
   final bool state;
-  bool? isPressed;
+  bool isPressed;
   //final bool isPressed;
   DateButton(
       {super.key,
@@ -17,26 +17,32 @@ class DateButton extends StatelessWidget {
       required this.index,
       required this.state,
       required this.id,
-      this.isPressed
+      required this.isPressed
       /*required this.isPressed*/
       });
 
+  @override
+  State<DateButton> createState() => _DateButtonState();
+}
+
+class _DateButtonState extends State<DateButton> {
   @override
   Widget build(BuildContext context) {
     final dateProvider = Provider.of<DateProvider>(context);
     final cardService = Provider.of<CardService>(context);
     final buttonFiltersProvider = Provider.of<ButtonFiltersProvider>(context);
 
-    x() {
-      print(dateProvider.filterButtons[index].isPressed);
-    }
-
     pressed() {
-      //isPressed = false;
-      x();
-      dateProvider.changeState(index, !state);
-      buttonFiltersProvider.changeIsPressed();
-      cardService.loadCardsFiltered(id);
+      // dateProvider.changeIsPressed(widget.index);
+      // dateProvider.changeState(widget.index, !widget.state);
+      // cardService.loadCardsFiltered(widget.id);
+      setState(() {
+        // dateProvider.changeIsPressed(widget.index);
+        widget.isPressed = !widget.isPressed;
+        dateProvider.changeState(widget.index, !widget.state);
+        cardService.loadCardsFiltered(widget.id);
+        widget.isPressed = false;
+      });
     }
 
     // if (DateTime.now().month == index - 1)
@@ -44,13 +50,13 @@ class DateButton extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(right: 10),
         child: ElevatedButton(
-          onPressed: !cardService.isLoading ? pressed : null,
+          onPressed: widget.isPressed ? pressed : null,
           style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
-              backgroundColor: state
+              backgroundColor: widget.state
                   ? Color.fromARGB(255, 126, 125, 125)
                   : ThemeApp.mainDarkColor),
-          child: Text(name, style: TextStyle(fontSize: 18)),
+          child: Text(widget.name, style: TextStyle(fontSize: 18)),
         ));
   }
 }
