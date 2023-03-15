@@ -9,6 +9,7 @@ class CardData extends StatelessWidget {
   final String date;
   final double amount;
   final bool state;
+  final String time;
   final String id;
   final int index;
 
@@ -18,6 +19,7 @@ class CardData extends StatelessWidget {
       required this.date,
       required this.amount,
       required this.state,
+      required this.time,
       required this.id,
       required this.index});
 
@@ -35,6 +37,7 @@ class CardData extends StatelessWidget {
                   id: id,
                   amount: amount,
                   date: date,
+                  time: time,
                   description: description,
                   state: state),
               buttonType: 2,
@@ -52,6 +55,7 @@ class CardData extends StatelessWidget {
                 id: id,
                 amount: amount,
                 date: date,
+                time: time,
                 description: description,
                 state: state));
       },
@@ -94,7 +98,7 @@ class CardData extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          '$date',
+                          '$date ${time}',
                           style:
                               const TextStyle(fontSize: 14, color: Colors.grey),
                         )

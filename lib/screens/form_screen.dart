@@ -32,7 +32,7 @@ class FormScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 25),
                 TextFormFieldCustom(
-                  initialValue: cardInfo.date,
+                  initialValue: cardInfo.date + ' ' + cardInfo.time,
                   labelText: 'Fecha',
                   helperText: 'Fecha de ocurrencia',
                   cardInfo: cardInfo,
@@ -99,6 +99,7 @@ class FormScreen extends StatelessWidget {
                           CardInfo(
                             amount: formProvider.amount,
                             date: formProvider.date,
+                            time: formProvider.time,
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
@@ -110,6 +111,7 @@ class FormScreen extends StatelessWidget {
                             id: formProvider.id,
                             amount: formProvider.amount,
                             date: formProvider.date,
+                            time: formProvider.time,
                             description: formProvider.description,
                             state: formProvider.state,
                           ),

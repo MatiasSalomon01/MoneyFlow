@@ -4,6 +4,7 @@ class FormProvider extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String date = '';
+  String time = '';
   String description = '';
   double amount = 0;
   bool state = true;
@@ -23,7 +24,10 @@ class FormProvider extends ChangeNotifier {
   }*/
 
   saveInput(dynamic value, int option, String cardId) {
-    if (option == 0) date = value;
+    if (option == 0) {
+      date = value.toString().split(' ')[0];
+      time = value.toString().split(' ')[1];
+    }
     if (option == 1) description = value;
     if (option == 2) amount = value != '' ? double.parse(value) : 0;
     if (option == 3) state = value;

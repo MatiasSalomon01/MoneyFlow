@@ -5,8 +5,8 @@ import 'package:money_flow/services/services.dart';
 class ModelOptionsProvider extends ChangeNotifier {
   double height = 0;
   String idCard = '';
-  CardInfo cardInfo =
-      CardInfo(amount: 0, date: '', description: '', state: true, id: '');
+  CardInfo cardInfo = CardInfo(
+      amount: 0, date: '', description: '', state: true, time: '', id: '');
 
   CardService cardService = CardService();
 

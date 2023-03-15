@@ -266,6 +266,7 @@ class HomeScreen extends StatelessWidget {
                                         description: cardService
                                             .cards[index].description,
                                         date: cardService.cards[index].date,
+                                        time: cardService.cards[index].time,
                                         amount: cardService.cards[index].amount,
                                         state: cardService.cards[index].state,
                                         id: cardService.cards[index].id!,
@@ -307,11 +308,13 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => FormScreen(
                         cardInfo: CardInfo(
-                          amount: 0,
-                          description: '',
-                          state: true,
-                          date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                        ),
+                            amount: 0,
+                            description: '',
+                            state: true,
+                            date:
+                                DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                            time:
+                                '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
                         buttonType: 1,
                         buttonText: 'Agregar',
                       ),
@@ -378,12 +381,13 @@ class HomeScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => FormScreen(
                                     cardInfo: CardInfo(
-                                      amount: 0,
-                                      description: '',
-                                      state: true,
-                                      date: DateFormat('dd/MM/yyyy')
-                                          .format(DateTime.now()),
-                                    ),
+                                        amount: 0,
+                                        description: '',
+                                        state: true,
+                                        date: DateFormat('dd/MM/yyyy')
+                                            .format(DateTime.now()),
+                                        time:
+                                            '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
                                     buttonType: 1,
                                     buttonText: 'Agregar',
                                   ),
