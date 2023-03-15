@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/services/services.dart';
@@ -43,7 +41,7 @@ class ModelOptionsProvider extends ChangeNotifier {
 
   void updateCard(CardInfo cardInfo) {
     //print('Card Selecionado para actualizar: ${cardInfo.id}');
-    var x = cardService.updateCard(cardInfo);
+    cardService.updateCard(cardInfo);
     //print(cardInfo.id);
   }
 

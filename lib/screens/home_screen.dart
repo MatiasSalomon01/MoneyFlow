@@ -4,7 +4,6 @@ import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
-import 'package:money_flow/theme/theme.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 

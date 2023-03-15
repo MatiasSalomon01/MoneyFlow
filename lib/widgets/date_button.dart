@@ -30,7 +30,6 @@ class _DateButtonState extends State<DateButton> {
   Widget build(BuildContext context) {
     final dateProvider = Provider.of<DateProvider>(context);
     final cardService = Provider.of<CardService>(context);
-    final buttonFiltersProvider = Provider.of<ButtonFiltersProvider>(context);
 
     pressed() {
       // dateProvider.changeIsPressed(widget.index);

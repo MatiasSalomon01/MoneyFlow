@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
@@ -25,7 +24,7 @@ class FormScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-        padding: EdgeInsets.only(top: 30, left: 30, right: 30),
+        padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
         child: SingleChildScrollView(
           child: Form(
             child: Column(
@@ -128,7 +127,7 @@ class FormScreen extends StatelessWidget {
                       ),
                       fixedSize: const Size(100, 50),
                     ),
-                    child: Text('$buttonText'),
+                    child: Text(buttonText),
                   ),
                 ),
               ],
