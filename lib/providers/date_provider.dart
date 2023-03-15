@@ -5,6 +5,7 @@ class DateProvider extends ChangeNotifier {
   static late int selectedMonth;
   int alreadyDone = 0;
   List<ButtonState> idPressed = [
+    ButtonState(0, true),
     ButtonState(1, true),
     ButtonState(2, true),
     ButtonState(3, true),
@@ -20,6 +21,7 @@ class DateProvider extends ChangeNotifier {
   ];
 
   List<DataButtons> filterButtons = [
+    DataButtons(0, 'Ver Todo', false),
     DataButtons(1, 'Enero', false),
     DataButtons(2, 'Febrero', false),
     DataButtons(3, 'Marzo', false),

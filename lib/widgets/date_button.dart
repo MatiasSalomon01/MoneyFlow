@@ -37,6 +37,9 @@ class _DateButtonState extends State<DateButton> {
       // cardService.loadCardsFiltered(widget.id);
       setState(() {
         // dateProvider.changeIsPressed(widget.index);
+        if (widget.index == 0) {
+          cardService.loadCards();
+        }
         widget.isPressed = !widget.isPressed;
         dateProvider.changeState(widget.index, !widget.state);
         cardService.loadCardsFiltered(widget.id);
@@ -53,7 +56,9 @@ class _DateButtonState extends State<DateButton> {
           style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
               backgroundColor: widget.state
-                  ? Color.fromARGB(255, 126, 125, 125)
+                  ? widget.index != 0
+                      ? Color.fromARGB(255, 126, 125, 125)
+                      : Color.fromARGB(255, 128, 46, 46)
                   : ThemeApp.mainDarkColor),
           child: Text(widget.name, style: TextStyle(fontSize: 18)),
         ));
