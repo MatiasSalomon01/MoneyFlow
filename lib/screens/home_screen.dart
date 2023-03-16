@@ -8,6 +8,8 @@ import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
@@ -33,15 +35,15 @@ class HomeScreen extends StatelessWidget {
                       amountProvider.changeIconState();
                     },
                     icon: amountProvider.iconState == true
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off)),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off)),
                 amountProvider.iconState == true
                     ? GestureDetector(
                         onTap: () => amountProvider.changeIconState(),
-                        child: Text('Gs. ${currentAmount}'))
+                        child: Text('Gs. $currentAmount'))
                     : GestureDetector(
                         onTap: () => amountProvider.changeIconState(),
-                        child: Text('*********')),
+                        child: const Text('*********')),
               ],
             )),
       ),
@@ -50,7 +52,7 @@ class HomeScreen extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           if (cardService.isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: Colors.grey,
               ),
