@@ -89,11 +89,12 @@ class HomeScreen extends StatelessWidget {
                       itemCount: dateProvider.filterButtons.length,
                       itemBuilder: (context, index) {
                         return DateButton(
-                            name: dateProvider.filterButtons[index].month,
-                            id: dateProvider.filterButtons[index].id,
-                            state: dateProvider.filterButtons[index].state,
-                            index: index,
-                            isPressed: dateProvider.idPressed[index].state);
+                          name: dateProvider.filterButtons[index].month,
+                          id: dateProvider.filterButtons[index].id,
+                          state: dateProvider.filterButtons[index].state,
+                          index: index,
+                          isPressed: dateProvider.idPressed[index].state,
+                        );
                       },
                     ),
                   ),
@@ -236,11 +237,10 @@ class HomeScreen extends StatelessWidget {
                         displacement: 5,
                         onRefresh: () async {
                           if (DateProvider.selectedMonth == 0)
-                            cardService.loadCards(true);
+                            cardService.loadCards(false);
 
                           cardService.loadCardsFiltered(
-                            DateProvider.selectedMonth,
-                          );
+                              DateProvider.selectedMonth, false);
                           //dateProvider.resetAllExcept(DateProvider.selectedMonth);
                           //totalCards = cardService.cards.length;
                         },
