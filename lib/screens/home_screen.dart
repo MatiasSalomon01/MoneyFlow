@@ -93,11 +93,12 @@ class HomeScreen extends StatelessWidget {
                         if (DateProvider.selectedMonth == 0) {
                           cardService.loadCards(false);
                         }
-
-                        cardService.loadCardsFiltered(
-                          DateProvider.selectedMonth,
-                          false,
-                        );
+                        if (DateProvider.selectedMonth != 0) {
+                          cardService.loadCardsFiltered(
+                            DateProvider.selectedMonth,
+                            false,
+                          );
+                        }
                       },
                       child: cardService.isLoading
                           ? const Center(
