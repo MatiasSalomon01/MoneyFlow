@@ -236,7 +236,7 @@ class HomeScreen extends StatelessWidget {
                         displacement: 5,
                         onRefresh: () async {
                           if (DateProvider.selectedMonth == 0)
-                            cardService.loadCards();
+                            cardService.loadCards(true);
 
                           cardService.loadCardsFiltered(
                             DateProvider.selectedMonth,

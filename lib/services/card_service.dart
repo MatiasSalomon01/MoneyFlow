@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -24,8 +25,8 @@ class CardService extends ChangeNotifier {
     loadCardsFiltered(DateTime.now().month);
   }
 
-  Future<List<CardInfo>> loadCards() async {
-    isLoading = true;
+  Future<void> loadCards(bool x) async {
+    print(x);
     cards.clear();
 
     final url = Uri.https(_baseUrl, 'card.json');
@@ -47,10 +48,9 @@ class CardService extends ChangeNotifier {
     cards = cards.reversed.toList();
 
     notifyListeners();
-    return cards;
   }
 
-  Future<List<CardInfo>> loadCardsFiltered(int month) async {
+  Future<void> loadCardsFiltered(int month) async {
     List<CardInfo> x = [];
     isLoading = true;
     cards.clear();
@@ -89,7 +89,7 @@ class CardService extends ChangeNotifier {
     //   print(
     //       "${element.id} | ${element.description} | ${element.date} 1 ${element.amount} | ${element.state}");
     // }
-    return cards;
+    // return cards;
   }
 
   double getTotalAmount(List<CardInfo> cards) {

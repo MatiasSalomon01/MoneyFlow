@@ -38,7 +38,7 @@ class _DateButtonState extends State<DateButton> {
       setState(() {
         // dateProvider.changeIsPressed(widget.index);
         if (widget.index == 0) {
-          cardService.loadCards();
+          cardService.loadCards(widget.state);
         }
         widget.isPressed = !widget.isPressed;
         dateProvider.changeState(widget.index, !widget.state);
