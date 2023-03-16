@@ -8,6 +8,8 @@ import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
@@ -15,23 +17,9 @@ class HomeScreen extends StatelessWidget {
     final alertProvider = Provider.of<AlertProvider>(context);
     final dateProvider = Provider.of<DateProvider>(context);
     final amountProvider = Provider.of<AmountProvider>(context);
-    //cardService.getTotalAmount(cardService.cards);
 
     int totalCards = cardService.cards.length;
-
-    //double _height = 0;
-
-    //bool onDelete = true;
-
-    // if (cardService.isLoading)
-    //   return Center(
-    //     child: CircularProgressIndicator(
-    //       color: Colors.red,
-    //     ),
-    //   );
     var currentAmount = cardService.currentAmount.round();
-
-    bool iconState = true;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,15 +35,15 @@ class HomeScreen extends StatelessWidget {
                       amountProvider.changeIconState();
                     },
                     icon: amountProvider.iconState == true
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off)),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off)),
                 amountProvider.iconState == true
                     ? GestureDetector(
                         onTap: () => amountProvider.changeIconState(),
-                        child: Text('Gs. ${currentAmount}'))
+                        child: Text('Gs. $currentAmount'))
                     : GestureDetector(
                         onTap: () => amountProvider.changeIconState(),
-                        child: Text('*********')),
+                        child: const Text('*********')),
               ],
             )),
       ),
@@ -64,16 +52,12 @@ class HomeScreen extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           if (cardService.isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: Colors.grey,
               ),
             ),
           GestureDetector(
-            /*onLongPress: () {
-              modalOptionsProvider
-                  .changeHeight(MediaQuery.of(context).size.height);
-            },*/
             child: Column(
               children: [
                 const SizedBox(
@@ -99,134 +83,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 20),
-                //   child: SingleChildScrollView(
-                //     scrollDirection: Axis.horizontal,
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //       children: [
-                //         const SizedBox(
-                //           width: 10,
-                //         ),
-                //         // ElevatedButton(
-                //         //   style: ElevatedButton.styleFrom(
-                //         //       shape: StadiumBorder(),
-                //         //       backgroundColor: ThemeApp.mainDarkColor),
-                //         //   onPressed: () {
-                //         //     cardService.loadCards();
-                //         //     dateProvider.resetAllState();
-                //         //   },
-                //         //   child: Text(
-                //         //     'Ver Todo',
-                //         //     style: TextStyle(fontSize: 18),
-                //         //   ),
-                //         // ),
-
-                //         ClipRRect(
-                //           borderRadius: BorderRadius.circular(50),
-                //           child: GestureDetector(
-                //             onTap: () {
-                //               cardService.loadCards();
-                //               dateProvider.resetAllState();
-                //             },
-                //             child: Container(
-                //               padding: EdgeInsets.symmetric(
-                //                   horizontal: 15, vertical: 10),
-                //               color: Colors.white24,
-                //               child: Row(
-                //                 children: [
-                //                   Icon(
-                //                     Icons.visibility_outlined,
-                //                     size: 25,
-                //                   ),
-                //                   SizedBox(
-                //                     width: 8,
-                //                   ),
-                //                   Text(
-                //                     'Ver Todo',
-                //                     style: TextStyle(fontSize: 18),
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //           width: 10,
-                //         ),
-                //         ClipRRect(
-                //           borderRadius: BorderRadius.circular(50),
-                //           child: GestureDetector(
-                //             onTap: () {
-                //               cardService.loadCards();
-                //               dateProvider.resetAllState();
-                //             },
-                //             child: Container(
-                //               padding: EdgeInsets.symmetric(
-                //                   horizontal: 15, vertical: 10),
-                //               color: Colors.white24,
-                //               child: Row(
-                //                 children: [
-                //                   Icon(
-                //                     Icons.replay_outlined,
-                //                     size: 25,
-                //                   ),
-                //                   SizedBox(
-                //                     width: 8,
-                //                   ),
-                //                   Text(
-                //                     'Refrescar',
-                //                     style: TextStyle(fontSize: 18),
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //           width: 10,
-                //         ),
-                //         ClipRRect(
-                //           borderRadius: BorderRadius.circular(50),
-                //           child: GestureDetector(
-                //             onTap: () {
-                //               cardService.loadCards();
-                //               dateProvider.resetAllState();
-                //             },
-                //             child: Container(
-                //               padding: EdgeInsets.symmetric(
-                //                   horizontal: 15, vertical: 10),
-                //               color: Colors.white24,
-                //               child: Row(
-                //                 children: [
-                //                   Icon(
-                //                     Icons.delete,
-                //                     size: 25,
-                //                   ),
-                //                   SizedBox(
-                //                     width: 8,
-                //                   ),
-                //                   Text(
-                //                     'Eliminar',
-                //                     style: TextStyle(fontSize: 18),
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //           ),
-                //         )
-                //         // IconButton(
-                //         //     splashRadius: 20,
-                //         //     onPressed: () {
-                //         //       cardService.loadCards();
-                //         //       dateProvider.resetAllState();
-                //         //     },
-                //         //     icon: Icon(Icons.receipt_rounded)),
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -234,67 +90,52 @@ class HomeScreen extends StatelessWidget {
                   flex: 18,
                   child: Container(
                     child: RefreshIndicator(
-                        displacement: 5,
-                        onRefresh: () async {
-                          if (DateProvider.selectedMonth == 0)
-                            cardService.loadCards(false);
-
+                      displacement: 5,
+                      onRefresh: () async {
+                        if (DateProvider.selectedMonth == 0) {
+                          cardService.loadCards(false);
+                        }
+                        if (DateProvider.selectedMonth != 0) {
                           cardService.loadCardsFiltered(
-                              DateProvider.selectedMonth, false);
-                          //dateProvider.resetAllExcept(DateProvider.selectedMonth);
-                          //totalCards = cardService.cards.length;
-                        },
-                        // child: totalCards == 0
-                        //     ? const Center(
-                        //         child: Text(
-                        //         'Cargando...' /*'No hay datos'*/,
-                        //         style: TextStyle(fontSize: 20),
-                        //       ))
-                        //sdssssd
-                        /*:*/ child: cardService.isLoading
-                            ? Center(
-                                child: Text(
-                                '   Cargando...' /*'No hay datos'*/,
+                            DateProvider.selectedMonth,
+                            false,
+                          );
+                        }
+                      },
+                      child: cardService.isLoading
+                          ? const Center(
+                              child: Text(
+                                '   Cargando...',
                                 style: TextStyle(fontSize: 20),
-                              ))
-                            : cardService.cards.length > 0
-                                ? ListView.builder(
-                                    padding: const EdgeInsets.only(bottom: 80),
-                                    shrinkWrap: true,
-                                    itemCount: totalCards,
-                                    itemBuilder: (context, index) {
-                                      return CardData(
-                                        description: cardService
-                                            .cards[index].description,
-                                        date: cardService.cards[index].date,
-                                        time: cardService.cards[index].time,
-                                        amount: cardService.cards[index].amount,
-                                        state: cardService.cards[index].state,
-                                        id: cardService.cards[index].id!,
-                                        index: index,
-                                      );
-                                    },
-                                  )
-                                : Center(
-                                    child: Text(
+                              ),
+                            )
+                          : cardService.cards.length > 0
+                              ? ListView.builder(
+                                  padding: const EdgeInsets.only(bottom: 80),
+                                  shrinkWrap: true,
+                                  itemCount: totalCards,
+                                  itemBuilder: (context, index) {
+                                    return CardData(
+                                      description:
+                                          cardService.cards[index].description,
+                                      date: cardService.cards[index].date,
+                                      time: cardService.cards[index].time,
+                                      amount: cardService.cards[index].amount,
+                                      state: cardService.cards[index].state,
+                                      id: cardService.cards[index].id!,
+                                      index: index,
+                                    );
+                                  },
+                                )
+                              : const Center(
+                                  child: Text(
                                     'No hay Datos',
                                     style: TextStyle(fontSize: 20),
-                                  ))),
+                                  ),
+                                ),
+                    ),
                   ),
                 ),
-                /*CardData(
-                description: 'Salario',
-                date: '05/03/2023 15:25hs',
-                amount: 2500000,
-                state: true,
-              ),
-              CardData(
-                description: 'Soporte de Notebook Quanta',
-                date: '05/03/2023 15:25hs',
-                amount: 99301,
-                state: false,
-              ),*/
-                //SizedBox(),
               ],
             ),
           ),
@@ -309,13 +150,15 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => FormScreen(
                         cardInfo: CardInfo(
-                            amount: 0,
-                            description: '',
-                            state: true,
-                            date:
-                                DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                            time:
-                                '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+                          amount: 0,
+                          description: '',
+                          state: true,
+                          date: DateFormat('dd/MM/yyyy').format(
+                            DateTime.now(),
+                          ),
+                          time:
+                              '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
+                        ),
                         buttonType: 1,
                         buttonText: 'Agregar',
                       ),
@@ -345,11 +188,14 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
+                        vertical: 10,
+                        horizontal: 20,
+                      ),
                       color: const Color.fromARGB(255, 34, 34, 34),
                       // color: Colors.red,
                       width: double.infinity,
@@ -359,11 +205,7 @@ class HomeScreen extends StatelessWidget {
                           ListTile(
                             selectedColor: Colors.red,
                             onTap: () {
-                              //print(modalOptionsProvider.index);
                               alertProvider.changeDelete(true);
-                              // modalOptionsProvider
-                              //     .deleteCard(modalOptionsProvider.idCard);
-                              // modalOptionsProvider.closeModalOptions(0);
                             },
                             leading: const Icon(
                               Icons.delete,
@@ -376,19 +218,20 @@ class HomeScreen extends StatelessWidget {
                           ),
                           ListTile(
                             onTap: () {
-                              //cardService.loadCards();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FormScreen(
                                     cardInfo: CardInfo(
-                                        amount: 0,
-                                        description: '',
-                                        state: true,
-                                        date: DateFormat('dd/MM/yyyy')
-                                            .format(DateTime.now()),
-                                        time:
-                                            '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+                                      amount: 0,
+                                      description: '',
+                                      state: true,
+                                      date: DateFormat('dd/MM/yyyy').format(
+                                        DateTime.now(),
+                                      ),
+                                      time:
+                                          '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
+                                    ),
                                     buttonType: 1,
                                     buttonText: 'Agregar',
                                   ),
@@ -435,55 +278,11 @@ class HomeScreen extends StatelessWidget {
                 )
               ],
             ),
-          )
-          /*GestureDetector(
-            //onTap: () => modalOptionsProvider.changeHeight(0),
-            child: Container(
-              color: Color.fromARGB(255, 34, 34, 34),
-              width: double.infinity,
-              height: modalOptionsProvider.height,
-              child: ListView(
-                children: [
-                  ListTile(
-                    onTap: () => print('eliminar'),
-                    leading: Icon(
-                      Icons.delete,
-                      size: 25,
-                    ),
-                    title: Text(
-                      'Eliminar',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.add,
-                      size: 25,
-                    ),
-                    title: Text(
-                      'Agregar',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.update,
-                      size: 25,
-                    ),
-                    title: Text(
-                      'Actualizar',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )*/
-          ,
+          ),
           alertProvider.onDelete == true
               ? AlertDialog(
-                  title: Text('Eliminar'),
-                  content: Text('Seguro que quieres eliminar este Card?'),
+                  title: const Text('Eliminar'),
+                  content: const Text('Seguro que quieres eliminar este Card?'),
                   actions: [
                     TextButton(
                       onPressed: () {},
@@ -492,7 +291,7 @@ class HomeScreen extends StatelessWidget {
                           modalOptionsProvider.closeModalOptions(0);
                           alertProvider.changeDelete(false);
                         },
-                        child: Text('Cancelar'),
+                        child: const Text('Cancelar'),
                       ),
                     ),
                     TextButton(
@@ -504,7 +303,7 @@ class HomeScreen extends StatelessWidget {
                         modalOptionsProvider.closeModalOptions(0);
                         alertProvider.changeDelete(false);
                       },
-                      child: Text('Si'),
+                      child: const Text('Sí'),
                     ),
                   ],
                 )
