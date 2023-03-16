@@ -250,6 +250,7 @@ class HomeScreen extends StatelessWidget {
                         //         'Cargando...' /*'No hay datos'*/,
                         //         style: TextStyle(fontSize: 20),
                         //       ))
+                        //sdssssd
                         /*:*/ child: cardService.isLoading
                             ? Center(
                                 child: Text(
