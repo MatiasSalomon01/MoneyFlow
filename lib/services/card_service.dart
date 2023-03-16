@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,7 +8,7 @@ import 'package:money_flow/providers/providers.dart';
 class CardService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
 
-  List<CardInfo> cards = [];
+  late List<CardInfo> cards = [];
 
   late CardInfo cardInfo;
 
@@ -22,63 +21,70 @@ class CardService extends ChangeNotifier {
   double get currentAmount => _currentAmount;
 
   CardService() {
-    loadCardsFiltered(DateTime.now().month);
+    loadCardsFiltered(DateTime.now().month, false);
   }
 
   Future<void> loadCards(bool x) async {
-    print(x);
-    cards.clear();
+    if (x == true) return;
+    if (x == false) {
+      isLoading = true;
+      cards.clear();
 
-    final url = Uri.https(_baseUrl, 'card.json');
-    final res = await http.get(url);
+      final url = Uri.https(_baseUrl, 'card.json');
+      final res = await http.get(url);
 
-    if (res.body != 'null') {
-      final Map<String, dynamic> cardsMap = json.decode(res.body);
+      if (res.body != 'null') {
+        final Map<String, dynamic> cardsMap = json.decode(res.body);
 
-      cardsMap.forEach((key, value) {
-        final tempCard = CardInfo.fromJson(value);
-        tempCard.id = key;
-        cards.add(tempCard);
-      });
+        cardsMap.forEach((key, value) {
+          final tempCard = CardInfo.fromJson(value);
+          tempCard.id = key;
+          cards.add(tempCard);
+        });
+      }
+      getTotalAmount(cards);
+      if (cards.length == 0) empty = true;
+
+      cards = cards.reversed.toList();
     }
-    getTotalAmount(cards);
-    if (cards.length == 0) empty = true;
-    isLoading = false;
 
-    cards = cards.reversed.toList();
+    isLoading = false;
 
     notifyListeners();
   }
 
-  Future<void> loadCardsFiltered(int month) async {
-    List<CardInfo> x = [];
-    isLoading = true;
-    cards.clear();
+  Future<void> loadCardsFiltered(int month, bool x) async {
+    if (x == true) return;
+    if (x == false) {
+      List<CardInfo> x = [];
+      isLoading = true;
+      cards.clear();
 
-    final url = Uri.https(_baseUrl, 'card.json');
-    final res = await http.get(url);
+      final url = Uri.https(_baseUrl, 'card.json');
+      final res = await http.get(url);
 
-    if (res.body != 'null') {
-      final Map<String, dynamic> cardsMap = json.decode(res.body);
+      if (res.body != 'null') {
+        final Map<String, dynamic> cardsMap = json.decode(res.body);
 
-      cardsMap.forEach((key, value) {
-        final tempCard = CardInfo.fromJson(value);
-        tempCard.id = key;
+        cardsMap.forEach((key, value) {
+          final tempCard = CardInfo.fromJson(value);
+          tempCard.id = key;
 
-        if (tempCard.date.split('/')[1].startsWith("0")) {
-          if (month == int.parse(tempCard.date.split('/')[1][1])) {
-            cards.add(tempCard);
+          if (tempCard.date.split('/')[1].startsWith("0")) {
+            if (month == int.parse(tempCard.date.split('/')[1][1])) {
+              cards.add(tempCard);
+            }
+          } else {
+            if (month == int.parse(tempCard.date.split('/')[1])) {
+              cards.add(tempCard);
+            }
           }
-        } else {
-          if (month == int.parse(tempCard.date.split('/')[1])) {
-            cards.add(tempCard);
-          }
-        }
-        x.add(tempCard);
-      });
+          x.add(tempCard);
+        });
+      }
+      getTotalAmount(x);
+      if (cards.length == 0) empty = true;
     }
-    getTotalAmount(x);
-    if (cards.length == 0) empty = true;
     isLoading = false;
 
     cards = cards.reversed.toList();
@@ -88,7 +94,7 @@ class CardService extends ChangeNotifier {
     // for (var element in cards.reversed) {
     //   print(
     //       "${element.id} | ${element.description} | ${element.date} 1 ${element.amount} | ${element.state}");
-    // }
+    // // }
     // return cards;
   }
 
@@ -110,7 +116,7 @@ class CardService extends ChangeNotifier {
 
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
-    await loadCardsFiltered(DateProvider.selectedMonth);
+    await loadCardsFiltered(DateProvider.selectedMonth, false);
     return cardInfo.id!;
   }
 
@@ -131,7 +137,7 @@ class CardService extends ChangeNotifier {
 
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
-    await loadCardsFiltered(DateProvider.selectedMonth);
+    await loadCardsFiltered(DateProvider.selectedMonth, false);
     return 'Actualización Exitosa';
   }
 }
