@@ -30,9 +30,6 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AmountProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => DataButtons(id, month, state),
-        // )
       ],
       child: MyApp(),
     );
@@ -50,11 +47,9 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (context) => HomeScreen(),
-        //'form': (context) => FormScreen(),
         'settings': (context) => SettingsScreen()
       },
       theme: ThemeApp.darkTheme,
-      // theme: ThemeApp.lightTheme,
     );
   }
 }
