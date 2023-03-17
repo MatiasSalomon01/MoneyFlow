@@ -20,6 +20,7 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final formProvider = Provider.of<FormProvider>(context);
+    final dateProvider = Provider.of<DateProvider>(context);
 
     return Scaffold(
       appBar: AppBar(),
@@ -96,6 +97,7 @@ class FormScreen extends StatelessWidget {
                     onPressed: () {
                       if (buttonType == 1) {
                         cardService.createCard(
+                          DateProvider.selectedMonth,
                           CardInfo(
                             amount: formProvider.amount,
                             date: formProvider.date,
@@ -107,6 +109,7 @@ class FormScreen extends StatelessWidget {
                       }
                       if (buttonType == 2) {
                         cardService.updateCard(
+                          DateProvider.selectedMonth,
                           CardInfo(
                             id: formProvider.id,
                             amount: formProvider.amount,
