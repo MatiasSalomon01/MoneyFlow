@@ -59,44 +59,7 @@ class HomeScreen extends StatelessWidget {
           ),
           FloatingActionButtonCustom(),
           Modal(),
-          alertProvider.onDelete == true
-              ? AlertDialog(
-                  title: const Text('Eliminar'),
-                  content: const Text('Seguro que quieres eliminar este Card?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {},
-                      child: TextButton(
-                        onPressed: () {
-                          modalOptionsProvider.closeModalOptions(0);
-                          alertProvider.changeDelete(false);
-                        },
-                        child: const Text('Cancelar'),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        cardService.cards.removeAt(modalOptionsProvider.index);
-                        if (DateProvider.selectedMonth == 0) {
-                          cardService.getTotalAmount(cardService.cards);
-                          //cardService.loadCards(false);
-                        }
-                        if (DateProvider.selectedMonth != 0) {
-                          cardService.getCurrentTotalCards(
-                              modalOptionsProvider.cardInfo.amount,
-                              modalOptionsProvider.cardInfo.state);
-                        }
-
-                        modalOptionsProvider
-                            .deleteCard(modalOptionsProvider.idCard);
-                        modalOptionsProvider.closeModalOptions(0);
-                        alertProvider.changeDelete(false);
-                      },
-                      child: const Text('Sí'),
-                    ),
-                  ],
-                )
-              : Container(),
+          alertProvider.onDelete == true ? AlertDialogCustom() : Container(),
         ],
       ),
       /*bottomNavigationBar: BottomNavigationBar(

@@ -1,3 +1,4 @@
+export 'package:money_flow/widgets/alert_dialog_custom.dart';
 export 'package:money_flow/widgets/modal.dart';
 export 'package:money_flow/widgets/floating_action_button_custom.dart';
 export 'package:money_flow/widgets/cards_deployment.dart';
