@@ -24,30 +24,9 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    splashRadius: 20,
-                    onPressed: () {
-                      amountProvider.changeIconState();
-                    },
-                    icon: amountProvider.iconState == true
-                        ? const Icon(Icons.visibility)
-                        : const Icon(Icons.visibility_off)),
-                amountProvider.iconState == true
-                    ? GestureDetector(
-                        onTap: () => amountProvider.changeIconState(),
-                        child: Text('Gs. $currentAmount'))
-                    : GestureDetector(
-                        onTap: () => amountProvider.changeIconState(),
-                        child: const Text('*********')),
-              ],
-            ),
-          )),
+        centerTitle: true,
+        title: AppBarTitleCustom(),
+      ),
       drawer: SideMenu(),
       body: Stack(
         alignment: Alignment.topCenter,
