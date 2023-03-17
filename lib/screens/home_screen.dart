@@ -45,23 +45,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: dateProvider.filterButtons.length,
-                      itemBuilder: (context, index) {
-                        return DateButton(
-                          name: dateProvider.filterButtons[index].month,
-                          id: dateProvider.filterButtons[index].id,
-                          state: dateProvider.filterButtons[index].state,
-                          index: index,
-                          isPressed: dateProvider.idPressed[index].state,
-                        );
-                      },
-                    ),
-                  ),
+                  child: FilterButtons(),
                 ),
                 const SizedBox(
                   height: 10,
