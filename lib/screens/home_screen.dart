@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
-import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -13,21 +10,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
-    final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
     final alertProvider = Provider.of<AlertProvider>(context);
-    final dateProvider = Provider.of<DateProvider>(context);
-    final amountProvider = Provider.of<AmountProvider>(context);
-    var currentAmount = cardService.currentAmount.round();
-
-    int totalCards = cardService.cards.length;
-    // var currentAmount = cardService.currentAmount.round();
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: AppBarTitleCustom(),
+        title: const AppBarTitleCustom(),
       ),
-      drawer: SideMenu(),
+      drawer: const SideMenu(),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -39,27 +29,19 @@ class HomeScreen extends StatelessWidget {
             ),
           GestureDetector(
             child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: FilterButtons(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  flex: 18,
-                  child: CardsDeployment(),
-                ),
+              children: const [
+                SizedBox(height: 20),
+                Expanded(flex: 1, child: FilterButtons()),
+                SizedBox(height: 10),
+                Expanded(flex: 18, child: CardsDeployment()),
               ],
             ),
           ),
-          FloatingActionButtonCustom(),
-          Modal(),
-          alertProvider.onDelete == true ? AlertDialogCustom() : Container(),
+          const FloatingActionButtonCustom(),
+          const Modal(),
+          alertProvider.onDelete == true
+              ? const AlertDialogCustom()
+              : Container(),
         ],
       ),
       /*bottomNavigationBar: BottomNavigationBar(
