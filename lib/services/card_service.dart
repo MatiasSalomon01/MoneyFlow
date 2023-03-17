@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:money_flow/providers/providers.dart';
@@ -108,7 +107,7 @@ class CardService extends ChangeNotifier {
     return _currentAmount;
   }
 
-  Future<String> createCard(CardInfo cardInfo) async {
+  Future<String> createCard(int month, CardInfo cardInfo) async {
     final url = Uri.https(_baseUrl, 'card.json');
     final res = await http.post(url, body: cardInfo.toRawJson());
 
@@ -116,7 +115,12 @@ class CardService extends ChangeNotifier {
 
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
-    await loadCardsFiltered(DateProvider.selectedMonth, false);
+    if (month == 0) {
+      loadCards(false);
+    }
+    if (month != 0) {
+      loadCardsFiltered(DateProvider.selectedMonth, false);
+    }
     return cardInfo.id!;
   }
 
@@ -128,16 +132,21 @@ class CardService extends ChangeNotifier {
     //await loadCards();
   }
 
-  Future<String?> updateCard(CardInfo cardInfo) async {
+  Future<String?> updateCard(int month, CardInfo cardInfo) async {
     // print(cardInfo.id);
     // print(cardInfo.description);
     // print(cardInfo.date);
     // print(cardInfo.amount);
     // print(cardInfo.state);
-
     final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
-    await loadCardsFiltered(DateProvider.selectedMonth, false);
+
+    if (month == 0) {
+      loadCards(false);
+    }
+    if (month != 0) {
+      loadCardsFiltered(DateProvider.selectedMonth, false);
+    }
     return 'Actualización Exitosa';
   }
 }
