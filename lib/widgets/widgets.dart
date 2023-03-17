@@ -1,3 +1,4 @@
+export 'package:money_flow/widgets/floating_action_button_custom.dart';
 export 'package:money_flow/widgets/cards_deployment.dart';
 export 'package:money_flow/widgets/filter_buttons.dart';
 export 'package:money_flow/widgets/appbar_title_custom.dart';
