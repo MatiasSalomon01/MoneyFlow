@@ -17,14 +17,15 @@ class HomeScreen extends StatelessWidget {
     final alertProvider = Provider.of<AlertProvider>(context);
     final dateProvider = Provider.of<DateProvider>(context);
     final amountProvider = Provider.of<AmountProvider>(context);
+    var currentAmount = cardService.currentAmount.round();
 
     int totalCards = cardService.cards.length;
-    var currentAmount = cardService.currentAmount.round();
+    // var currentAmount = cardService.currentAmount.round();
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Align(
+          centerTitle: true,
+          title: Align(
             alignment: Alignment.centerRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -45,8 +46,8 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => amountProvider.changeIconState(),
                         child: const Text('*********')),
               ],
-            )),
-      ),
+            ),
+          )),
       drawer: SideMenu(),
       body: Stack(
         alignment: Alignment.topCenter,
@@ -295,9 +296,18 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         cardService.cards.removeAt(modalOptionsProvider.index);
-                        cardService.getTotalAmount(cardService.cards);
+                        if (DateProvider.selectedMonth == 0) {
+                          cardService.getTotalAmount(cardService.cards);
+                          //cardService.loadCards(false);
+                        }
+                        if (DateProvider.selectedMonth != 0) {
+                          cardService.getCurrentTotalCards(
+                              modalOptionsProvider.cardInfo.amount,
+                              modalOptionsProvider.cardInfo.state);
+                        }
+
                         modalOptionsProvider
                             .deleteCard(modalOptionsProvider.idCard);
                         modalOptionsProvider.closeModalOptions(0);
