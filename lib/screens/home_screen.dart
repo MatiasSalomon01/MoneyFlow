@@ -329,6 +329,7 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(Icons.account_box_outlined), label: 'Boton1'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.add_chart_sharp), label: 'Boton2')
+                dededede
           ]),*/
     );
   }
