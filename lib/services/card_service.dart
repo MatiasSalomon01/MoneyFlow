@@ -9,6 +9,8 @@ class CardService extends ChangeNotifier {
 
   late List<CardInfo> cards = [];
 
+  late List<CardInfo> currenTotalCards = [];
+
   late CardInfo cardInfo;
 
   bool empty = false;
@@ -45,6 +47,7 @@ class CardService extends ChangeNotifier {
       if (cards.length == 0) empty = true;
 
       cards = cards.reversed.toList();
+      currenTotalCards = cards.reversed.toList();
     }
 
     isLoading = false;
@@ -87,6 +90,7 @@ class CardService extends ChangeNotifier {
     isLoading = false;
 
     cards = cards.reversed.toList();
+    currenTotalCards = cards.reversed.toList();
 
     notifyListeners();
 
@@ -106,6 +110,14 @@ class CardService extends ChangeNotifier {
     notifyListeners();
     return _currentAmount;
   }
+
+  // double updateTotalAmount(double amount, bool state) {
+  //   if (state == true) _currentAmount += amount;
+  //   if (state == false) _currentAmount -= amount;
+  //   // notifyListeners();
+  //   print(_currentAmount);
+  //   return 0;
+  // }
 
   Future<String> createCard(int month, CardInfo cardInfo) async {
     final url = Uri.https(_baseUrl, 'card.json');
@@ -148,5 +160,12 @@ class CardService extends ChangeNotifier {
       loadCardsFiltered(DateProvider.selectedMonth, false);
     }
     return 'Actualización Exitosa';
+  }
+
+  double getCurrentTotalCards(double amount, bool state) {
+    if (state == true) _currentAmount -= amount;
+    if (state == false) _currentAmount += amount;
+    notifyListeners();
+    return _currentAmount;
   }
 }
