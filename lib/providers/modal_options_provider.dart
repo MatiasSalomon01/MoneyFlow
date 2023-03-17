@@ -39,9 +39,9 @@ class ModelOptionsProvider extends ChangeNotifier {
     //print(cardService.empty);
   }
 
-  void updateCard(CardInfo cardInfo) {
+  void updateCard(selectedMonth, CardInfo cardInfo) {
     //print('Card Selecionado para actualizar: ${cardInfo.id}');
-    cardService.updateCard(cardInfo);
+    cardService.updateCard(selectedMonth, cardInfo);
     //print(cardInfo.id);
   }
 
