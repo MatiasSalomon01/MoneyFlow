@@ -37,7 +37,7 @@ class Modal extends StatelessWidget {
                 topRight: Radius.circular(20),
               ),
               child: SlideInUp(
-                duration: Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 250),
                 animate: modalOptionsProvider.activateAnimation,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
