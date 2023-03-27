@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
@@ -56,8 +57,9 @@ class FormScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 TextFormFieldCustom(
-                  initialValue:
-                      cardInfo.amount > 0 ? '${cardInfo.amount.round()}' : '',
+                  initialValue: cardInfo.amount > 0
+                      ? '${_formatNumber(cardInfo.amount.round())}'
+                      : '',
                   labelText: 'Monto',
                   helperText: 'Ingrese Monto',
                   keyboardType: TextInputType.number,
@@ -142,4 +144,9 @@ class FormScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+String _formatNumber(int value) {
+  NumberFormat myFormat = NumberFormat.decimalPattern('es_es');
+  return myFormat.format(value);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
@@ -117,14 +118,14 @@ class CardData extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 10),
                           child: this.state == true
                               ? Text(
-                                  '${amount.round()}',
+                                  '${_formatNumber(amount.round())}',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.green,
                                   ),
                                 )
                               : Text(
-                                  '-${amount.round()}',
+                                  '-${_formatNumber(amount.round())}',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.red,
@@ -140,4 +141,9 @@ class CardData extends StatelessWidget {
           )),
     );
   }
+}
+
+String _formatNumber(int value) {
+  NumberFormat myFormat = NumberFormat.decimalPattern('es_es');
+  return myFormat.format(value);
 }

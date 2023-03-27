@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class AppBarTitleCustom extends StatelessWidget {
           amountProvider.iconState == true
               ? GestureDetector(
                   onTap: () => amountProvider.changeIconState(),
-                  child: Text('Gs. $currentAmount'))
+                  child: Text('Gs. ${_formatNumber(currentAmount)}'))
               : GestureDetector(
                   onTap: () => amountProvider.changeIconState(),
                   child: const Text('*********'),
@@ -36,4 +37,9 @@ class AppBarTitleCustom extends StatelessWidget {
       ),
     );
   }
+}
+
+String _formatNumber(int value) {
+  NumberFormat myFormat = NumberFormat.decimalPattern('es_es');
+  return myFormat.format(value);
 }
