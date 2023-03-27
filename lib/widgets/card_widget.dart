@@ -58,6 +58,7 @@ class CardData extends StatelessWidget {
                 time: time,
                 description: description,
                 state: state));
+        modalOptionsProvider.activateAnimation = true;
       },
       child: Container(
           margin: const EdgeInsets.only(right: 5, left: 5, top: 5),

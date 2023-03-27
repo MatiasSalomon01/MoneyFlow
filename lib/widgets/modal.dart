@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
@@ -22,6 +23,7 @@ class Modal extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 modalOptionsProvider.closeModalOptions(0);
+                modalOptionsProvider.activateAnimation = false;
               },
               child: Container(
                 color: Colors.transparent.withOpacity(0.2),
@@ -34,87 +36,91 @@ class Modal extends StatelessWidget {
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 20,
-                ),
-                color: const Color.fromARGB(255, 34, 34, 34),
-                // color: Colors.red,
-                width: double.infinity,
-                height: modalOptionsProvider.height,
-                child: ListView(
-                  children: [
-                    ListTile(
-                      selectedColor: Colors.red,
-                      onTap: () {
-                        alertProvider.changeDelete(true);
-                      },
-                      leading: const Icon(
-                        Icons.delete,
-                        size: 25,
+              child: SlideInUp(
+                duration: Duration(milliseconds: 250),
+                animate: modalOptionsProvider.activateAnimation,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  color: const Color.fromARGB(255, 34, 34, 34),
+                  // color: Colors.red,
+                  width: double.infinity,
+                  height: modalOptionsProvider.height,
+                  child: ListView(
+                    children: [
+                      ListTile(
+                        selectedColor: Colors.red,
+                        onTap: () {
+                          alertProvider.changeDelete(true);
+                        },
+                        leading: const Icon(
+                          Icons.delete,
+                          size: 25,
+                        ),
+                        title: const Text(
+                          'Eliminar',
+                          style: TextStyle(fontSize: 25),
+                        ),
                       ),
-                      title: const Text(
-                        'Eliminar',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FormScreen(
-                              cardInfo: CardInfo(
-                                amount: 0,
-                                description: '',
-                                state: true,
-                                date: DateFormat('dd/MM/yyyy').format(
-                                  DateTime.now(),
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FormScreen(
+                                cardInfo: CardInfo(
+                                  amount: 0,
+                                  description: '',
+                                  state: true,
+                                  date: DateFormat('dd/MM/yyyy').format(
+                                    DateTime.now(),
+                                  ),
+                                  time:
+                                      '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
                                 ),
-                                time:
-                                    '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
+                                buttonType: 1,
+                                buttonText: 'Agregar',
                               ),
-                              buttonType: 1,
-                              buttonText: 'Agregar',
                             ),
-                          ),
-                        );
-                        modalOptionsProvider.closeModalOptions(0);
-                      },
-                      leading: const Icon(
-                        Icons.add,
-                        size: 25,
+                          );
+                          modalOptionsProvider.closeModalOptions(0);
+                        },
+                        leading: const Icon(
+                          Icons.add,
+                          size: 25,
+                        ),
+                        title: const Text(
+                          'Agregar',
+                          style: TextStyle(fontSize: 25),
+                        ),
                       ),
-                      title: const Text(
-                        'Agregar',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FormScreen(
-                              cardInfo: modalOptionsProvider.cardInfo,
-                              buttonType: 2,
-                              buttonText: 'Actualizar',
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FormScreen(
+                                cardInfo: modalOptionsProvider.cardInfo,
+                                buttonType: 2,
+                                buttonText: 'Actualizar',
+                              ),
                             ),
-                          ),
-                        );
-                        modalOptionsProvider.closeModalOptions(0);
-                      },
-                      leading: const Icon(
-                        Icons.update,
-                        size: 25,
-                      ),
-                      title: const Text(
-                        'Actualizar',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    )
-                  ],
+                          );
+                          modalOptionsProvider.closeModalOptions(0);
+                        },
+                        leading: const Icon(
+                          Icons.update,
+                          size: 25,
+                        ),
+                        title: const Text(
+                          'Actualizar',
+                          style: TextStyle(fontSize: 25),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

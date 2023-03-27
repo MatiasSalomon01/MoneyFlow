@@ -12,6 +12,13 @@ class ModelOptionsProvider extends ChangeNotifier {
 
   int index = 0;
 
+  bool _activateAnimation = false;
+  bool get activateAnimation => _activateAnimation;
+  set activateAnimation(bool value) {
+    _activateAnimation = value;
+    notifyListeners();
+  }
+
   double openModalOptions(double value, String id, int i, CardInfo card) {
     height = value;
     idCard = id;
