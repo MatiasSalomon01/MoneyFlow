@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/providers/theme_provider.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ class DateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateProvider = Provider.of<DateProvider>(context);
     final cardService = Provider.of<CardService>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     pressed() {
       //isPressed = !isPressed;
@@ -43,12 +46,26 @@ class DateButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isPressed ? pressed : null,
         style: ElevatedButton.styleFrom(
-            shape: StadiumBorder(),
-            backgroundColor: state
-                ? index != 0
-                    ? Color.fromARGB(255, 126, 125, 125)
-                    : Color.fromARGB(255, 128, 46, 46)
-                : ThemeApp.mainDarkColor),
+          backgroundColor: state
+              ? index != 0
+                  ? Color.fromARGB(255, 126, 125, 125)
+                  : Color.fromARGB(255, 128, 46, 46)
+              // state ? themeProvider.currentColor : themeProvider.currentColor
+              : themeProvider.currentColor,
+
+          // : index != 0
+          //     ? Color.fromARGB(255, 126, 125, 125)
+          //     : Color.fromARGB(255, 128, 46, 46),
+        ),
+        // style: ElevatedButton.styleFrom(
+        //   backgroundColor: //state
+        //       /*?*/ index != 0 || state
+        //           ? Color.fromARGB(255, 126, 125, 125)
+        //           : Color.fromARGB(255, 128, 46, 46),
+        // ),
+        // : state == false
+        //     ? Color.fromARGB(255, 69, 69, 69)
+        //     : Colors.red),
         child: Text(name, style: TextStyle(fontSize: 18)),
       ),
     );

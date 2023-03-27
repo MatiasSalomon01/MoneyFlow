@@ -70,6 +70,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => ThemeProvider(isDarkMode: Preferences.isDarkMode),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ThemeApp(),
       )
     ],
     child: const MyApp(),
