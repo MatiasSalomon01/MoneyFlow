@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AmountProvider extends ChangeNotifier {
-  bool iconState = true;
+  bool iconState = false;
 
   changeIconState() {
     iconState = !iconState;
