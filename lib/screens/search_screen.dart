@@ -18,6 +18,10 @@ class SearchScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.search),
+      ),
     );
   }
 }
@@ -73,9 +77,9 @@ class _SearchBar extends StatelessWidget {
           child: TextFormField(
             decoration: const InputDecoration(
               labelText: 'Buscar',
-              prefixIcon: Icon(
-                Icons.search,
-              ),
+              // prefixIcon: Icon(
+              //   Icons.search,
+              // ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 2),
                 borderRadius: BorderRadius.all(
