@@ -53,7 +53,7 @@ class ThemeProvider extends ChangeNotifier {
     _x = false;
     _currentColor = Color(0xff1E77CF);
     selectColorDark(
-        Color.fromARGB(255, 105, 152, 199), Color.fromARGB(255, 128, 46, 46));
+        Color.fromARGB(255, 105, 152, 199), Color.fromARGB(255, 190, 223, 255));
     notifyListeners();
   }
 

@@ -18,19 +18,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         centerTitle: true,
         title: Text('Configuración'),
       ),
-      body: Center(
-        child: SwitchListTile.adaptive(
-          value: Preferences.isDarkMode,
-          title: const Text('Darkmode'),
-          onChanged: (value) {
-            Preferences.isDarkMode = value;
-            final themeProvider =
-                Provider.of<ThemeProvider>(context, listen: false);
-            value ? themeProvider.setDarkMode() : themeProvider.setLightMode();
-            setState(() {});
-          },
-        ),
-      ),
+      // body: Center(
+      //   child: SwitchListTile.adaptive(
+      //     value: Preferences.isDarkMode,
+      //     title: const Text('Darkmode'),
+      //     onChanged: (value) {
+      //       Preferences.isDarkMode = value;
+      //       final themeProvider =
+      //           Provider.of<ThemeProvider>(context, listen: false);
+      //       value ? themeProvider.setDarkMode() : themeProvider.setLightMode();
+      //       setState(() {});
+      //     },
+      //   ),
+      // ),
     );
   }
 }
