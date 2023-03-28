@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,13 @@ class SearchScreen extends StatelessWidget {
           // print(searchBarProvider.input);
           var allCards = await cardService.getCards();
           allCards.forEach((i) {
-            if (i.description.startsWith(searchScreenProvider.input)) {
+            if (i.description.startsWith(searchScreenProvider.input) &&
+                searchScreenProvider.menuItemOption == 2) {
+              print(
+                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (i.amount == double.tryParse(searchScreenProvider.input) &&
+                searchScreenProvider.menuItemOption == 3) {
               print(
                   "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
@@ -61,6 +68,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
 
   @override
   Widget build(BuildContext context) {
+    final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Container(
       padding: EdgeInsets.only(right: 20),
       // color: Colors.red,
@@ -69,6 +77,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
         items: menuItems,
         onChanged: (value) {
           _value = value!;
+          searchScreenProvider.menuItemOption = value;
           setState(() {});
         },
       ),
@@ -90,14 +99,50 @@ class _SearchBar extends StatelessWidget {
           // color: Colors.green,
           padding: EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
+            // controller: TextEditingController(
+            //     // text: searchScreenProvider.dateChoosed != "null"
+            //     //     ? DateFormat('dd/MM/yyyy').format(
+            //     //         searchScreenProvider.dateChoosed,
+            //     //       )
+            //     //     : searchScreenProvider.input),
+            //     text: searchScreenProvider.input),
+            controller: searchScreenProvider.menuItemOption != 1
+                ? null
+                : TextEditingController(
+                    text: searchScreenProvider.dateChoosed != "null"
+                        ? searchScreenProvider.input
+                        : ''),
+            keyboardType: searchScreenProvider.menuItemOption == 3
+                ? TextInputType.number
+                : searchScreenProvider.menuItemOption == 1
+                    ? TextInputType.none
+                    : TextInputType.text,
             onChanged: (value) {
               searchScreenProvider.input = value;
+            },
+            onTap: () {
+              if (searchScreenProvider.menuItemOption == 1) {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime(2025),
+                ).then((value) {
+                  if (value != null) {
+                    searchScreenProvider.input =
+                        DateFormat('dd/MM/yyyy').format(value);
+                  } else {
+                    searchScreenProvider.input = '';
+                  }
+                });
+                // searchScreenProvider.input = ;
+              }
             },
             decoration: const InputDecoration(
               labelText: 'Buscar',
               // prefixIcon: Icon(
               //   Icons.search,
-              // ),
+              // );
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 2),
                 borderRadius: BorderRadius.all(
