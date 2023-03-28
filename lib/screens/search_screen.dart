@@ -9,7 +9,7 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
-    final searchBarProvider = Provider.of<SearchBarProvider>(context);
+    final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buscar'),
@@ -28,7 +28,7 @@ class SearchScreen extends StatelessWidget {
           // print(searchBarProvider.input);
           var allCards = await cardService.getCards();
           allCards.forEach((i) {
-            if (i.description.startsWith(searchBarProvider.input)) {
+            if (i.description.startsWith(searchScreenProvider.input)) {
               print(
                   "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
@@ -83,7 +83,7 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchBarProvider = Provider.of<SearchBarProvider>(context);
+    final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Form(
       child: Expanded(
         child: Container(
@@ -91,7 +91,7 @@ class _SearchBar extends StatelessWidget {
           padding: EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
             onChanged: (value) {
-              searchBarProvider.input = value;
+              searchScreenProvider.input = value;
             },
             decoration: const InputDecoration(
               labelText: 'Buscar',
