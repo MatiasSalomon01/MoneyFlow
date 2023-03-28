@@ -9,7 +9,7 @@ class SearchScreenProvider extends ChangeNotifier {
 
   // String _inputText = "";
 
-  // dynamic get input => _input;
+  dynamic get input => _input;
 
   set input(dynamic value) {
     _input = value;
@@ -29,11 +29,4 @@ class SearchScreenProvider extends ChangeNotifier {
     _dateChoosed = value;
     notifyListeners();
   }
-
-//   String get inputText => _inputText;
-
-//   set inputText(String value) {
-//     _inputText = value;
-//     notifyListeners();
-//   }
 }
