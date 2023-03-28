@@ -48,11 +48,12 @@ class DateButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: state
               ? index != 0
-                  ? Color.fromARGB(255, 126, 125, 125)
-                  : Color.fromARGB(255, 128, 46, 46)
+                  ? themeProvider.selectedElevatedButton
+                  : themeProvider.selectedElevatedButtonSeeAll
               // state ? themeProvider.currentColor : themeProvider.currentColor
               : themeProvider.currentColor,
-
+          foregroundColor:
+              state && !Preferences.isDarkMode ? Colors.black : Colors.white,
           // : index != 0
           //     ? Color.fromARGB(255, 126, 125, 125)
           //     : Color.fromARGB(255, 128, 46, 46),
