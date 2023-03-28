@@ -39,7 +39,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
       children: [
         Expanded(
           child: RadioListTile(
-            title: Text('Ingreso'),
+            title: const Text('Ingreso'),
             value: 1,
             groupValue: selected,
             onChanged: (value) {
@@ -52,7 +52,7 @@ class _RadioListTileCustomState extends State<RadioListTileCustom> {
         ),
         Expanded(
           child: RadioListTile(
-            title: Text('Egreso'),
+            title: const Text('Egreso'),
             value: 2,
             groupValue: selected,
             onChanged: (value) {

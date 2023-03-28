@@ -21,7 +21,6 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final formProvider = Provider.of<FormProvider>(context);
-    final dateProvider = Provider.of<DateProvider>(context);
 
     return Scaffold(
       appBar: AppBar(),
@@ -58,7 +57,7 @@ class FormScreen extends StatelessWidget {
                 const SizedBox(height: 25),
                 TextFormFieldCustom(
                   initialValue: cardInfo.amount > 0
-                      ? '${_formatNumber(cardInfo.amount.round())}'
+                      ? _formatNumber(cardInfo.amount.round())
                       : '',
                   labelText: 'Monto',
                   helperText: 'Ingrese Monto',

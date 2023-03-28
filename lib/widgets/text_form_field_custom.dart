@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:money_flow/models/card_info.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class TextFormFieldCustom extends StatelessWidget {
   //dynamic dataInput;
   //FormProvider formProvider;
 
-  TextFormFieldCustom({
+  const TextFormFieldCustom({
     super.key,
     this.initialValue,
     required this.labelText,
@@ -52,7 +51,7 @@ class TextFormFieldCustom extends StatelessWidget {
       // },
       //initialValue: '${DateFormat('dd/MM/yyyy').format(date)}',
       decoration: InputDecoration(
-        floatingLabelStyle: TextStyle(
+        floatingLabelStyle: const TextStyle(
           color: Colors.white,
         ),
         labelText: labelText,
@@ -61,13 +60,13 @@ class TextFormFieldCustom extends StatelessWidget {
           suffixIcon,
           color: suffixIconColor ?? Colors.grey,
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.all(
             Radius.circular(50),
           ),
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       onChanged: (value) {
         getInput(value, formProvider, labelText, cardInfo);
@@ -78,11 +77,14 @@ class TextFormFieldCustom extends StatelessWidget {
   static getInput(dynamic value, FormProvider formProvider, String labelText,
       CardInfo cardInfo) {
     //print(cardInfo.id);
-    if (labelText == 'Fecha')
+    if (labelText == 'Fecha') {
       formProvider.saveInput(value, 0, cardInfo.id ?? '');
-    if (labelText == 'Descripcion')
+    }
+    if (labelText == 'Descripcion') {
       formProvider.saveInput(value, 1, cardInfo.id ?? '');
-    if (labelText == 'Monto')
+    }
+    if (labelText == 'Monto') {
       formProvider.saveInput(value, 2, cardInfo.id ?? '');
+    }
   }
 }

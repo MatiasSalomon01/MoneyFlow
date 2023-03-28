@@ -3,7 +3,6 @@ import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/providers/theme_provider.dart';
 import 'package:money_flow/services/services.dart';
-import 'package:money_flow/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class DateButton extends StatelessWidget {
@@ -67,7 +66,7 @@ class DateButton extends StatelessWidget {
         // : state == false
         //     ? Color.fromARGB(255, 69, 69, 69)
         //     : Colors.red),
-        child: Text(name, style: TextStyle(fontSize: 18)),
+        child: Text(name, style: const TextStyle(fontSize: 18)),
       ),
     );
   }

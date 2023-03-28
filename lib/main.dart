@@ -89,8 +89,8 @@ class MyApp extends StatelessWidget {
         title: 'Money Flow',
         initialRoute: 'home',
         routes: {
-          'home': (context) => HomeScreen(),
-          'settings': (context) => SettingsScreen()
+          'home': (context) => const HomeScreen(),
+          'settings': (context) => const SettingsScreen()
         },
         // theme: ThemeApp.darkTheme,
         theme: Provider.of<ThemeProvider>(context).currentTheme);

@@ -17,7 +17,7 @@ class _SideMenuState extends State<SideMenu> {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Drawer(
       child: SlideInLeft(
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         child: SafeArea(
           child: Column(
             children: [
@@ -30,7 +30,7 @@ class _SideMenuState extends State<SideMenu> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.close_sharp)),
+                    icon: const Icon(Icons.close_sharp)),
                 //onTap: () => Navigator.pop(context),
               ),
               const SizedBox(
@@ -60,13 +60,15 @@ class _SideMenuState extends State<SideMenu> {
                 padding: const EdgeInsets.only(left: 3),
                 child: ListTile(
                   leading: Preferences.isDarkMode
-                      ? Icon(Icons.dark_mode,
+                      ? const Icon(Icons.dark_mode,
                           color: Color.fromARGB(255, 71, 144, 204), size: 30)
-                      : Icon(Icons.light_mode,
+                      : const Icon(Icons.light_mode,
                           color: Color.fromARGB(255, 255, 196, 3), size: 30),
                   title: Preferences.isDarkMode
-                      ? Text('Modo Oscuro', style: TextStyle(fontSize: 20))
-                      : Text('Modo Claro', style: TextStyle(fontSize: 20)),
+                      ? const Text('Modo Oscuro',
+                          style: TextStyle(fontSize: 20))
+                      : const Text('Modo Claro',
+                          style: TextStyle(fontSize: 20)),
                   trailing: Switch.adaptive(
                     activeColor: Colors.grey,
                     value: Preferences.isDarkMode,

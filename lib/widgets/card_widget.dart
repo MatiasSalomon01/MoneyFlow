@@ -118,7 +118,7 @@ class CardData extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 10),
                           child: this.state == true
                               ? Text(
-                                  '${_formatNumber(amount.round())}',
+                                  _formatNumber(amount.round()),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.green,

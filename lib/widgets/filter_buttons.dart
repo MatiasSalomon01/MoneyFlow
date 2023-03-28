@@ -10,7 +10,7 @@ class FilterButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateProvider = Provider.of<DateProvider>(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
