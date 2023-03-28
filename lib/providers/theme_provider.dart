@@ -31,7 +31,8 @@ class ThemeProvider extends ChangeNotifier {
   static ThemeData darkTheme = ThemeData.dark().copyWith(
     appBarTheme: const AppBarTheme(backgroundColor: mainDarkColor),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Color.fromARGB(255, 104, 104, 104)),
+        backgroundColor: Color.fromARGB(255, 104, 104, 104),
+        foregroundColor: Colors.white),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: mainDarkColor,
         selectedItemColor: Colors.white,

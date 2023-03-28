@@ -57,6 +57,14 @@ class _SideMenuState extends State<SideMenu> {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: ListTile(
+                  leading: const Icon(Icons.search),
+                  title: const Text('Buscar', style: TextStyle(fontSize: 20)),
+                  onTap: () => Navigator.popAndPushNamed(context, 'search'),
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: ListTile(
                   leading: Preferences.isDarkMode

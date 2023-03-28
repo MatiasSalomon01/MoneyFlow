@@ -168,4 +168,21 @@ class CardService extends ChangeNotifier {
     notifyListeners();
     return _currentAmount;
   }
+
+  Future<List<CardInfo>> getCards() async {
+    List<CardInfo> x = [];
+
+    final url = Uri.https(_baseUrl, 'card.json');
+    final res = await http.get(url);
+
+    if (res.body != 'null') {
+      final Map<String, dynamic> cardsMap = json.decode(res.body);
+
+      cardsMap.forEach((key, value) {
+        final tempCard = CardInfo.fromJson(value);
+        x.add(tempCard);
+      });
+    }
+    return x;
+  }
 }
