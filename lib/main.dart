@@ -90,7 +90,8 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         routes: {
           'home': (context) => const HomeScreen(),
-          'settings': (context) => const SettingsScreen()
+          'settings': (context) => const SettingsScreen(),
+          'search': (context) => SearchScreen()
         },
         // theme: ThemeApp.darkTheme,
         theme: Provider.of<ThemeProvider>(context).currentTheme);
