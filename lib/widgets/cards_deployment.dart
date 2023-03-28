@@ -34,6 +34,7 @@ class CardsDeployment extends StatelessWidget {
               )
             : cardService.cards.length > 0
                 ? ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.only(bottom: 80),
                     shrinkWrap: true,
                     itemCount: totalCards,
