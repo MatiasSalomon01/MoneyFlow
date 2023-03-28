@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/services/services.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
+    final searchBarProvider = Provider.of<SearchBarProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buscar'),
@@ -19,7 +24,16 @@ class SearchScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          // print(searchBarProvider.input);
+          var allCards = await cardService.getCards();
+          allCards.forEach((i) {
+            if (i.description.startsWith(searchBarProvider.input)) {
+              print(
+                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+          });
+        },
         child: Icon(Icons.search),
       ),
     );
@@ -69,12 +83,16 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchBarProvider = Provider.of<SearchBarProvider>(context);
     return Form(
       child: Expanded(
         child: Container(
           // color: Colors.green,
           padding: EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
+            onChanged: (value) {
+              searchBarProvider.input = value;
+            },
             decoration: const InputDecoration(
               labelText: 'Buscar',
               // prefixIcon: Icon(
@@ -94,5 +112,3 @@ class _SearchBar extends StatelessWidget {
     );
   }
 }
-
-// List<DropdownMenuItem> getMenuItems() {}

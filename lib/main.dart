@@ -73,6 +73,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => ThemeApp(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchBarProvider(),
       )
     ],
     child: const MyApp(),
