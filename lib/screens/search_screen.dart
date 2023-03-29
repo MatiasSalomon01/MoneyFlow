@@ -58,27 +58,45 @@ class SearchScreen extends StatelessWidget {
           // print(searchBarProvider.input);
           var allCards = await cardService.getCards();
           allCards.forEach((i) {
-            if (i.description.toLowerCase().contains(
-                    searchScreenProvider.input.toString().toLowerCase()) &&
-                searchScreenProvider.menuItemOption == 2) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (i.amount == double.tryParse(searchScreenProvider.input) &&
-                searchScreenProvider.menuItemOption == 3) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (i.date == searchScreenProvider.input &&
-                searchScreenProvider.menuItemOption == 1) {
+            if (searchScreenProvider.menuItemOption == 1 &&
+                i.date == searchScreenProvider.input) {
               searchCards.add(i);
               searchScreenProvider.cards = searchCards;
               // print(
               //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (searchScreenProvider.menuItemOption == 2 &&
+                i.description.toLowerCase().contains(
+                    searchScreenProvider.input.toString().toLowerCase())) {
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (searchScreenProvider.menuItemOption == 3 &&
+                i.amount == double.tryParse(searchScreenProvider.input)) {
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (searchScreenProvider.menuItemOption == 4 &&
+                i.description.toLowerCase().contains(
+                    searchScreenProvider.input.toString().toLowerCase()) &&
+                i.state == true) {
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (searchScreenProvider.menuItemOption == 5 &&
+                i.description.toLowerCase().contains(
+                    searchScreenProvider.input.toString().toLowerCase()) &&
+                i.state == false) {
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
           });
         },
