@@ -175,13 +175,7 @@ class _SearchBar extends StatelessWidget {
           // color: Colors.green,
           padding: const EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
-            // controller: TextEditingController(
-            //     // text: searchScreenProvider.dateChoosed != "null"
-            //     //     ? DateFormat('dd/MM/yyyy').format(
-            //     //         searchScreenProvider.dateChoosed,
-            //     //       )
-            //     //     : searchScreenProvider.input),
-            //     text: searchScreenProvider.input),
+            cursorColor: Colors.grey,
             controller: searchScreenProvider.menuItemOption != 1
                 ? null
                 : TextEditingController(
@@ -211,23 +205,18 @@ class _SearchBar extends StatelessWidget {
                     searchScreenProvider.input = '';
                   }
                 });
-                // searchScreenProvider.input = ;
               }
             },
             decoration: InputDecoration(
               labelText: 'Buscar',
-              // prefixIcon: Icon(
-              //   Icons.search,
-              // );
               floatingLabelStyle: TextStyle(
-                  color: Preferences.isDarkMode ? Colors.white : Colors.black),
+                color: Preferences.isDarkMode ? Colors.white : Colors.black,
+              ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 2),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
               ),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             ),
           ),
         ),
