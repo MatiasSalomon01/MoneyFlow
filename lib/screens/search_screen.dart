@@ -25,10 +25,7 @@ class SearchScreen extends StatelessWidget {
             Container(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  _SearchBar(),
-                  _DropDownButton(),
-                ],
+                children: const [_SearchBar(), _DropDownButton()],
               ),
             ),
             const SizedBox(height: 20),
@@ -37,55 +34,9 @@ class SearchScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          List<CardInfo> searchCards = [];
-          // print(searchBarProvider.input);
-          var allCards = await cardService.getCards();
-          allCards.forEach((i) {
-            if (searchScreenProvider.menuItemOption == 1 &&
-                i.date == searchScreenProvider.input) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (searchScreenProvider.menuItemOption == 2 &&
-                i.description.toLowerCase().contains(
-                    searchScreenProvider.input.toString().toLowerCase())) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (searchScreenProvider.menuItemOption == 3 &&
-                i.amount == double.tryParse(searchScreenProvider.input)) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (searchScreenProvider.menuItemOption == 4 &&
-                i.description.toLowerCase().contains(
-                    searchScreenProvider.input.toString().toLowerCase()) &&
-                i.state == true) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (searchScreenProvider.menuItemOption == 5 &&
-                i.description.toLowerCase().contains(
-                    searchScreenProvider.input.toString().toLowerCase()) &&
-                i.state == false) {
-              searchCards.add(i);
-              searchScreenProvider.cards = searchCards;
-              // print(
-              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-          });
-        },
-        child: const Icon(Icons.search),
+      floatingActionButton: _FloatingActionButtonCustom(
+        cardService: cardService,
+        searchScreenProvider: searchScreenProvider,
       ),
     );
   }
@@ -248,7 +199,8 @@ class _SearchBar extends StatelessWidget {
                 : TextEditingController(
                     text: searchScreenProvider.dateChoosed != "null"
                         ? searchScreenProvider.input
-                        : ''),
+                        : '',
+                  ),
             keyboardType: searchScreenProvider.menuItemOption == 3
                 ? TextInputType.number
                 : searchScreenProvider.menuItemOption == 1
@@ -288,6 +240,70 @@ class _SearchBar extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _FloatingActionButtonCustom extends StatelessWidget {
+  const _FloatingActionButtonCustom(
+      {super.key,
+      required this.cardService,
+      required this.searchScreenProvider});
+
+  final CardService cardService;
+  final SearchScreenProvider searchScreenProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () async {
+        List<CardInfo> searchCards = [];
+        // print(searchBarProvider.input);
+        var allCards = await cardService.getCards();
+        allCards.forEach((i) {
+          if (searchScreenProvider.menuItemOption == 1 &&
+              i.date == searchScreenProvider.input) {
+            searchCards.add(i);
+            searchScreenProvider.cards = searchCards;
+            // print(
+            //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
+          }
+          if (searchScreenProvider.menuItemOption == 2 &&
+              i.description.toLowerCase().contains(
+                  searchScreenProvider.input.toString().toLowerCase())) {
+            searchCards.add(i);
+            searchScreenProvider.cards = searchCards;
+            // print(
+            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+          }
+          if (searchScreenProvider.menuItemOption == 3 &&
+              i.amount == double.tryParse(searchScreenProvider.input)) {
+            searchCards.add(i);
+            searchScreenProvider.cards = searchCards;
+            // print(
+            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+          }
+          if (searchScreenProvider.menuItemOption == 4 &&
+              i.description.toLowerCase().contains(
+                  searchScreenProvider.input.toString().toLowerCase()) &&
+              i.state == true) {
+            searchCards.add(i);
+            searchScreenProvider.cards = searchCards;
+            // print(
+            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+          }
+          if (searchScreenProvider.menuItemOption == 5 &&
+              i.description.toLowerCase().contains(
+                  searchScreenProvider.input.toString().toLowerCase()) &&
+              i.state == false) {
+            searchCards.add(i);
+            searchScreenProvider.cards = searchCards;
+            // print(
+            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+          }
+        });
+      },
+      child: const Icon(Icons.search),
     );
   }
 }
