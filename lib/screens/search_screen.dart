@@ -4,7 +4,6 @@ import 'package:money_flow/models/models.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
-import 'package:money_flow/widgets/card_widget.dart';
 import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -153,6 +152,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Container(
       padding: const EdgeInsets.only(right: 35),
@@ -164,6 +164,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
           _value = value!;
           searchScreenProvider.menuItemOption = value;
           searchScreenProvider.cards = [];
+          displayInfo(cardService, searchScreenProvider);
           setState(() {});
         },
         elevation: 8,
@@ -192,6 +193,7 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Form(
       child: Expanded(
@@ -214,6 +216,8 @@ class _SearchBar extends StatelessWidget {
                     : TextInputType.text,
             onChanged: (value) {
               searchScreenProvider.input = value;
+              displayInfo(cardService, searchScreenProvider);
+              // print(searchScreenProvider.cards.length);
             },
             onTap: () {
               if (searchScreenProvider.menuItemOption == 1) {
@@ -266,56 +270,58 @@ class _FloatingActionButtonCustom extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 20, right: 10),
         child: FloatingActionButton(
-          onPressed: () async {
-            List<CardInfo> searchCards = [];
-            // print(searchBarProvider.input);
-            var allCards = await cardService.getCards();
-            allCards.forEach((i) {
-              if (searchScreenProvider.menuItemOption == 1 &&
-                  i.date == searchScreenProvider.input) {
-                searchCards.add(i);
-                searchScreenProvider.cards = searchCards;
-                // print(
-                //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
-              }
-              if (searchScreenProvider.menuItemOption == 2 &&
-                  i.description.toLowerCase().contains(
-                      searchScreenProvider.input.toString().toLowerCase())) {
-                searchCards.add(i);
-                searchScreenProvider.cards = searchCards;
-                // print(
-                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-              }
-              if (searchScreenProvider.menuItemOption == 3 &&
-                  i.amount == double.tryParse(searchScreenProvider.input)) {
-                searchCards.add(i);
-                searchScreenProvider.cards = searchCards;
-                // print(
-                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-              }
-              if (searchScreenProvider.menuItemOption == 4 &&
-                  i.description.toLowerCase().contains(
-                      searchScreenProvider.input.toString().toLowerCase()) &&
-                  i.state == true) {
-                searchCards.add(i);
-                searchScreenProvider.cards = searchCards;
-                // print(
-                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-              }
-              if (searchScreenProvider.menuItemOption == 5 &&
-                  i.description.toLowerCase().contains(
-                      searchScreenProvider.input.toString().toLowerCase()) &&
-                  i.state == false) {
-                searchCards.add(i);
-                searchScreenProvider.cards = searchCards;
-                // print(
-                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-              }
-            });
+          onPressed: () {
+            displayInfo(cardService, searchScreenProvider);
           },
           child: const Icon(Icons.search),
         ),
       ),
     );
+  }
+}
+
+displayInfo(
+    CardService cardService, SearchScreenProvider searchScreenProvider) async {
+  List<CardInfo> searchCards = [];
+  int totalFound = 0;
+
+  var allCards = await cardService.getCards();
+
+  allCards.forEach((i) {
+    if (searchScreenProvider.menuItemOption == 1 &&
+        i.date == searchScreenProvider.input) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 2 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase())) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 3 &&
+        i.amount == double.tryParse(searchScreenProvider.input)) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 4 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase()) &&
+        i.state == true) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 5 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase()) &&
+        i.state == false) {
+      searchCards.add(i);
+    }
+    totalFound = searchCards.length;
+  });
+
+  if (totalFound > 0) {
+    searchScreenProvider.cards = searchCards;
+  } else {
+    searchScreenProvider.cards = [];
   }
 }

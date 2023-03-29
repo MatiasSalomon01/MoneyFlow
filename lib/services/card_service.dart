@@ -184,6 +184,6 @@ class CardService extends ChangeNotifier {
         x.add(tempCard);
       });
     }
-    return x;
+    return x.reversed.toList();
   }
 }
