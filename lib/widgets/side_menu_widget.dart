@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
+import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Drawer(
       child: SlideInLeft(
         duration: const Duration(milliseconds: 350),
@@ -61,7 +63,11 @@ class _SideMenuState extends State<SideMenu> {
                 child: ListTile(
                   leading: const Icon(Icons.search),
                   title: const Text('Buscar', style: TextStyle(fontSize: 20)),
-                  onTap: () => Navigator.popAndPushNamed(context, 'search'),
+                  onTap: () {
+                    searchScreenProvider.cards = [];
+                    searchScreenProvider.input = '';
+                    Navigator.popAndPushNamed(context, 'search');
+                  },
                 ),
               ),
               Padding(
