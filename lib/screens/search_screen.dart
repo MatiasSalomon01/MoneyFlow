@@ -100,7 +100,7 @@ class SearchScreen extends StatelessWidget {
             }
           });
         },
-        child: Icon(Icons.search),
+        child: const Icon(Icons.search),
       ),
     );
   }
@@ -118,18 +118,18 @@ class _DropDownButton extends StatefulWidget {
 class _DropDownButtonState extends State<_DropDownButton> {
   int _value = 1;
   List<DropdownMenuItem<int>> menuItems = [
-    DropdownMenuItem(child: Text('Fecha'), value: 1),
-    DropdownMenuItem(child: Text('Descripcion'), value: 2),
-    DropdownMenuItem(child: Text('Monto'), value: 3),
-    DropdownMenuItem(child: Text('Ingreso'), value: 4),
-    DropdownMenuItem(child: Text('Egreso'), value: 5)
+    const DropdownMenuItem(value: 1, child: Text('Fecha')),
+    const DropdownMenuItem(value: 2, child: Text('Descripcion')),
+    const DropdownMenuItem(value: 3, child: Text('Monto')),
+    const DropdownMenuItem(value: 4, child: Text('Ingreso')),
+    const DropdownMenuItem(value: 5, child: Text('Egreso'))
   ];
 
   @override
   Widget build(BuildContext context) {
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Container(
-      padding: EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.only(right: 20),
       // color: Colors.red,
       child: DropdownButton(
         value: _value,
@@ -158,7 +158,7 @@ class _SearchBar extends StatelessWidget {
       child: Expanded(
         child: Container(
           // color: Colors.green,
-          padding: EdgeInsets.only(right: 30, left: 20),
+          padding: const EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
             // controller: TextEditingController(
             //     // text: searchScreenProvider.dateChoosed != "null"
