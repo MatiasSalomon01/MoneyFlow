@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/card_info.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:provider/provider.dart';
 
@@ -51,9 +52,8 @@ class TextFormFieldCustom extends StatelessWidget {
       // },
       //initialValue: '${DateFormat('dd/MM/yyyy').format(date)}',
       decoration: InputDecoration(
-        floatingLabelStyle: const TextStyle(
-          color: Colors.white,
-        ),
+        floatingLabelStyle: TextStyle(
+            color: Preferences.isDarkMode ? Colors.white : Colors.black),
         labelText: labelText,
         helperText: helperText,
         suffixIcon: Icon(

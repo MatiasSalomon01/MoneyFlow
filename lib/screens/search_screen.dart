@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/card_widget.dart';
@@ -213,12 +214,14 @@ class _SearchBar extends StatelessWidget {
                 // searchScreenProvider.input = ;
               }
             },
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Buscar',
               // prefixIcon: Icon(
               //   Icons.search,
               // );
-              focusedBorder: OutlineInputBorder(
+              floatingLabelStyle: TextStyle(
+                  color: Preferences.isDarkMode ? Colors.white : Colors.black),
+              focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(50),
