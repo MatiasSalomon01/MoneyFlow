@@ -132,57 +132,65 @@ class _DropDownButton extends StatefulWidget {
 
 class _DropDownButtonState extends State<_DropDownButton> {
   int _value = 1;
+  // List<DropdownMenuItem<int>> menuItems = [
+  //   DropdownMenuItem(
+  //     value: 1,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Fecha'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 2,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Descripcion'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 3,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Monto'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 4,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Ingreso'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 5,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Egreso'),
+  //       ],
+  //     ),
+  //   )
+  // ];
+
   List<DropdownMenuItem<int>> menuItems = [
-    DropdownMenuItem(
-      value: 1,
-      child: Row(
-        children: const [
-          Icon(Icons.check),
-          SizedBox(width: 15),
-          Text('Fecha'),
-        ],
-      ),
-    ),
-    DropdownMenuItem(
-      value: 2,
-      child: Row(
-        children: const [
-          Icon(Icons.check),
-          SizedBox(width: 15),
-          Text('Descripcion'),
-        ],
-      ),
-    ),
-    DropdownMenuItem(
-      value: 3,
-      child: Row(
-        children: const [
-          Icon(Icons.check),
-          SizedBox(width: 15),
-          Text('Monto'),
-        ],
-      ),
-    ),
-    DropdownMenuItem(
-      value: 4,
-      child: Row(
-        children: const [
-          Icon(Icons.check),
-          SizedBox(width: 15),
-          Text('Ingreso'),
-        ],
-      ),
-    ),
-    DropdownMenuItem(
-      value: 5,
-      child: Row(
-        children: const [
-          Icon(Icons.check),
-          SizedBox(width: 15),
-          Text('Egreso'),
-        ],
-      ),
-    )
+    const DropdownMenuItem(value: 1, child: Text('Fecha')),
+    const DropdownMenuItem(value: 2, child: Text('Descripcion')),
+    const DropdownMenuItem(value: 3, child: Text('Monto')),
+    const DropdownMenuItem(value: 4, child: Text('Ingreso')),
+    const DropdownMenuItem(value: 5, child: Text('Egreso'))
   ];
 
   @override
@@ -203,7 +211,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
         },
         elevation: 8,
         dropdownColor: Preferences.isDarkMode
-            ? Color.fromARGB(255, 63, 63, 63)
+            ? const Color.fromARGB(255, 63, 63, 63)
             : Colors.white,
         borderRadius: BorderRadius.circular(15),
         style: TextStyle(
