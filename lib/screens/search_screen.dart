@@ -5,10 +5,11 @@ import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/card_widget.dart';
+import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +19,30 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Buscar'),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Column(
-          children: [
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [_SearchBar(), _DropDownButton()],
-              ),
+      body: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [_SearchBar(), _DropDownButton()],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _CardsDeployment(searchScreenProvider: searchScreenProvider),
+                const SizedBox(height: 75),
+              ],
             ),
-            const SizedBox(height: 20),
-            _CardsDeployment(searchScreenProvider: searchScreenProvider),
-            const SizedBox(height: 75),
-          ],
-        ),
-      ),
-      floatingActionButton: _FloatingActionButtonCustom(
-        cardService: cardService,
-        searchScreenProvider: searchScreenProvider,
+          ),
+          _FloatingActionButtonCustom(
+            cardService: cardService,
+            searchScreenProvider: searchScreenProvider,
+          ),
+          const Modal(),
+        ],
       ),
     );
   }
@@ -255,55 +261,61 @@ class _FloatingActionButtonCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () async {
-        List<CardInfo> searchCards = [];
-        // print(searchBarProvider.input);
-        var allCards = await cardService.getCards();
-        allCards.forEach((i) {
-          if (searchScreenProvider.menuItemOption == 1 &&
-              i.date == searchScreenProvider.input) {
-            searchCards.add(i);
-            searchScreenProvider.cards = searchCards;
-            // print(
-            //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
-          }
-          if (searchScreenProvider.menuItemOption == 2 &&
-              i.description.toLowerCase().contains(
-                  searchScreenProvider.input.toString().toLowerCase())) {
-            searchCards.add(i);
-            searchScreenProvider.cards = searchCards;
-            // print(
-            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-          }
-          if (searchScreenProvider.menuItemOption == 3 &&
-              i.amount == double.tryParse(searchScreenProvider.input)) {
-            searchCards.add(i);
-            searchScreenProvider.cards = searchCards;
-            // print(
-            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-          }
-          if (searchScreenProvider.menuItemOption == 4 &&
-              i.description.toLowerCase().contains(
-                  searchScreenProvider.input.toString().toLowerCase()) &&
-              i.state == true) {
-            searchCards.add(i);
-            searchScreenProvider.cards = searchCards;
-            // print(
-            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-          }
-          if (searchScreenProvider.menuItemOption == 5 &&
-              i.description.toLowerCase().contains(
-                  searchScreenProvider.input.toString().toLowerCase()) &&
-              i.state == false) {
-            searchCards.add(i);
-            searchScreenProvider.cards = searchCards;
-            // print(
-            //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-          }
-        });
-      },
-      child: const Icon(Icons.search),
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20, right: 10),
+        child: FloatingActionButton(
+          onPressed: () async {
+            List<CardInfo> searchCards = [];
+            // print(searchBarProvider.input);
+            var allCards = await cardService.getCards();
+            allCards.forEach((i) {
+              if (searchScreenProvider.menuItemOption == 1 &&
+                  i.date == searchScreenProvider.input) {
+                searchCards.add(i);
+                searchScreenProvider.cards = searchCards;
+                // print(
+                //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              }
+              if (searchScreenProvider.menuItemOption == 2 &&
+                  i.description.toLowerCase().contains(
+                      searchScreenProvider.input.toString().toLowerCase())) {
+                searchCards.add(i);
+                searchScreenProvider.cards = searchCards;
+                // print(
+                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              }
+              if (searchScreenProvider.menuItemOption == 3 &&
+                  i.amount == double.tryParse(searchScreenProvider.input)) {
+                searchCards.add(i);
+                searchScreenProvider.cards = searchCards;
+                // print(
+                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              }
+              if (searchScreenProvider.menuItemOption == 4 &&
+                  i.description.toLowerCase().contains(
+                      searchScreenProvider.input.toString().toLowerCase()) &&
+                  i.state == true) {
+                searchCards.add(i);
+                searchScreenProvider.cards = searchCards;
+                // print(
+                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              }
+              if (searchScreenProvider.menuItemOption == 5 &&
+                  i.description.toLowerCase().contains(
+                      searchScreenProvider.input.toString().toLowerCase()) &&
+                  i.state == false) {
+                searchCards.add(i);
+                searchScreenProvider.cards = searchCards;
+                // print(
+                //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              }
+            });
+          },
+          child: const Icon(Icons.search),
+        ),
+      ),
     );
   }
 }
