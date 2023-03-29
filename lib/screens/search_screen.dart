@@ -30,24 +30,7 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: searchScreenProvider.cards.length,
-                itemBuilder: (context, index) {
-                  return CardData(
-                    description: searchScreenProvider.cards[index].description,
-                    date: searchScreenProvider.cards[index].date,
-                    amount: searchScreenProvider.cards[index].amount,
-                    state: searchScreenProvider.cards[index].state,
-                    time: searchScreenProvider.cards[index].time,
-                    id: searchScreenProvider.cards[index].id!,
-                    index: index,
-                  );
-                },
-              ),
-            ),
+            _CardsDeployment(searchScreenProvider: searchScreenProvider),
             const SizedBox(height: 75),
           ],
         ),
@@ -101,6 +84,37 @@ class SearchScreen extends StatelessWidget {
           });
         },
         child: const Icon(Icons.search),
+      ),
+    );
+  }
+}
+
+class _CardsDeployment extends StatelessWidget {
+  const _CardsDeployment({
+    super.key,
+    required this.searchScreenProvider,
+  });
+
+  final SearchScreenProvider searchScreenProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: searchScreenProvider.cards.length,
+        itemBuilder: (context, index) {
+          return CardData(
+            description: searchScreenProvider.cards[index].description,
+            date: searchScreenProvider.cards[index].date,
+            amount: searchScreenProvider.cards[index].amount,
+            state: searchScreenProvider.cards[index].state,
+            time: searchScreenProvider.cards[index].time,
+            id: searchScreenProvider.cards[index].id!,
+            index: index,
+          );
+        },
       ),
     );
   }
