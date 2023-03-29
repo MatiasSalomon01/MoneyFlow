@@ -29,13 +29,19 @@ class SearchScreen extends StatelessWidget {
           // print(searchBarProvider.input);
           var allCards = await cardService.getCards();
           allCards.forEach((i) {
-            if (i.description.startsWith(searchScreenProvider.input) &&
+            if (i.description.toLowerCase().contains(
+                    searchScreenProvider.input.toString().toLowerCase()) &&
                 searchScreenProvider.menuItemOption == 2) {
               print(
                   "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
             if (i.amount == double.tryParse(searchScreenProvider.input) &&
                 searchScreenProvider.menuItemOption == 3) {
+              print(
+                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+            }
+            if (i.date == searchScreenProvider.input &&
+                searchScreenProvider.menuItemOption == 1) {
               print(
                   "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
