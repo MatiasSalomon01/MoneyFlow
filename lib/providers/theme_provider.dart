@@ -19,14 +19,20 @@ class ThemeProvider extends ChangeNotifier {
       Preferences.isDarkMode ? mainDarkColor : const Color(0xff1E77CF);
 
   static ThemeData lightTheme = ThemeData.light().copyWith(
-      scaffoldBackgroundColor: const Color.fromRGBO(240, 240, 240, 1),
-      appBarTheme: const AppBarTheme(backgroundColor: mainLightColor),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xff1E77CF)),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: mainLightColor,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.black));
+    scaffoldBackgroundColor: const Color.fromRGBO(240, 240, 240, 1),
+    appBarTheme: const AppBarTheme(backgroundColor: mainLightColor),
+    floatingActionButtonTheme:
+        const FloatingActionButtonThemeData(backgroundColor: Color(0xff1E77CF)),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: mainLightColor,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.black),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+      ),
+    ),
+  );
 
   static ThemeData darkTheme = ThemeData.dark().copyWith(
     appBarTheme: const AppBarTheme(backgroundColor: mainDarkColor),

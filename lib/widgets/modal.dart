@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
+import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
 
 class Modal extends StatelessWidget {
@@ -109,6 +110,7 @@ class Modal extends StatelessWidget {
                             ),
                           );
                           modalOptionsProvider.closeModalOptions(0);
+                          // prueba.displayInfo(cardService, searchScreenProvider);
                         },
                         leading: const Icon(
                           Icons.update,

@@ -180,9 +180,10 @@ class CardService extends ChangeNotifier {
 
       cardsMap.forEach((key, value) {
         final tempCard = CardInfo.fromJson(value);
+        tempCard.id = key;
         x.add(tempCard);
       });
     }
-    return x;
+    return x.reversed.toList();
   }
 }

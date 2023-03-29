@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:money_flow/models/models.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
+import 'package:money_flow/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,33 +18,61 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Buscar'),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 50),
-        child: Row(
-          children: const [
-            _SearchBar(),
-            _DropDownButton(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [_SearchBar(), _DropDownButton()],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _CardsDeployment(searchScreenProvider: searchScreenProvider),
+                const SizedBox(height: 75),
+              ],
+            ),
+          ),
+          _FloatingActionButtonCustom(
+            cardService: cardService,
+            searchScreenProvider: searchScreenProvider,
+          ),
+          const Modal(),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // print(searchBarProvider.input);
-          var allCards = await cardService.getCards();
-          allCards.forEach((i) {
-            if (i.description.startsWith(searchScreenProvider.input) &&
-                searchScreenProvider.menuItemOption == 2) {
-              print(
-                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-            if (i.amount == double.tryParse(searchScreenProvider.input) &&
-                searchScreenProvider.menuItemOption == 3) {
-              print(
-                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
-            }
-          });
+    );
+  }
+}
+
+class _CardsDeployment extends StatelessWidget {
+  const _CardsDeployment({
+    super.key,
+    required this.searchScreenProvider,
+  });
+
+  final SearchScreenProvider searchScreenProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: searchScreenProvider.cards.length,
+        itemBuilder: (context, index) {
+          return CardData(
+            description: searchScreenProvider.cards[index].description,
+            date: searchScreenProvider.cards[index].date,
+            amount: searchScreenProvider.cards[index].amount,
+            state: searchScreenProvider.cards[index].state,
+            time: searchScreenProvider.cards[index].time,
+            id: searchScreenProvider.cards[index].id!,
+            index: index,
+          );
         },
-        child: Icon(Icons.search),
       ),
     );
   }
@@ -58,19 +89,73 @@ class _DropDownButton extends StatefulWidget {
 
 class _DropDownButtonState extends State<_DropDownButton> {
   int _value = 1;
+  // List<DropdownMenuItem<int>> menuItems = [
+  //   DropdownMenuItem(
+  //     value: 1,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Fecha'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 2,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Descripcion'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 3,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Monto'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 4,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Ingreso'),
+  //       ],
+  //     ),
+  //   ),
+  //   DropdownMenuItem(
+  //     value: 5,
+  //     child: Row(
+  //       children: const [
+  //         Icon(Icons.check),
+  //         SizedBox(width: 15),
+  //         Text('Egreso'),
+  //       ],
+  //     ),
+  //   )
+  // ];
+
   List<DropdownMenuItem<int>> menuItems = [
-    DropdownMenuItem(child: Text('Fecha'), value: 1),
-    DropdownMenuItem(child: Text('Descripcion'), value: 2),
-    DropdownMenuItem(child: Text('Monto'), value: 3),
-    DropdownMenuItem(child: Text('Ingreso'), value: 4),
-    DropdownMenuItem(child: Text('Egreso'), value: 5)
+    const DropdownMenuItem(value: 1, child: Text('Fecha')),
+    const DropdownMenuItem(value: 2, child: Text('Descripcion')),
+    const DropdownMenuItem(value: 3, child: Text('Monto')),
+    const DropdownMenuItem(value: 4, child: Text('Ingreso')),
+    const DropdownMenuItem(value: 5, child: Text('Egreso'))
   ];
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Container(
-      padding: EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.only(right: 35),
       // color: Colors.red,
       child: DropdownButton(
         value: _value,
@@ -78,8 +163,24 @@ class _DropDownButtonState extends State<_DropDownButton> {
         onChanged: (value) {
           _value = value!;
           searchScreenProvider.menuItemOption = value;
+          searchScreenProvider.cards = [];
+          displayInfo(cardService, searchScreenProvider);
           setState(() {});
         },
+        elevation: 8,
+        dropdownColor: Preferences.isDarkMode
+            ? const Color.fromARGB(255, 63, 63, 63)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        style: TextStyle(
+          color: Preferences.isDarkMode ? Colors.white : Colors.black,
+          fontSize: 18,
+          // fontWeight: FontWeight.bold,
+        ),
+        underline: Container(
+          height: 1,
+          color: Preferences.isDarkMode ? Colors.white : Colors.black,
+        ),
       ),
     );
   }
@@ -92,26 +193,22 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Form(
       child: Expanded(
         child: Container(
           // color: Colors.green,
-          padding: EdgeInsets.only(right: 30, left: 20),
+          padding: const EdgeInsets.only(right: 30, left: 20),
           child: TextFormField(
-            // controller: TextEditingController(
-            //     // text: searchScreenProvider.dateChoosed != "null"
-            //     //     ? DateFormat('dd/MM/yyyy').format(
-            //     //         searchScreenProvider.dateChoosed,
-            //     //       )
-            //     //     : searchScreenProvider.input),
-            //     text: searchScreenProvider.input),
+            cursorColor: Colors.grey,
             controller: searchScreenProvider.menuItemOption != 1
                 ? null
                 : TextEditingController(
                     text: searchScreenProvider.dateChoosed != "null"
                         ? searchScreenProvider.input
-                        : ''),
+                        : '',
+                  ),
             keyboardType: searchScreenProvider.menuItemOption == 3
                 ? TextInputType.number
                 : searchScreenProvider.menuItemOption == 1
@@ -119,13 +216,15 @@ class _SearchBar extends StatelessWidget {
                     : TextInputType.text,
             onChanged: (value) {
               searchScreenProvider.input = value;
+              displayInfo(cardService, searchScreenProvider);
+              // print(searchScreenProvider.cards.length);
             },
             onTap: () {
               if (searchScreenProvider.menuItemOption == 1) {
                 showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
+                  firstDate: DateTime(1900),
                   lastDate: DateTime(2025),
                 ).then((value) {
                   if (value != null) {
@@ -135,25 +234,94 @@ class _SearchBar extends StatelessWidget {
                     searchScreenProvider.input = '';
                   }
                 });
-                // searchScreenProvider.input = ;
               }
             },
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Buscar',
-              // prefixIcon: Icon(
-              //   Icons.search,
-              // );
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 2),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
-                ),
+              floatingLabelStyle: TextStyle(
+                color: Preferences.isDarkMode ? Colors.white : Colors.black,
               ),
-              border: OutlineInputBorder(),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 2),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+              ),
+              border: const OutlineInputBorder(),
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _FloatingActionButtonCustom extends StatelessWidget {
+  const _FloatingActionButtonCustom(
+      {super.key,
+      required this.cardService,
+      required this.searchScreenProvider});
+
+  final CardService cardService;
+  final SearchScreenProvider searchScreenProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20, right: 10),
+        child: FloatingActionButton(
+          onPressed: () {
+            displayInfo(cardService, searchScreenProvider);
+          },
+          child: const Icon(Icons.search),
+        ),
+      ),
+    );
+  }
+}
+
+displayInfo(
+    CardService cardService, SearchScreenProvider searchScreenProvider) async {
+  List<CardInfo> searchCards = [];
+  int totalFound = 0;
+
+  var allCards = await cardService.getCards();
+
+  allCards.forEach((i) {
+    if (searchScreenProvider.menuItemOption == 1 &&
+        i.date == searchScreenProvider.input) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 2 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase())) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 3 &&
+        i.amount == double.tryParse(searchScreenProvider.input)) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 4 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase()) &&
+        i.state == true) {
+      searchCards.add(i);
+    }
+    if (searchScreenProvider.menuItemOption == 5 &&
+        i.description
+            .toLowerCase()
+            .contains(searchScreenProvider.input.toString().toLowerCase()) &&
+        i.state == false) {
+      searchCards.add(i);
+    }
+    totalFound = searchCards.length;
+  });
+
+  if (totalFound > 0) {
+    searchScreenProvider.cards = searchCards;
+  } else {
+    searchScreenProvider.cards = [];
   }
 }
