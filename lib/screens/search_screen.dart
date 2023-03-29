@@ -133,11 +133,56 @@ class _DropDownButton extends StatefulWidget {
 class _DropDownButtonState extends State<_DropDownButton> {
   int _value = 1;
   List<DropdownMenuItem<int>> menuItems = [
-    const DropdownMenuItem(value: 1, child: Text('Fecha')),
-    const DropdownMenuItem(value: 2, child: Text('Descripcion')),
-    const DropdownMenuItem(value: 3, child: Text('Monto')),
-    const DropdownMenuItem(value: 4, child: Text('Ingreso')),
-    const DropdownMenuItem(value: 5, child: Text('Egreso'))
+    DropdownMenuItem(
+      value: 1,
+      child: Row(
+        children: const [
+          Icon(Icons.check),
+          SizedBox(width: 15),
+          Text('Fecha'),
+        ],
+      ),
+    ),
+    DropdownMenuItem(
+      value: 2,
+      child: Row(
+        children: const [
+          Icon(Icons.check),
+          SizedBox(width: 15),
+          Text('Descripcion'),
+        ],
+      ),
+    ),
+    DropdownMenuItem(
+      value: 3,
+      child: Row(
+        children: const [
+          Icon(Icons.check),
+          SizedBox(width: 15),
+          Text('Monto'),
+        ],
+      ),
+    ),
+    DropdownMenuItem(
+      value: 4,
+      child: Row(
+        children: const [
+          Icon(Icons.check),
+          SizedBox(width: 15),
+          Text('Ingreso'),
+        ],
+      ),
+    ),
+    DropdownMenuItem(
+      value: 5,
+      child: Row(
+        children: const [
+          Icon(Icons.check),
+          SizedBox(width: 15),
+          Text('Egreso'),
+        ],
+      ),
+    )
   ];
 
   @override
@@ -156,6 +201,20 @@ class _DropDownButtonState extends State<_DropDownButton> {
           // searchScreenProvider.cards = [];
           setState(() {});
         },
+        elevation: 8,
+        dropdownColor: Preferences.isDarkMode
+            ? Color.fromARGB(255, 63, 63, 63)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        style: TextStyle(
+          color: Preferences.isDarkMode ? Colors.white : Colors.black,
+          fontSize: 18,
+          // fontWeight: FontWeight.bold,
+        ),
+        underline: Container(
+          height: 1,
+          color: Preferences.isDarkMode ? Colors.white : Colors.black,
+        ),
       ),
     );
   }
@@ -195,7 +254,7 @@ class _SearchBar extends StatelessWidget {
                 showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
+                  firstDate: DateTime(1900),
                   lastDate: DateTime(2025),
                 ).then((value) {
                   if (value != null) {
