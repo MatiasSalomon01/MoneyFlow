@@ -24,6 +24,7 @@ class SearchScreen extends StatelessWidget {
           children: [
             Container(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   _SearchBar(),
                   _DropDownButton(),
@@ -197,7 +198,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
   Widget build(BuildContext context) {
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
     return Container(
-      padding: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.only(right: 35),
       // color: Colors.red,
       child: DropdownButton(
         value: _value,
@@ -206,7 +207,6 @@ class _DropDownButtonState extends State<_DropDownButton> {
           _value = value!;
           searchScreenProvider.menuItemOption = value;
           searchScreenProvider.cards = [];
-          // searchScreenProvider.cards = [];
           setState(() {});
         },
         elevation: 8,
