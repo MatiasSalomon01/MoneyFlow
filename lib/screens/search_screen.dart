@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:money_flow/models/models.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
+import 'package:money_flow/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -16,34 +18,67 @@ class SearchScreen extends StatelessWidget {
         title: const Text('Buscar'),
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 50),
-        child: Row(
-          children: const [
-            _SearchBar(),
-            _DropDownButton(),
+        margin: const EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            Container(
+              child: Row(
+                children: const [
+                  _SearchBar(),
+                  _DropDownButton(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: searchScreenProvider.cards.length,
+                itemBuilder: (context, index) {
+                  return CardData(
+                    description: searchScreenProvider.cards[index].description,
+                    date: searchScreenProvider.cards[index].date,
+                    amount: searchScreenProvider.cards[index].amount,
+                    state: searchScreenProvider.cards[index].state,
+                    time: searchScreenProvider.cards[index].time,
+                    id: searchScreenProvider.cards[index].id!,
+                    index: index,
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 75),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          List<CardInfo> searchCards = [];
           // print(searchBarProvider.input);
           var allCards = await cardService.getCards();
           allCards.forEach((i) {
             if (i.description.toLowerCase().contains(
                     searchScreenProvider.input.toString().toLowerCase()) &&
                 searchScreenProvider.menuItemOption == 2) {
-              print(
-                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
             if (i.amount == double.tryParse(searchScreenProvider.input) &&
                 searchScreenProvider.menuItemOption == 3) {
-              print(
-                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
             if (i.date == searchScreenProvider.input &&
                 searchScreenProvider.menuItemOption == 1) {
-              print(
-                  "${i.id} ${i.date} ${i.description} ${i.amount} ${i.time} ${i.state}");
+              searchCards.add(i);
+              searchScreenProvider.cards = searchCards;
+              // print(
+              //     "${i.id} ${i.datjjjje} ${i.description} ${i.amount} ${i.time} ${i.state}");
             }
           });
         },
@@ -84,6 +119,8 @@ class _DropDownButtonState extends State<_DropDownButton> {
         onChanged: (value) {
           _value = value!;
           searchScreenProvider.menuItemOption = value;
+          searchScreenProvider.cards = [];
+          // searchScreenProvider.cards = [];
           setState(() {});
         },
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/models/models.dart';
 
 class SearchScreenProvider extends ChangeNotifier {
   late dynamic _input = "";
@@ -6,6 +7,8 @@ class SearchScreenProvider extends ChangeNotifier {
   late int _menuItemOption = 1;
 
   late DateTime _dateChoosed = DateTime.now();
+
+  late List<CardInfo> _cards = [];
 
   // String _inputText = "";
 
@@ -27,6 +30,13 @@ class SearchScreenProvider extends ChangeNotifier {
 
   set dateChoosed(DateTime value) {
     _dateChoosed = value;
+    notifyListeners();
+  }
+
+  List<CardInfo> get cards => _cards;
+
+  set cards(List<CardInfo> value) {
+    _cards = value;
     notifyListeners();
   }
 }
