@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
+import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/services/services.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -8,7 +11,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register Screen'),
+        title: const Text('Register Screen'),
       ),
       body: Center(
         child: Column(
@@ -59,6 +62,7 @@ class _InputPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
       decoration: InputDecoration(
@@ -73,6 +77,7 @@ class _InputPassword extends StatelessWidget {
         border: const OutlineInputBorder(),
         suffixIcon: const Icon(Icons.visibility_off),
       ),
+      onChanged: (value) => authProvider.password = value,
     );
   }
 }
@@ -84,6 +89,7 @@ class _InputEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
       keyboardType: TextInputType.emailAddress,
@@ -99,6 +105,7 @@ class _InputEmail extends StatelessWidget {
         border: const OutlineInputBorder(),
         suffixIcon: const Icon(Icons.email_outlined),
       ),
+      onChanged: (value) => authProvider.email = value,
     );
   }
 }
@@ -110,20 +117,30 @@ class _RegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 30),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 48, 48, 48),
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
+    final authProvider = Provider.of<AuthProvider>(context);
+    return GestureDetector(
+      onTap: () {
+        print("${authProvider.email} ${authProvider.password}");
+        // final loginService = Provider.of<LoginService>(context, listen: false);
+
+        // final String? token = await loginService.createUser(
+        //     authProvider.email, authProvider.password);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 48, 48, 48),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
-      ),
-      child: const Center(
-        child: Text(
-          'Registrar',
-          style: TextStyle(fontSize: 20),
+        child: const Center(
+          child: Text(
+            'Registrar',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
