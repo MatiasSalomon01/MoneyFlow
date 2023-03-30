@@ -22,6 +22,10 @@ class LoginService extends ChangeNotifier {
 
     final Map<String, dynamic> decodeRes = json.decode(res.body);
 
-    print(decodeRes);
+    if (decodeRes.containsKey('idToken')) {
+      return null;
+    } else {
+      return decodeRes['error']['message'];
+    }
   }
 }

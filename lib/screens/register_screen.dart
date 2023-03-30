@@ -119,12 +119,17 @@ class _RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     return GestureDetector(
-      onTap: () {
-        print("${authProvider.email} ${authProvider.password}");
-        // final loginService = Provider.of<LoginService>(context, listen: false);
+      onTap: () async {
+        final loginService = Provider.of<LoginService>(context, listen: false);
 
-        // final String? token = await loginService.createUser(
-        //     authProvider.email, authProvider.password);
+        final String? errorMessage = await loginService.createUser(
+            authProvider.email, authProvider.password);
+
+        if (errorMessage == null) {
+          Navigator.popAndPushNamed(context, 'login');
+        } else {
+          print(errorMessage);
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(top: 30),
