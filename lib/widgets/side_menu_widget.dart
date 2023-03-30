@@ -24,16 +24,37 @@ class _SideMenuState extends State<SideMenu> {
           child: Column(
             children: [
               const _Options(),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               const _MainMenu(),
               const _Settings(),
               _Search(searchScreenProvider: searchScreenProvider),
               _LightAndDarkTheme(themeProvider: themeProvider),
+              const LogOut()
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LogOut extends StatelessWidget {
+  const LogOut({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: ListTile(
+        leading: const Icon(Icons.logout),
+        title: const Text('Cerrar Sesión', style: TextStyle(fontSize: 20)),
+        onTap: () {
+          Navigator.popAndPushNamed(context, 'login');
+          // Navigator.pop(context);
+          // Navigator.pop(context);
+        },
       ),
     );
   }

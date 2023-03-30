@@ -131,6 +131,8 @@ class _LogInButton extends StatelessWidget {
             await loginService.login(authProvider.email, authProvider.password);
 
         if (errorMessage == null) {
+          authProvider.email = '';
+          authProvider.password = '';
           Navigator.popAndPushNamed(context, 'home');
         } else {
           print(errorMessage);
