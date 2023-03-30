@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/providers/theme_provider.dart';
+import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
 
 class SideMenu extends StatefulWidget {
@@ -24,16 +25,39 @@ class _SideMenuState extends State<SideMenu> {
           child: Column(
             children: [
               const _Options(),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               const _MainMenu(),
               const _Settings(),
               _Search(searchScreenProvider: searchScreenProvider),
               _LightAndDarkTheme(themeProvider: themeProvider),
+              const LogOut()
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LogOut extends StatelessWidget {
+  const LogOut({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final loginService = Provider.of<LoginService>(context);
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: ListTile(
+        leading: const Icon(Icons.logout),
+        title: const Text('Cerrar Sesión', style: TextStyle(fontSize: 20)),
+        onTap: () {
+          loginService.logOut();
+          Navigator.pushReplacementNamed(context, 'login');
+          // Navigator.pop(context);
+          // Navigator.pop(context);
+        },
       ),
     );
   }

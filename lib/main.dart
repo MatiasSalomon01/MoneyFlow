@@ -76,6 +76,15 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => SearchScreenProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LoginService(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AuthProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => UserService(),
       )
     ],
     child: const MyApp(),
@@ -90,11 +99,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Money Flow',
-        initialRoute: 'home',
+        initialRoute: 'checking',
         routes: {
           'home': (context) => const HomeScreen(),
           'settings': (context) => const SettingsScreen(),
-          'search': (context) => SearchScreen()
+          'search': (context) => const SearchScreen(),
+          'login': (context) => const LoginScreen(),
+          'register': (context) => const RegisterScreen(),
+          'checking': (context) => const CheckTokenScreen()
         },
         // theme: ThemeApp.darkTheme,
         theme: Provider.of<ThemeProvider>(context).currentTheme);
