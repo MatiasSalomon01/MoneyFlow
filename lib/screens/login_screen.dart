@@ -16,8 +16,11 @@ class LoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 20),
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
             decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 65, 65, 65),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
+              color: Color.fromARGB(255, 65, 65, 65),
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
             child: Column(
               children: const [
                 _Title(),
