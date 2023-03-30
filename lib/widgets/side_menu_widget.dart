@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/providers/theme_provider.dart';
+import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
 
 class SideMenu extends StatefulWidget {
@@ -45,13 +46,15 @@ class LogOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginService = Provider.of<LoginService>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 5),
       child: ListTile(
         leading: const Icon(Icons.logout),
         title: const Text('Cerrar Sesión', style: TextStyle(fontSize: 20)),
         onTap: () {
-          Navigator.popAndPushNamed(context, 'login');
+          loginService.logOut();
+          Navigator.pushReplacementNamed(context, 'login');
           // Navigator.pop(context);
           // Navigator.pop(context);
         },
