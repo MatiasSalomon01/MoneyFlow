@@ -90,11 +90,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Money Flow',
-        initialRoute: 'home',
+        initialRoute: 'login',
         routes: {
           'home': (context) => const HomeScreen(),
           'settings': (context) => const SettingsScreen(),
-          'search': (context) => SearchScreen()
+          'search': (context) => const SearchScreen(),
+          'login': (context) => const LoginScreen()
         },
         // theme: ThemeApp.darkTheme,
         theme: Provider.of<ThemeProvider>(context).currentTheme);
