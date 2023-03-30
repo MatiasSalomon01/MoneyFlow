@@ -36,8 +36,16 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pushNamed(context, 'register');
+
+                final userService =
+                    await Provider.of<UserService>(context, listen: false)
+                        .loadUsers();
+
+                userService.forEach((element) {
+                  print("${element.id} ${element.email}");
+                });
               },
               child: Text(
                 'Crear Usuario',

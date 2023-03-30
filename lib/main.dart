@@ -82,6 +82,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => AuthProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => UserService(),
       )
     ],
     child: const MyApp(),
