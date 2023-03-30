@@ -43,9 +43,9 @@ class LoginScreen extends StatelessWidget {
                     await Provider.of<UserService>(context, listen: false)
                         .loadUsers();
 
-                userService.forEach((element) {
-                  print("${element.id} ${element.email}");
-                });
+                // userService.forEach((element) {
+                //   print("${element.id} ${element.email}");
+                // });
               },
               child: Text(
                 'Crear Usuario',

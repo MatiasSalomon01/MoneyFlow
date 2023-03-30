@@ -9,6 +9,8 @@ class UserService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
   // late List<User> users = [];
 
+  Map<String, String> userLogged = {"id": "", "email": ""};
+
   Future<List<User>> loadUsers() async {
     List<User> users = [];
     final url = Uri.https(_baseUrl, 'users.json');
@@ -21,9 +23,16 @@ class UserService extends ChangeNotifier {
         final tempUser = User.fromJson(value);
         tempUser.id = key;
         users.add(tempUser);
+        // if (!userLogged.containsKey(key)) {
+        //   userLogged["id"] = key;
+        //   userLogged["email"] = value.toString();
+        // }
+        userLogged["id"] = key;
+        userLogged["email"] = value.toString();
+        userLogged.addAll(userLogged);
       });
     }
-
+    print(userLogged);
     notifyListeners();
     return users;
   }

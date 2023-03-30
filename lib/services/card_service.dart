@@ -21,6 +21,15 @@ class CardService extends ChangeNotifier {
 
   double get currentAmount => _currentAmount;
 
+  late final String _currentUser;
+
+  String get currentUser => _currentUser;
+
+  set currentUser(String value) {
+    _currentUser = value;
+    notifyListeners();
+  }
+
   CardService() {
     loadCardsFiltered(DateTime.now().month, false);
   }
@@ -31,13 +40,14 @@ class CardService extends ChangeNotifier {
       isLoading = true;
       cards.clear();
 
-      final url = Uri.https(_baseUrl, 'card.json');
+      final url = Uri.https(_baseUrl, 'card/-NRo9yFYr9-3VS9GwITt.json');
       final res = await http.get(url);
 
       if (res.body != 'null') {
         final Map<String, dynamic> cardsMap = json.decode(res.body);
 
         cardsMap.forEach((key, value) {
+          print("$key $value");
           final tempCard = CardInfo.fromJson(value);
           tempCard.id = key;
           cards.add(tempCard);
@@ -62,7 +72,7 @@ class CardService extends ChangeNotifier {
       isLoading = true;
       cards.clear();
 
-      final url = Uri.https(_baseUrl, 'card.json');
+      final url = Uri.https(_baseUrl, 'card/-NRo9yFYr9-3VS9GwITt.json');
       final res = await http.get(url);
 
       if (res.body != 'null') {
