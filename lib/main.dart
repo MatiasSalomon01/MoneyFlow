@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Money Flow',
-        initialRoute: 'login',
+        initialRoute: 'checking',
         routes: {
           'home': (context) => const HomeScreen(),
           'settings': (context) => const SettingsScreen(),
