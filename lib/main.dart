@@ -76,6 +76,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (context) => SearchScreenProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => LoginService(),
       )
     ],
     child: const MyApp(),
