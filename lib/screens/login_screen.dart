@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
+import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/services/services.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -64,6 +67,7 @@ class _InputPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
       decoration: InputDecoration(
@@ -78,6 +82,7 @@ class _InputPassword extends StatelessWidget {
         border: const OutlineInputBorder(),
         suffixIcon: const Icon(Icons.visibility_off),
       ),
+      onChanged: (value) => authProvider.password = value,
     );
   }
 }
@@ -89,6 +94,7 @@ class _InputEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
       keyboardType: TextInputType.emailAddress,
@@ -104,6 +110,7 @@ class _InputEmail extends StatelessWidget {
         border: const OutlineInputBorder(),
         suffixIcon: const Icon(Icons.email_outlined),
       ),
+      onChanged: (value) => authProvider.email = value,
     );
   }
 }
@@ -115,20 +122,35 @@ class _LogInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 30),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 48, 48, 48),
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
+    final authProvider = Provider.of<AuthProvider>(context);
+    return GestureDetector(
+      onTap: () async {
+        final loginService = Provider.of<LoginService>(context, listen: false);
+
+        final String? errorMessage =
+            await loginService.login(authProvider.email, authProvider.password);
+
+        if (errorMessage == null) {
+          Navigator.popAndPushNamed(context, 'home');
+        } else {
+          print(errorMessage);
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 48, 48, 48),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
-      ),
-      child: const Center(
-        child: Text(
-          'Ingresar',
-          style: TextStyle(fontSize: 20),
+        child: const Center(
+          child: Text(
+            'Ingresar',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
