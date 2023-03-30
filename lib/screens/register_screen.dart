@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/models/user.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
@@ -126,6 +127,9 @@ class _RegisterButton extends StatelessWidget {
             authProvider.email, authProvider.password);
 
         if (errorMessage == null) {
+          final userService =
+              await Provider.of<UserService>(context, listen: false)
+                  .createUser(User(email: authProvider.email));
           Navigator.popAndPushNamed(context, 'login');
         } else {
           print(errorMessage);

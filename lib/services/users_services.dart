@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -25,5 +26,16 @@ class UserService extends ChangeNotifier {
 
     notifyListeners();
     return users;
+  }
+
+  Future<void> createUser(User user) async {
+    final url = Uri.https(_baseUrl, 'users.json');
+    final res = await http.post(url, body: user.toRawJson());
+
+    final decodedData = json.decode(res.body);
+
+    print(decodedData["name"]);
+
+    return;
   }
 }
