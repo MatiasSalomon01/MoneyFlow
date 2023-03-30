@@ -95,6 +95,37 @@ class _InputEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    List<String> emails = ["m@m.com", "matias@.gmail.com"];
+    // return InputDecorator(
+    //   decoration: InputDecoration(
+    //     // labelText: 'Email',
+    //     contentPadding: EdgeInsets.all(0),
+    //     floatingLabelStyle: TextStyle(
+    //       color: Preferences.isDarkMode ? Colors.white : Colors.black,
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: Colors.grey, width: 2),
+    //       borderRadius: BorderRadius.all(Radius.circular(50)),
+    //     ),
+    //     border: const OutlineInputBorder(),
+    //     suffixIcon: const Icon(Icons.email_outlined),
+    //   ),
+    //   child: Autocomplete<String>(
+
+    //     optionsBuilder: (textEditingValue) {
+    //       if (textEditingValue.text == '') {
+    //         return const Iterable.empty();
+    //       } else {
+    //         return emails.where(
+    //           (user) {
+    //             return user.contains(textEditingValue.text.toLowerCase());
+    //           },
+    //         );
+    //       }
+    //     },
+    //     onSelected: (option) {},
+    //   ),
+    // );
     return TextFormField(
       cursorColor: Colors.grey,
       keyboardType: TextInputType.emailAddress,
