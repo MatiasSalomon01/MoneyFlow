@@ -98,7 +98,8 @@ class MyApp extends StatelessWidget {
           'home': (context) => const HomeScreen(),
           'settings': (context) => const SettingsScreen(),
           'search': (context) => const SearchScreen(),
-          'login': (context) => const LoginScreen()
+          'login': (context) => const LoginScreen(),
+          'register': (context) => const RegisterScreen()
         },
         // theme: ThemeApp.darkTheme,
         theme: Provider.of<ThemeProvider>(context).currentTheme);
