@@ -22,6 +22,7 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final formProvider = Provider.of<FormProvider>(context);
+    final userService = Provider.of<UserService>(context);
     // final searchScreen = SearchScreen();
     return Scaffold(
       appBar: AppBar(),
@@ -107,6 +108,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
+                          userService.userLogged['id']!,
                         );
                       }
                       if (buttonType == 2) {
@@ -120,6 +122,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
+                          userService.userLogged['id']!,
                         );
                       }
                       Navigator.pop(context);

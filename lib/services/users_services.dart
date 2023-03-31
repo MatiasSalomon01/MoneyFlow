@@ -9,7 +9,15 @@ class UserService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
   // late List<User> users = [];
 
-  Map<String, String> userLogged = {"id": "", "email": ""};
+  Map<String, String> _userLogged = {"email": "", "id": ""};
+  // late Map<String, dynamic> _allUsers;
+
+  Map<String, String> get userLogged => _userLogged;
+
+  set userLogged(Map<String, String> map) {
+    _userLogged = map;
+    notifyListeners();
+  }
 
   Future<List<User>> loadUsers() async {
     List<User> users = [];
@@ -18,7 +26,6 @@ class UserService extends ChangeNotifier {
 
     if (res.body != 'null') {
       final Map<String, dynamic> usersMap = json.decode(res.body);
-
       usersMap.forEach((key, value) {
         final tempUser = User.fromJson(value);
         tempUser.id = key;
@@ -27,12 +34,12 @@ class UserService extends ChangeNotifier {
         //   userLogged["id"] = key;
         //   userLogged["email"] = value.toString();
         // }
-        userLogged["id"] = key;
-        userLogged["email"] = value.toString();
-        userLogged.addAll(userLogged);
+        _userLogged["id"] = key;
+        _userLogged["email"] = value.toString();
+        _userLogged.addAll(_userLogged);
       });
     }
-    print(userLogged);
+    // print(userLogged);
     notifyListeners();
     return users;
   }
@@ -43,8 +50,24 @@ class UserService extends ChangeNotifier {
 
     final decodedData = json.decode(res.body);
 
-    print(decodedData["name"]);
+    // print(decodedData["name"]);
 
     return;
+  }
+
+  Future<List<Map<dynamic, dynamic>>> getMapUsers() async {
+    List<Map<dynamic, dynamic>> list = [];
+    final url = Uri.https(_baseUrl, 'users.json');
+    final res = await http.get(url);
+
+    final Map<String, dynamic> usersMap = json.decode(res.body);
+
+    usersMap.forEach((key, value) {
+      list.add(value);
+    });
+    // list.forEach((element) {
+    //   print("${element.values}");
+    // });
+    return list;
   }
 }

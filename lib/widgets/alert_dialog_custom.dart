@@ -11,6 +11,7 @@ class AlertDialogCustom extends StatelessWidget {
     final modalOptionsProvider = Provider.of<ModelOptionsProvider>(context);
     final alertProvider = Provider.of<AlertProvider>(context);
     final cardService = Provider.of<CardService>(context);
+    final userService = Provider.of<UserService>(context);
     return AlertDialog(
       title: const Text('Eliminar'),
       content: const Text('Seguro que quieres eliminar este Card?'),
@@ -38,7 +39,8 @@ class AlertDialogCustom extends StatelessWidget {
                   modalOptionsProvider.cardInfo.state);
             }
 
-            modalOptionsProvider.deleteCard(modalOptionsProvider.idCard);
+            modalOptionsProvider.deleteCard(
+                modalOptionsProvider.idCard, userService.userLogged['id']!);
             modalOptionsProvider.closeModalOptions(0);
             alertProvider.changeDelete(false);
           },

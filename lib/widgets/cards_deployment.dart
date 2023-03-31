@@ -10,19 +10,18 @@ class CardsDeployment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
+    final userService = Provider.of<UserService>(context);
     int totalCards = cardService.cards.length;
     return Container(
       child: RefreshIndicator(
         displacement: 5,
         onRefresh: () async {
           if (DateProvider.selectedMonth == 0) {
-            cardService.loadCards(false);
+            cardService.loadCards(false, userService.userLogged['id']!);
           }
           if (DateProvider.selectedMonth != 0) {
-            cardService.loadCardsFiltered(
-              DateProvider.selectedMonth,
-              false,
-            );
+            cardService.loadCardsFiltered(DateProvider.selectedMonth, false,
+                userService.userLogged['id']!);
           }
         },
         child: cardService.isLoading

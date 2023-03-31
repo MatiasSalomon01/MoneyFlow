@@ -39,16 +39,16 @@ class ModelOptionsProvider extends ChangeNotifier {
     return height;
   }
 
-  void deleteCard(String id) {
+  void deleteCard(String id, String userId) {
     //print('Card Selecionado para eliminar : $id');
-    cardService.deleteCard(id);
+    cardService.deleteCard(id, userId);
     //print(id);
     //print(cardService.empty);
   }
 
-  void updateCard(selectedMonth, CardInfo cardInfo) {
+  void updateCard(selectedMonth, CardInfo cardInfo, String userId) {
     //print('Card Selecionado para actualizar: ${cardInfo.id}');
-    cardService.updateCard(selectedMonth, cardInfo);
+    cardService.updateCard(selectedMonth, cardInfo, userId);
     //print(cardInfo.id);
   }
 

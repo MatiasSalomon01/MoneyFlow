@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
@@ -162,14 +164,30 @@ class _LogInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final cardService = Provider.of<CardService>(context);
     return GestureDetector(
       onTap: () async {
         final loginService = Provider.of<LoginService>(context, listen: false);
-
+        final userService = Provider.of<UserService>(context, listen: false);
+        var x = await userService.getMapUsers();
         final String? errorMessage =
             await loginService.login(authProvider.email, authProvider.password);
 
         if (errorMessage == null) {
+          for (var user in x) {
+            if (user['email'] == authProvider.email) {
+              userService.userLogged = {
+                "email": user['email'],
+                "id": user['id']
+              };
+              print(userService.userLogged);
+              Preferences.id = userService.userLogged['id']!;
+              print("Preferencias ID: " + Preferences.id);
+            } /* else {
+              print('user no encontrado');
+            }*/
+          }
+          cardService.cards = [];
           authProvider.email = '';
           authProvider.password = '';
           Navigator.popAndPushNamed(context, 'home');
