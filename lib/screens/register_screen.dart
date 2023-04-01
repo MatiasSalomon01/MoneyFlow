@@ -132,7 +132,7 @@ class _RegisterButton extends StatelessWidget {
           final userService =
               await Provider.of<UserService>(context, listen: false).createUser(
                   User(
-                      id: Random().nextInt(100).toString(),
+                      id: UniqueKey().hashCode.toString(),
                       email: authProvider.email));
           Navigator.popAndPushNamed(context, 'login');
         } else {

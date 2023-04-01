@@ -23,6 +23,11 @@ class CardService extends ChangeNotifier {
 
   double get currentAmount => _currentAmount;
 
+  set currentAmount(double value) {
+    _currentAmount = value;
+    notifyListeners();
+  }
+
   late final String _currentUser;
 
   String get currentUser => _currentUser;
@@ -43,7 +48,6 @@ class CardService extends ChangeNotifier {
       cards.clear();
 
       final url = Uri.https(_baseUrl, 'card/$userId.json');
-      print("USER ID: " + userId);
       final res = await http.get(url);
       if (res.body != 'null') {
         final Map<String, dynamic> cardsMap = json.decode(res.body);

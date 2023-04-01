@@ -186,10 +186,11 @@ class _LogInButton extends StatelessWidget {
               print('user no encontrado');
             }*/
           }
+          Navigator.popAndPushNamed(context, 'home');
+
           cardService.cards = [];
           authProvider.email = '';
           authProvider.password = '';
-          Navigator.popAndPushNamed(context, 'home');
         } else {
           print(errorMessage);
         }
