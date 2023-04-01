@@ -186,6 +186,8 @@ class _LogInButton extends StatelessWidget {
               print('user no encontrado');
             }*/
           }
+
+          cardService.loadCurrentAmount(Preferences.id);
           Navigator.popAndPushNamed(context, 'home');
 
           cardService.cards = [];

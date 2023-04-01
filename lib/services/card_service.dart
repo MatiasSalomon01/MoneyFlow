@@ -203,4 +203,18 @@ class CardService extends ChangeNotifier {
     }
     return x.reversed.toList();
   }
+
+  Future<void> loadCurrentAmount(String userId) async {
+    final url = Uri.https(_baseUrl, 'card/$userId.json');
+    final res = await http.get(url);
+    if (res.body != 'null') {
+      final Map<String, dynamic> cardsMap = json.decode(res.body);
+
+      cardsMap.forEach((key, value) {
+        final tempCard = CardInfo.fromJson(value);
+        _currentAmount += tempCard.amount;
+      });
+    }
+    notifyListeners();
+  }
 }
