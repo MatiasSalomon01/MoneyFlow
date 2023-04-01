@@ -215,6 +215,7 @@ class CardService extends ChangeNotifier {
         _currentAmount += tempCard.amount;
       });
     }
+    loadCardsFiltered(DateTime.now().month, false, Preferences.id);
     notifyListeners();
   }
 }

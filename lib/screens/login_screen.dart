@@ -165,6 +165,7 @@ class _LogInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final cardService = Provider.of<CardService>(context);
+    final dateProvider = Provider.of<DateProvider>(context);
     return GestureDetector(
       onTap: () async {
         final loginService = Provider.of<LoginService>(context, listen: false);
@@ -186,9 +187,10 @@ class _LogInButton extends StatelessWidget {
               print('user no encontrado');
             }*/
           }
-
-          cardService.loadCurrentAmount(Preferences.id);
+          cardService.loadCardsFiltered(
+              DateTime.now().month, false, Preferences.id);
           Navigator.popAndPushNamed(context, 'home');
+          dateProvider.checkCurrentMonth();
 
           cardService.cards = [];
           authProvider.email = '';
