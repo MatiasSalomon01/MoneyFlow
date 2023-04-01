@@ -180,9 +180,8 @@ class _LogInButton extends StatelessWidget {
                 "email": user['email'],
                 "id": user['id']
               };
-              print(userService.userLogged);
               Preferences.id = userService.userLogged['id']!;
-              print("Preferencias ID: " + Preferences.id);
+              Preferences.currentUser = userService.userLogged['email']!;
             } /* else {
               print('user no encontrado');
             }*/

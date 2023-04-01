@@ -137,8 +137,8 @@ class _Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text(
-        'Opciones',
+      title: Text(
+        Preferences.currentUser,
         style: TextStyle(fontSize: 20),
       ),
       trailing: IconButton(
