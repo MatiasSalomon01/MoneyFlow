@@ -49,7 +49,7 @@ class CardService extends ChangeNotifier {
         final Map<String, dynamic> cardsMap = json.decode(res.body);
 
         cardsMap.forEach((key, value) {
-          // print("$key $value");
+          //print("$key $value");
           final tempCard = CardInfo.fromJson(value);
           tempCard.id = key;
           cards.add(tempCard);
@@ -163,7 +163,7 @@ class CardService extends ChangeNotifier {
     // print(cardInfo.date);
     // print(cardInfo.amount);
     // print(cardInfo.state);
-    final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
+    final url = Uri.https(_baseUrl, 'card/$userId/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
 
     if (month == 0) {
