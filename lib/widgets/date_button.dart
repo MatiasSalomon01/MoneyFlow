@@ -26,16 +26,17 @@ class DateButton extends StatelessWidget {
     final dateProvider = Provider.of<DateProvider>(context);
     final cardService = Provider.of<CardService>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final userService = Provider.of<UserService>(context);
 
     pressed() {
       //isPressed = !isPressed;
       if (index == 0) {
         dateProvider.changeState(index, !state);
-        cardService.loadCards(state);
+        cardService.loadCards(state, Preferences.id);
       }
       if (index != 0) {
         dateProvider.changeState(index, !state);
-        cardService.loadCardsFiltered(id, state);
+        cardService.loadCardsFiltered(id, state, Preferences.id);
       }
       //isPressed = !isPressed;
     }

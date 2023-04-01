@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:money_flow/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
+import 'package:money_flow/services/services.dart';
 
 class CardService extends ChangeNotifier {
   final String _baseUrl = 'moneyflow-b3a9a-default-rtdb.firebaseio.com';
@@ -21,6 +23,11 @@ class CardService extends ChangeNotifier {
 
   double get currentAmount => _currentAmount;
 
+  set currentAmount(double value) {
+    _currentAmount = value;
+    notifyListeners();
+  }
+
   late final String _currentUser;
 
   String get currentUser => _currentUser;
@@ -31,23 +38,22 @@ class CardService extends ChangeNotifier {
   }
 
   CardService() {
-    loadCardsFiltered(DateTime.now().month, false);
+    loadCardsFiltered(DateTime.now().month, false, Preferences.id);
   }
 
-  Future<void> loadCards(bool x) async {
+  Future<void> loadCards(bool x, String userId) async {
     if (x == true) return;
     if (x == false) {
       isLoading = true;
       cards.clear();
 
-      final url = Uri.https(_baseUrl, 'card/-NRo9yFYr9-3VS9GwITt.json');
+      final url = Uri.https(_baseUrl, 'card/$userId.json');
       final res = await http.get(url);
-
       if (res.body != 'null') {
         final Map<String, dynamic> cardsMap = json.decode(res.body);
 
         cardsMap.forEach((key, value) {
-          print("$key $value");
+          //print("$key $value");
           final tempCard = CardInfo.fromJson(value);
           tempCard.id = key;
           cards.add(tempCard);
@@ -65,14 +71,14 @@ class CardService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadCardsFiltered(int month, bool x) async {
+  Future<void> loadCardsFiltered(int month, bool x, String userId) async {
     if (x == true) return;
     if (x == false) {
       List<CardInfo> x = [];
       isLoading = true;
       cards.clear();
 
-      final url = Uri.https(_baseUrl, 'card/-NRo9yFYr9-3VS9GwITt.json');
+      final url = Uri.https(_baseUrl, 'card/$userId.json');
       final res = await http.get(url);
 
       if (res.body != 'null') {
@@ -129,8 +135,8 @@ class CardService extends ChangeNotifier {
   //   return 0;
   // }
 
-  Future<String> createCard(int month, CardInfo cardInfo) async {
-    final url = Uri.https(_baseUrl, 'card.json');
+  Future<String> createCard(int month, CardInfo cardInfo, String userId) async {
+    final url = Uri.https(_baseUrl, 'card/$userId.json');
     final res = await http.post(url, body: cardInfo.toRawJson());
 
     final decodedData = json.decode(res.body);
@@ -138,36 +144,37 @@ class CardService extends ChangeNotifier {
     cardInfo.id = decodedData['name'];
     cards.add(cardInfo);
     if (month == 0) {
-      loadCards(false);
+      loadCards(false, Preferences.id);
     }
     if (month != 0) {
-      loadCardsFiltered(DateProvider.selectedMonth, false);
+      loadCardsFiltered(DateProvider.selectedMonth, false, Preferences.id);
     }
     return cardInfo.id!;
   }
 
-  Future deleteCard(String id) async {
-    final url = Uri.https(_baseUrl, 'card/$id.json');
+  Future deleteCard(String id, String userId) async {
+    final url = Uri.https(_baseUrl, 'card/$userId/$id.json');
     final res = await http.delete(url);
     //loadCards();
 
     //await loadCards();
   }
 
-  Future<String?> updateCard(int month, CardInfo cardInfo) async {
+  Future<String?> updateCard(
+      int month, CardInfo cardInfo, String userId) async {
     // print(cardInfo.id);
     // print(cardInfo.description);
     // print(cardInfo.date);
     // print(cardInfo.amount);
     // print(cardInfo.state);
-    final url = Uri.https(_baseUrl, 'card/${cardInfo.id}.json');
+    final url = Uri.https(_baseUrl, 'card/$userId/${cardInfo.id}.json');
     final res = await http.patch(url, body: cardInfo.toRawJson());
 
     if (month == 0) {
-      loadCards(false);
+      loadCards(false, Preferences.id);
     }
     if (month != 0) {
-      loadCardsFiltered(DateProvider.selectedMonth, false);
+      loadCardsFiltered(DateProvider.selectedMonth, false, Preferences.id);
     }
     return 'Actualización Exitosa';
   }
@@ -179,10 +186,10 @@ class CardService extends ChangeNotifier {
     return _currentAmount;
   }
 
-  Future<List<CardInfo>> getCards() async {
+  Future<List<CardInfo>> getCards(String userId) async {
     List<CardInfo> x = [];
 
-    final url = Uri.https(_baseUrl, 'card.json');
+    final url = Uri.https(_baseUrl, 'card/$userId.json');
     final res = await http.get(url);
 
     if (res.body != 'null') {
@@ -195,5 +202,20 @@ class CardService extends ChangeNotifier {
       });
     }
     return x.reversed.toList();
+  }
+
+  Future<void> loadCurrentAmount(String userId) async {
+    final url = Uri.https(_baseUrl, 'card/$userId.json');
+    final res = await http.get(url);
+    if (res.body != 'null') {
+      final Map<String, dynamic> cardsMap = json.decode(res.body);
+
+      cardsMap.forEach((key, value) {
+        final tempCard = CardInfo.fromJson(value);
+        _currentAmount += tempCard.amount;
+      });
+    }
+    loadCardsFiltered(DateTime.now().month, false, Preferences.id);
+    notifyListeners();
   }
 }

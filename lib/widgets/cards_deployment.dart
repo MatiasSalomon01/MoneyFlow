@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/widgets.dart';
@@ -10,19 +11,18 @@ class CardsDeployment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
+    final userService = Provider.of<UserService>(context);
     int totalCards = cardService.cards.length;
     return Container(
       child: RefreshIndicator(
         displacement: 5,
         onRefresh: () async {
           if (DateProvider.selectedMonth == 0) {
-            cardService.loadCards(false);
+            cardService.loadCards(false, Preferences.id);
           }
           if (DateProvider.selectedMonth != 0) {
             cardService.loadCardsFiltered(
-              DateProvider.selectedMonth,
-              false,
-            );
+                DateProvider.selectedMonth, false, Preferences.id);
           }
         },
         child: cardService.isLoading

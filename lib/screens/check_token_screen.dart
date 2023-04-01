@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,8 @@ class CheckTokenScreen extends StatelessWidget {
             });
           } else {
             Future.microtask(() {
+              // Provider.of<CardService>(context, listen: false)
+              //     .loadCards(false, Preferences.id);
               Navigator.of(context).pushReplacement(PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       HomeScreen(),

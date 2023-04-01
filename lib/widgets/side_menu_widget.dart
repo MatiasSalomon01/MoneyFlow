@@ -47,12 +47,14 @@ class LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginService = Provider.of<LoginService>(context);
+    final cardService = Provider.of<CardService>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 5),
       child: ListTile(
         leading: const Icon(Icons.logout),
         title: const Text('Cerrar Sesión', style: TextStyle(fontSize: 20)),
         onTap: () {
+          cardService.cards = [];
           loginService.logOut();
           Navigator.pushReplacementNamed(context, 'login');
           // Navigator.pop(context);
@@ -135,8 +137,8 @@ class _Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text(
-        'Opciones',
+      title: Text(
+        Preferences.currentUser,
         style: TextStyle(fontSize: 20),
       ),
       trailing: IconButton(

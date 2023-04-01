@@ -154,6 +154,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
+    final userService = Provider.of<UserService>(context);
     return Container(
       padding: const EdgeInsets.only(right: 35),
       // color: Colors.red,
@@ -164,7 +165,7 @@ class _DropDownButtonState extends State<_DropDownButton> {
           _value = value!;
           searchScreenProvider.menuItemOption = value;
           searchScreenProvider.cards = [];
-          displayInfo(cardService, searchScreenProvider);
+          displayInfo(cardService, searchScreenProvider, userService);
           setState(() {});
         },
         elevation: 8,
@@ -195,6 +196,7 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final searchScreenProvider = Provider.of<SearchScreenProvider>(context);
+    final userService = Provider.of<UserService>(context);
     return Form(
       child: Expanded(
         child: Container(
@@ -216,7 +218,7 @@ class _SearchBar extends StatelessWidget {
                     : TextInputType.text,
             onChanged: (value) {
               searchScreenProvider.input = value;
-              displayInfo(cardService, searchScreenProvider);
+              displayInfo(cardService, searchScreenProvider, userService);
               // print(searchScreenProvider.cards.length);
             },
             onTap: () {
@@ -265,13 +267,14 @@ class _FloatingActionButtonCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userService = Provider.of<UserService>(context);
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
         margin: const EdgeInsets.only(bottom: 20, right: 10),
         child: FloatingActionButton(
           onPressed: () {
-            displayInfo(cardService, searchScreenProvider);
+            displayInfo(cardService, searchScreenProvider, userService);
           },
           child: const Icon(Icons.search),
         ),
@@ -280,12 +283,12 @@ class _FloatingActionButtonCustom extends StatelessWidget {
   }
 }
 
-displayInfo(
-    CardService cardService, SearchScreenProvider searchScreenProvider) async {
+displayInfo(CardService cardService, SearchScreenProvider searchScreenProvider,
+    UserService userService) async {
   List<CardInfo> searchCards = [];
   int totalFound = 0;
 
-  var allCards = await cardService.getCards();
+  var allCards = await cardService.getCards(Preferences.id);
 
   allCards.forEach((i) {
     if (searchScreenProvider.menuItemOption == 1 &&

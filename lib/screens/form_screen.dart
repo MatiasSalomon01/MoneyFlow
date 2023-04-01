@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
@@ -22,6 +23,7 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardService = Provider.of<CardService>(context);
     final formProvider = Provider.of<FormProvider>(context);
+    final userService = Provider.of<UserService>(context);
     // final searchScreen = SearchScreen();
     return Scaffold(
       appBar: AppBar(),
@@ -107,6 +109,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
+                          Preferences.id,
                         );
                       }
                       if (buttonType == 2) {
@@ -120,6 +123,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
+                          Preferences.id,
                         );
                       }
                       Navigator.pop(context);
