@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class AlertDialogCustom extends StatelessWidget {
             }
 
             modalOptionsProvider.deleteCard(
-                modalOptionsProvider.idCard, userService.userLogged['id']!);
+                modalOptionsProvider.idCard, Preferences.id);
             modalOptionsProvider.closeModalOptions(0);
             alertProvider.changeDelete(false);
           },

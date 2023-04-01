@@ -32,11 +32,11 @@ class DateButton extends StatelessWidget {
       //isPressed = !isPressed;
       if (index == 0) {
         dateProvider.changeState(index, !state);
-        cardService.loadCards(state, userService.userLogged['id']!);
+        cardService.loadCards(state, Preferences.id);
       }
       if (index != 0) {
         dateProvider.changeState(index, !state);
-        cardService.loadCardsFiltered(id, state, userService.userLogged['id']!);
+        cardService.loadCardsFiltered(id, state, Preferences.id);
       }
       //isPressed = !isPressed;
     }

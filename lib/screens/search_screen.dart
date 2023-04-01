@@ -288,7 +288,7 @@ displayInfo(CardService cardService, SearchScreenProvider searchScreenProvider,
   List<CardInfo> searchCards = [];
   int totalFound = 0;
 
-  var allCards = await cardService.getCards(userService.userLogged['id']!);
+  var allCards = await cardService.getCards(Preferences.id);
 
   allCards.forEach((i) {
     if (searchScreenProvider.menuItemOption == 1 &&

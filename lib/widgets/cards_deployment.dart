@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
 import 'package:money_flow/widgets/widgets.dart';
@@ -17,11 +18,11 @@ class CardsDeployment extends StatelessWidget {
         displacement: 5,
         onRefresh: () async {
           if (DateProvider.selectedMonth == 0) {
-            cardService.loadCards(false, userService.userLogged['id']!);
+            cardService.loadCards(false, Preferences.id);
           }
           if (DateProvider.selectedMonth != 0) {
-            cardService.loadCardsFiltered(DateProvider.selectedMonth, false,
-                userService.userLogged['id']!);
+            cardService.loadCardsFiltered(
+                DateProvider.selectedMonth, false, Preferences.id);
           }
         },
         child: cardService.isLoading

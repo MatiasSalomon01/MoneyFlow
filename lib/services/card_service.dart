@@ -43,8 +43,8 @@ class CardService extends ChangeNotifier {
       cards.clear();
 
       final url = Uri.https(_baseUrl, 'card/$userId.json');
+      print("USER ID: " + userId);
       final res = await http.get(url);
-
       if (res.body != 'null') {
         final Map<String, dynamic> cardsMap = json.decode(res.body);
 

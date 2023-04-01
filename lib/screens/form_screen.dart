@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
@@ -108,7 +109,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
-                          userService.userLogged['id']!,
+                          Preferences.id,
                         );
                       }
                       if (buttonType == 2) {
@@ -122,7 +123,7 @@ class FormScreen extends StatelessWidget {
                             description: formProvider.description,
                             state: formProvider.state,
                           ),
-                          userService.userLogged['id']!,
+                          Preferences.id,
                         );
                       }
                       Navigator.pop(context);
