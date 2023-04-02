@@ -41,6 +41,7 @@ dependencies:
   animate_do: ^3.0.2
   shared_preferences: ^2.0.18
   flutter_secure_storage: ^8.0.0
+  flutter_typeahead: ^4.3.7
 
 dev_dependencies:
   flutter_test:

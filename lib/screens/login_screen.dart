@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/services/services.dart';
@@ -136,22 +137,28 @@ class _InputEmail extends StatelessWidget {
     //     onSelected: (option) {},
     //   ),
     // );
-    return TextFormField(
-      cursorColor: Colors.grey,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        labelText: 'Email',
-        floatingLabelStyle: TextStyle(
-          color: Preferences.isDarkMode ? Colors.white : Colors.black,
+    return TypeAheadField(
+      itemBuilder: (context, itemData) => Text('$itemData'),
+      onSuggestionSelected: (value) => authProvider.email = value,
+      suggestionsCallback: (pattern) => emails,
+      textFieldConfiguration: TextFieldConfiguration(
+        controller: TextEditingController(text: authProvider.email),
+        cursorColor: Colors.grey,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          labelText: 'Email',
+          floatingLabelStyle: TextStyle(
+            color: Preferences.isDarkMode ? Colors.white : Colors.black,
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey, width: 2),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          border: const OutlineInputBorder(),
+          suffixIcon: const Icon(Icons.email_outlined),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-        ),
-        border: const OutlineInputBorder(),
-        suffixIcon: const Icon(Icons.email_outlined),
+        onChanged: (value) => authProvider.email = value,
       ),
-      onChanged: (value) => authProvider.email = value,
     );
   }
 }
