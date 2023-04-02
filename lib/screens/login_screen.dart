@@ -149,9 +149,22 @@ class _InputEmail extends StatelessWidget {
         //authProvider.email = value;
         controller.text = value;
       },
-      suggestionsCallback: (pattern) => emails,
+      suggestionsCallback: (pattern) async {
+        List<String> x = [];
+        if (pattern.length > 0) {
+          var mapUsers = await Provider.of<UserService>(context, listen: false)
+              .getMapUsers();
+          for (var user in mapUsers) {
+            if (user['email'].toString().startsWith(pattern)) {
+              x.add(user['email']);
+            }
+          }
+          return x;
+        } else {
+          return [];
+        }
+      },
       textFieldConfiguration: TextFieldConfiguration(
-        //textDirection: TextDirection.ltr,
         controller: controller,
         cursorColor: Colors.grey,
         keyboardType: TextInputType.emailAddress,
