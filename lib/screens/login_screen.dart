@@ -24,8 +24,10 @@ class LoginScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 65, 65, 65),
+              decoration: BoxDecoration(
+                color: Preferences.isDarkMode
+                    ? const Color.fromARGB(255, 65, 65, 65)
+                    : const Color.fromARGB(255, 199, 199, 199),
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
@@ -85,6 +87,10 @@ class _InputPassword extends StatelessWidget {
     return TextFormField(
       cursorColor: Colors.grey,
       decoration: InputDecoration(
+        fillColor: Preferences.isDarkMode
+            ? const Color.fromARGB(255, 65, 65, 65)
+            : const Color.fromARGB(255, 235, 235, 235),
+        filled: true,
         labelText: 'Contraseña',
         floatingLabelStyle: TextStyle(
           color: Preferences.isDarkMode ? Colors.white : Colors.black,
@@ -166,6 +172,10 @@ class _InputEmail extends StatelessWidget {
         cursorColor: Colors.grey,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Preferences.isDarkMode
+              ? const Color.fromARGB(255, 65, 65, 65)
+              : const Color.fromARGB(255, 235, 235, 235),
           labelText: 'Email',
           floatingLabelStyle: TextStyle(
             color: Preferences.isDarkMode ? Colors.white : Colors.black,
@@ -255,9 +265,11 @@ class _LogInButton extends StatelessWidget {
         margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(vertical: 10),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 48, 48, 48),
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Preferences.isDarkMode
+              ? const Color.fromARGB(255, 48, 48, 48)
+              : const Color.fromARGB(255, 242, 242, 242),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),
