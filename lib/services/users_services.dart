@@ -14,7 +14,7 @@ class UserService extends ChangeNotifier {
 
   Map<String, String> get userLogged => _userLogged;
 
-  late List<Map<dynamic, dynamic>> mapUsers;
+  static List<Map<dynamic, dynamic>> mapUsers = [];
 
   set userLogged(Map<String, String> map) {
     _userLogged = map;
@@ -41,7 +41,6 @@ class UserService extends ChangeNotifier {
         _userLogged.addAll(_userLogged);
       });
     }
-    // print(userLogged);
     notifyListeners();
     return users;
   }
@@ -70,6 +69,8 @@ class UserService extends ChangeNotifier {
     // list.forEach((element) {
     //   print("${element.values}");
     // });
+    mapUsers = list;
+    // print(mapUsers);
     return list;
   }
 }

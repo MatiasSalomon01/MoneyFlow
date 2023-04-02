@@ -108,7 +108,9 @@ class _InputEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    List<String> emails = ["m@m.com", "matias@gmail.com", "p@p.com"];
+    // List<String> emails = ["m@m.com", "matias@gmail.com", "p@p.com"];
+    List<Map<dynamic, dynamic>> mapUsers = UserService.mapUsers;
+
     // return InputDecorator(
     //   decoration: InputDecoration(
     //     // labelText: 'Email',
@@ -140,29 +142,24 @@ class _InputEmail extends StatelessWidget {
     //   ),
     // );
     return TypeAheadField(
+      hideOnEmpty: true,
       itemBuilder: (context, itemData) {
-        return ListTile(
-          title: Text(itemData),
-        );
+        return ListTile(title: Text(itemData));
       },
       onSuggestionSelected: (value) {
         //authProvider.email = value;
         controller.text = value;
       },
-      suggestionsCallback: (pattern) async {
+      suggestionsCallback: (pattern) {
         List<String> x = [];
         if (pattern.length > 0) {
-          var mapUsers = await Provider.of<UserService>(context, listen: false)
-              .getMapUsers();
           for (var user in mapUsers) {
             if (user['email'].toString().startsWith(pattern)) {
               x.add(user['email']);
             }
           }
-          return x;
-        } else {
-          return [];
         }
+        return x;
       },
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,

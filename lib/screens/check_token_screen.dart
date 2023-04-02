@@ -19,7 +19,9 @@ class CheckTokenScreen extends StatelessWidget {
             return Text('Espere...');
           }
           if (snapshot.data == '') {
-            Future.microtask(() {
+            Future.microtask(() async {
+              await Provider.of<UserService>(context, listen: false)
+                  .getMapUsers();
               Navigator.of(context).pushReplacement(PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       LoginScreen(),
