@@ -14,6 +14,8 @@ class UserService extends ChangeNotifier {
 
   Map<String, String> get userLogged => _userLogged;
 
+  late List<Map<dynamic, dynamic>> mapUsers;
+
   set userLogged(Map<String, String> map) {
     _userLogged = map;
     notifyListeners();
