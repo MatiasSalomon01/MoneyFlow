@@ -13,7 +13,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   set password(String password) {
-    _password = email;
+    _password = password;
     notifyListeners();
   }
 }

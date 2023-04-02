@@ -13,50 +13,53 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 65, 65, 65),
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
+    TextEditingController controller = TextEditingController();
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+          body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 65, 65, 65),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: /*const*/ [
+                  const _Title(),
+                  const SizedBox(height: 20),
+                  _InputEmail(controller: controller),
+                  const SizedBox(height: 30),
+                  const _InputPassword(),
+                  _LogInButton(controller: controller)
+                ],
               ),
             ),
-            child: Column(
-              children: const [
-                _Title(),
-                SizedBox(height: 20),
-                _InputEmail(),
-                SizedBox(height: 30),
-                _InputPassword(),
-                _LogInButton()
-              ],
-            ),
-          ),
-          TextButton(
-              onPressed: () async {
-                Navigator.pushNamed(context, 'register');
+            TextButton(
+                onPressed: () async {
+                  Navigator.pushNamed(context, 'register');
 
-                final userService =
-                    await Provider.of<UserService>(context, listen: false)
-                        .loadUsers();
+                  await Provider.of<UserService>(context, listen: false)
+                      .loadUsers();
 
-                // userService.forEach((element) {
-                //   print("${element.id} ${element.email}");
-                // });
-              },
-              child: Text(
-                'Crear Usuario',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              )),
-        ],
-      ),
-    ));
+                  // userService.forEach((element) {
+                  //   print("${element.id} ${element.email}");
+                  // });
+                },
+                child: const Text(
+                  'Crear Usuario',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+          ],
+        ),
+      )),
+    );
   }
 }
 
@@ -99,14 +102,13 @@ class _InputPassword extends StatelessWidget {
 }
 
 class _InputEmail extends StatelessWidget {
-  const _InputEmail({
-    super.key,
-  });
+  TextEditingController controller = TextEditingController();
+  _InputEmail({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    List<String> emails = ["m@m.com", "matias@.gmail.com"];
+    List<String> emails = ["m@m.com", "matias@gmail.com", "p@p.com"];
     // return InputDecorator(
     //   decoration: InputDecoration(
     //     // labelText: 'Email',
@@ -138,11 +140,19 @@ class _InputEmail extends StatelessWidget {
     //   ),
     // );
     return TypeAheadField(
-      itemBuilder: (context, itemData) => Text('$itemData'),
-      onSuggestionSelected: (value) => authProvider.email = value,
+      itemBuilder: (context, itemData) {
+        return ListTile(
+          title: Text(itemData),
+        );
+      },
+      onSuggestionSelected: (value) {
+        //authProvider.email = value;
+        controller.text = value;
+      },
       suggestionsCallback: (pattern) => emails,
       textFieldConfiguration: TextFieldConfiguration(
-        controller: TextEditingController(text: authProvider.email),
+        //textDirection: TextDirection.ltr,
+        controller: controller,
         cursorColor: Colors.grey,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
@@ -157,16 +167,37 @@ class _InputEmail extends StatelessWidget {
           border: const OutlineInputBorder(),
           suffixIcon: const Icon(Icons.email_outlined),
         ),
-        onChanged: (value) => authProvider.email = value,
+        onChanged: (value) {
+          //authProvider.email = value;
+          controller.text = value;
+          controller.selection = TextSelection.fromPosition(
+              TextPosition(offset: controller.text.length));
+        },
       ),
     );
+    // return TextFormField(
+    //   cursorColor: Colors.grey,
+    //   keyboardType: TextInputType.emailAddress,
+    //   decoration: InputDecoration(
+    //     labelText: 'Email',
+    //     floatingLabelStyle: TextStyle(
+    //       color: Preferences.isDarkMode ? Colors.white : Colors.black,
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: Colors.grey, width: 2),
+    //       borderRadius: BorderRadius.all(Radius.circular(50)),
+    //     ),
+    //     border: const OutlineInputBorder(),
+    //     suffixIcon: const Icon(Icons.email_outlined),
+    //   ),
+    //   onChanged: (value) => authProvider.email = value,
+    // );
   }
 }
 
 class _LogInButton extends StatelessWidget {
-  const _LogInButton({
-    super.key,
-  });
+  TextEditingController controller = TextEditingController();
+  _LogInButton({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +206,13 @@ class _LogInButton extends StatelessWidget {
     final dateProvider = Provider.of<DateProvider>(context);
     return GestureDetector(
       onTap: () async {
+        authProvider.email = controller.text;
+
         final loginService = Provider.of<LoginService>(context, listen: false);
         final userService = Provider.of<UserService>(context, listen: false);
         var x = await userService.getMapUsers();
+        print("${authProvider.email} ${authProvider.password}");
+
         final String? errorMessage =
             await loginService.login(authProvider.email, authProvider.password);
 
