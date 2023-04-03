@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                 color: Preferences.isDarkMode
                     ? const Color.fromARGB(255, 65, 65, 65)
                     : const Color.fromARGB(255, 199, 199, 199),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
@@ -100,9 +100,28 @@ class _InputPassword extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         border: const OutlineInputBorder(),
-        suffixIcon: const Icon(Icons.visibility_off),
+        suffixIcon: _VisibilityButton(),
       ),
       onChanged: (value) => authProvider.password = value,
+    );
+  }
+}
+
+class _VisibilityButton extends StatelessWidget {
+  const _VisibilityButton({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    return IconButton(
+      onPressed: () {
+        authProvider.iconState = !authProvider.iconState;
+      },
+      icon: authProvider.iconState == false
+          ? Icon(Icons.visibility_off)
+          : Icon(Icons.visibility),
     );
   }
 }
