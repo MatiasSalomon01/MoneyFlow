@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:money_flow/preferences/preferences.dart';
@@ -13,9 +11,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    TextEditingController controller = TextEditingController();
+    TextEditingController controllerEmail = TextEditingController();
+    TextEditingController controllerPassword = TextEditingController();
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
           body: Center(
         child: Column(
@@ -24,9 +23,11 @@ class LoginScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 65, 65, 65),
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Preferences.isDarkMode
+                    ? const Color.fromARGB(255, 65, 65, 65)
+                    : const Color.fromARGB(255, 199, 199, 199),
+                borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
@@ -34,10 +35,10 @@ class LoginScreen extends StatelessWidget {
                 children: /*const*/ [
                   const _Title(),
                   const SizedBox(height: 20),
-                  _InputEmail(controller: controller),
+                  _InputEmail(controller: controllerEmail),
                   const SizedBox(height: 30),
-                  const _InputPassword(),
-                  _LogInButton(controller: controller)
+                  _InputPassword(controller: controllerPassword),
+                  _LogInButton(controller: controllerEmail)
                 ],
               ),
             ),
@@ -75,16 +76,20 @@ class _Title extends StatelessWidget {
 }
 
 class _InputPassword extends StatelessWidget {
-  const _InputPassword({
-    super.key,
-  });
+  _InputPassword({super.key, required this.controller});
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
+      obscureText: authProvider.iconState,
       decoration: InputDecoration(
+        fillColor: Preferences.isDarkMode
+            ? const Color.fromARGB(255, 65, 65, 65)
+            : const Color.fromARGB(255, 235, 235, 235),
+        filled: true,
         labelText: 'Contraseña',
         floatingLabelStyle: TextStyle(
           color: Preferences.isDarkMode ? Colors.white : Colors.black,
@@ -94,9 +99,28 @@ class _InputPassword extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         border: const OutlineInputBorder(),
-        suffixIcon: const Icon(Icons.visibility_off),
+        suffixIcon: const _VisibilityButton(),
       ),
       onChanged: (value) => authProvider.password = value,
+    );
+  }
+}
+
+class _VisibilityButton extends StatelessWidget {
+  const _VisibilityButton({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    return IconButton(
+      onPressed: () {
+        authProvider.iconState = !authProvider.iconState;
+      },
+      icon: authProvider.iconState == true
+          ? const Icon(Icons.visibility_off)
+          : const Icon(Icons.visibility),
     );
   }
 }
@@ -108,7 +132,9 @@ class _InputEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    List<String> emails = ["m@m.com", "matias@gmail.com", "p@p.com"];
+    // List<String> emails = ["m@m.com", "matias@gmail.com", "p@p.com"];
+    List<Map<dynamic, dynamic>> mapUsers = UserService.mapUsers;
+
     // return InputDecorator(
     //   decoration: InputDecoration(
     //     // labelText: 'Email',
@@ -140,35 +166,34 @@ class _InputEmail extends StatelessWidget {
     //   ),
     // );
     return TypeAheadField(
+      hideOnEmpty: true,
       itemBuilder: (context, itemData) {
-        return ListTile(
-          title: Text(itemData),
-        );
+        return ListTile(title: Text(itemData));
       },
       onSuggestionSelected: (value) {
         //authProvider.email = value;
         controller.text = value;
       },
-      suggestionsCallback: (pattern) async {
+      suggestionsCallback: (pattern) {
         List<String> x = [];
         if (pattern.length > 0) {
-          var mapUsers = await Provider.of<UserService>(context, listen: false)
-              .getMapUsers();
           for (var user in mapUsers) {
             if (user['email'].toString().startsWith(pattern)) {
               x.add(user['email']);
             }
           }
-          return x;
-        } else {
-          return [];
         }
+        return x;
       },
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,
         cursorColor: Colors.grey,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Preferences.isDarkMode
+              ? const Color.fromARGB(255, 65, 65, 65)
+              : const Color.fromARGB(255, 235, 235, 235),
           labelText: 'Email',
           floatingLabelStyle: TextStyle(
             color: Preferences.isDarkMode ? Colors.white : Colors.black,
@@ -258,9 +283,11 @@ class _LogInButton extends StatelessWidget {
         margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(vertical: 10),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 48, 48, 48),
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Preferences.isDarkMode
+              ? const Color.fromARGB(255, 48, 48, 48)
+              : const Color.fromARGB(255, 242, 242, 242),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),

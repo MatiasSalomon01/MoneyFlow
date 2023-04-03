@@ -14,7 +14,7 @@ class UserService extends ChangeNotifier {
 
   Map<String, String> get userLogged => _userLogged;
 
-  late List<Map<dynamic, dynamic>> mapUsers;
+  static List<Map<dynamic, dynamic>> mapUsers = [];
 
   set userLogged(Map<String, String> map) {
     _userLogged = map;
@@ -41,7 +41,6 @@ class UserService extends ChangeNotifier {
         _userLogged.addAll(_userLogged);
       });
     }
-    // print(userLogged);
     notifyListeners();
     return users;
   }
@@ -62,14 +61,20 @@ class UserService extends ChangeNotifier {
     final url = Uri.https(_baseUrl, 'users.json');
     final res = await http.get(url);
 
-    final Map<String, dynamic> usersMap = json.decode(res.body);
+    if (res.body != "null") {
+      final Map<String, dynamic> usersMap = json.decode(res.body);
 
-    usersMap.forEach((key, value) {
-      list.add(value);
-    });
-    // list.forEach((element) {
-    //   print("${element.values}");
-    // });
-    return list;
+      usersMap.forEach((key, value) {
+        list.add(value);
+      });
+      // list.forEach((element) {
+      //   print("${element.values}");
+      // });
+      mapUsers = list;
+      // print(mapUsers);
+      return list;
+    } else {
+      return [];
+    }
   }
 }
