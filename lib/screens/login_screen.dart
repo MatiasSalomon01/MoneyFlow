@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
     TextEditingController controllerEmail = TextEditingController();
     TextEditingController controllerPassword = TextEditingController();
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
           body: Center(
         child: Column(

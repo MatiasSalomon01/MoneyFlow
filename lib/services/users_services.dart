@@ -61,16 +61,20 @@ class UserService extends ChangeNotifier {
     final url = Uri.https(_baseUrl, 'users.json');
     final res = await http.get(url);
 
-    final Map<String, dynamic> usersMap = json.decode(res.body);
+    if (res.body != "null") {
+      final Map<String, dynamic> usersMap = json.decode(res.body);
 
-    usersMap.forEach((key, value) {
-      list.add(value);
-    });
-    // list.forEach((element) {
-    //   print("${element.values}");
-    // });
-    mapUsers = list;
-    // print(mapUsers);
-    return list;
+      usersMap.forEach((key, value) {
+        list.add(value);
+      });
+      // list.forEach((element) {
+      //   print("${element.values}");
+      // });
+      mapUsers = list;
+      // print(mapUsers);
+      return list;
+    } else {
+      return [];
+    }
   }
 }
