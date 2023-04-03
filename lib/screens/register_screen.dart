@@ -68,7 +68,12 @@ class _InputPassword extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
+      obscureText: authProvider.iconState,
       decoration: InputDecoration(
+        fillColor: Preferences.isDarkMode
+            ? const Color.fromARGB(255, 65, 65, 65)
+            : const Color.fromARGB(255, 235, 235, 235),
+        filled: true,
         labelText: 'Contraseña',
         floatingLabelStyle: TextStyle(
           color: Preferences.isDarkMode ? Colors.white : Colors.black,
