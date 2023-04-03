@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AuthProvider extends ChangeNotifier {
   String _email = '';
   String _password = '';
-  bool _iconState = false;
+  bool _iconState = true;
 
   String get email => _email;
   String get password => _password;

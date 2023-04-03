@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:money_flow/preferences/preferences.dart';
@@ -13,7 +11,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    TextEditingController controller = TextEditingController();
+    TextEditingController controllerEmail = TextEditingController();
+    TextEditingController controllerPassword = TextEditingController();
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
@@ -36,10 +35,10 @@ class LoginScreen extends StatelessWidget {
                 children: /*const*/ [
                   const _Title(),
                   const SizedBox(height: 20),
-                  _InputEmail(controller: controller),
+                  _InputEmail(controller: controllerEmail),
                   const SizedBox(height: 30),
-                  const _InputPassword(),
-                  _LogInButton(controller: controller)
+                  _InputPassword(controller: controllerPassword),
+                  _LogInButton(controller: controllerEmail)
                 ],
               ),
             ),
@@ -77,15 +76,15 @@ class _Title extends StatelessWidget {
 }
 
 class _InputPassword extends StatelessWidget {
-  const _InputPassword({
-    super.key,
-  });
+  _InputPassword({super.key, required this.controller});
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     return TextFormField(
       cursorColor: Colors.grey,
+      obscureText: authProvider.iconState,
       decoration: InputDecoration(
         fillColor: Preferences.isDarkMode
             ? const Color.fromARGB(255, 65, 65, 65)
@@ -100,7 +99,7 @@ class _InputPassword extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         border: const OutlineInputBorder(),
-        suffixIcon: _VisibilityButton(),
+        suffixIcon: const _VisibilityButton(),
       ),
       onChanged: (value) => authProvider.password = value,
     );
@@ -119,9 +118,9 @@ class _VisibilityButton extends StatelessWidget {
       onPressed: () {
         authProvider.iconState = !authProvider.iconState;
       },
-      icon: authProvider.iconState == false
-          ? Icon(Icons.visibility_off)
-          : Icon(Icons.visibility),
+      icon: authProvider.iconState == true
+          ? const Icon(Icons.visibility_off)
+          : const Icon(Icons.visibility),
     );
   }
 }
