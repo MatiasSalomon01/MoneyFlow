@@ -42,6 +42,7 @@ dependencies:
   shared_preferences: ^2.0.18
   flutter_secure_storage: ^8.0.0
   flutter_typeahead: ^4.3.7
+  syncfusion_flutter_charts: ^21.1.39
 
 dev_dependencies:
   flutter_test:
