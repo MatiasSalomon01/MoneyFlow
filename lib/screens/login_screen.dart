@@ -269,6 +269,7 @@ class _LogInButton extends StatelessWidget {
           }
           cardService.loadCardsFiltered(
               DateTime.now().month, false, Preferences.id);
+          cardService.moveScroll = true;
           Navigator.popAndPushNamed(context, 'home');
           dateProvider.checkCurrentMonth();
 

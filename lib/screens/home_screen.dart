@@ -29,11 +29,11 @@ class HomeScreen extends StatelessWidget {
             ),
           GestureDetector(
             child: Column(
-              children: const [
-                SizedBox(height: 20),
+              children: [
+                const SizedBox(height: 20),
                 Expanded(flex: 1, child: FilterButtons()),
-                SizedBox(height: 10),
-                Expanded(flex: 18, child: CardsDeployment()),
+                const SizedBox(height: 10),
+                const Expanded(flex: 18, child: CardsDeployment()),
               ],
             ),
           ),

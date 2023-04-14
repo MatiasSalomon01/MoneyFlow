@@ -10,6 +10,7 @@ class CheckTokenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginService = Provider.of<LoginService>(context);
+    final cardService = Provider.of<CardService>(context);
     return Scaffold(
         body: Center(
       child: FutureBuilder(
@@ -31,6 +32,7 @@ class CheckTokenScreen extends StatelessWidget {
             Future.microtask(() {
               // Provider.of<CardService>(context, listen: false)
               //     .loadCards(false, Preferences.id);
+              cardService.moveScroll = true;
               Navigator.of(context).pushReplacement(PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       HomeScreen(),

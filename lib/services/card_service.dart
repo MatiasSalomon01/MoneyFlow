@@ -21,6 +21,8 @@ class CardService extends ChangeNotifier {
 
   double _currentAmount = 0;
 
+  bool _moveScroll = true;
+
   double get currentAmount => _currentAmount;
 
   set currentAmount(double value) {
@@ -34,6 +36,13 @@ class CardService extends ChangeNotifier {
 
   set currentUser(String value) {
     _currentUser = value;
+    notifyListeners();
+  }
+
+  bool get moveScroll => _moveScroll;
+
+  set moveScroll(bool value) {
+    _moveScroll = value;
     notifyListeners();
   }
 
