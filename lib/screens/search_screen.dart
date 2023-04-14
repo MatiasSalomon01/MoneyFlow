@@ -32,7 +32,7 @@ class SearchScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 _CardsDeployment(searchScreenProvider: searchScreenProvider),
-                const SizedBox(height: 75),
+                // const SizedBox(height: 80),
               ],
             ),
           ),
@@ -60,6 +60,7 @@ class _CardsDeployment extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(bottom: 80),
         shrinkWrap: true,
         itemCount: searchScreenProvider.cards.length,
         itemBuilder: (context, index) {
