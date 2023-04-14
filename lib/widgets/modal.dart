@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_flow/models/models.dart';
+import 'package:money_flow/preferences/preferences.dart';
 import 'package:money_flow/providers/providers.dart';
 import 'package:money_flow/screens/screens.dart';
 import 'package:money_flow/services/services.dart';
@@ -33,10 +34,10 @@ class Modal extends StatelessWidget {
           ),
           Expanded(
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
+              // borderRadius: const BorderRadius.only(
+              //   topLeft: Radius.circular(20),
+              //   topRight: Radius.circular(20)
+              // ),
               child: SlideInUp(
                 duration: const Duration(milliseconds: 250),
                 animate: modalOptionsProvider.activateAnimation,
@@ -45,14 +46,15 @@ class Modal extends StatelessWidget {
                     vertical: 10,
                     horizontal: 20,
                   ),
-                  color: const Color.fromARGB(255, 34, 34, 34),
+                  color: Preferences.isDarkMode
+                      ? const Color.fromARGB(255, 34, 34, 34)
+                      : Colors.white,
                   // color: Colors.red,
                   width: double.infinity,
                   height: modalOptionsProvider.height,
                   child: ListView(
                     children: [
                       ListTile(
-                        selectedColor: Colors.red,
                         onTap: () {
                           alertProvider.changeDelete(true);
                         },
